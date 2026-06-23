@@ -13,35 +13,27 @@
         :root {
             --bg-app: #f4f7fe;
             --bg-card: #ffffff;
-            --primary: #111111; 
-            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); 
+            --primary: #111111;
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%);
             --text-main: #1e293b;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-            --pill-active-bg: #111111;
             --nav-bg: #ffffff;
-            --icon-bg: #f1f5f9; 
-            --accent-red: #111111;
-            --accent-red-hover: #000000;
-            --dashed-border: #cbd5e1;
+            --icon-bg: #f1f5f9;
         }
 
         [data-theme="dark"] {
-            --bg-app: #0b0f19; 
-            --bg-card: #111827; 
-            --primary: #ffffff; 
-            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --bg-app: #0b0f19;
+            --bg-card: #111827;
+            --primary: #ffffff;
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: #1f2937;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            --pill-active-bg: #f8fafc;
             --nav-bg: #111827;
             --icon-bg: rgba(255, 255, 255, 0.05);
-            --accent-red: #ffffff;
-            --accent-red-hover: #e2e8f0;
-            --dashed-border: #1f2937;
         }
 
         * {
@@ -60,7 +52,7 @@
         }
 
         .article-container {
-            max-width: 480px; 
+            max-width: 480px;
             margin: 0 auto;
             background: var(--bg-app);
             min-height: 100vh;
@@ -105,135 +97,101 @@
             gap: 8px;
         }
 
-        /* DYNAMIC CONTENT AREA & MODERN MARKDOWN STYLING */
         .article-content {
             padding: 24px 16px 0px 16px;
             overflow-x: hidden;
         }
 
-        /* --- `article_old.html` प्रमाणेच आकर्षक डिझाईन मॅपिंग --- */
-        
-        #md-render-area h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: -0.3px;
-            line-height: 1.3;
+        /* --- Markdown Render Area Styling (Inspired by article_old.html) --- */
+        #md-render-area {
             animation: fadeUp 0.4s ease-out forwards;
         }
 
-        /* जुन्या FAQ हेडिंगप्रमाणे लुक */
+        #md-render-area h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            text-align: center;
+            margin: 0 0 20px 0;
+            line-height: 1.3;
+            color: var(--text-main);
+        }
+
         #md-render-area h2 {
             font-size: 1.25rem;
             font-weight: 800;
+            margin: 28px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed var(--border-color);
             color: var(--text-main);
-            margin: 28px 0 14px;
-            line-height: 1.3;
-            padding-bottom: 10px;
-            border-bottom: 1px dashed var(--dashed-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        /* Emulating the static FAQ question style from old article */
+        #md-render-area h2::before {
+            content: "\f0c1"; /* fa-link icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--primary);
+            font-size: 1.1rem;
         }
 
         #md-render-area h3 {
             font-size: 1.1rem;
             font-weight: 700;
-            margin: 18px 0 8px;
-            color: var(--primary);
+            margin: 20px 0 10px 0;
+            color: var(--text-main);
         }
 
         #md-render-area p {
             font-size: 0.95rem;
             line-height: 1.6;
-            color: var(--text-muted);
-            text-align: justify;
             margin-bottom: 12px;
-        }
-
-        /* जुन्या 'Key Takeaway' ब्लॉककोटसारखे डिझाईन */
-        #md-render-area blockquote {
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            border-radius: 16px;
-            background: var(--bg-card);
-            margin: 20px 0;
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--primary);
+            text-align: justify;
+            color: var(--text-muted);
         }
         
-        #md-render-area blockquote p {
-            margin: 0;
-            font-weight: 600;
+        #md-render-area p strong {
             color: var(--text-main);
         }
 
-        /* जुन्या नंबर बॅजेसप्रमाणे दिसेल अशी ऑर्डर्ड लिस्ट (Numbered List) */
-        #md-render-area ol {
-            list-style: none;
-            padding: 0;
+        /* Blockquote styling - acts like Key Takeaway boxes */
+        #md-render-area blockquote {
+            background: var(--bg-card);
+            border-left: 4px solid var(--primary);
+            padding: 12px 16px;
             margin: 20px 0;
+            border-radius: 0 16px 16px 0;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            border-left-width: 4px;
+            font-style: normal;
+            background: var(--bg-app);
         }
-        
-        #md-render-area ol li {
-            position: relative;
-            padding-left: 3rem;
-            margin-bottom: 1.2rem;
-            text-align: justify;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            line-height: 1.6;
+        #md-render-area blockquote p {
+            margin-bottom: 0;
+            color: var(--text-main);
+            font-weight: 500;
         }
-        
-        #md-render-area ol li::before {
-            content: counter(li-counter);
-            counter-increment: li-counter;
-            display: inline-block;
-            position: absolute;
-            left: 0;
-            top: 2px;
-            background-color: var(--primary) !important;
-            color: var(--bg-card);
-            width: 1.8rem;
-            height: 1.8rem;
-            text-align: center;
-            line-height: 1.8rem;
-            font-weight: bold;
-            font-size: 0.9rem;
-            border-radius: 4px;
-        }
-        
-        #md-render-area ol {
-            counter-reset: li-counter;
-        }
-
-        /* जुन्या आकर्षक बुलेट लिस्ट डिझाईन सारखी अनऑर्डर्ड लिस्ट */
-        #md-render-area ul {
-            list-style: none;
-            padding: 0;
-            margin: 16px 0;
-        }
-        
-        #md-render-area ul li {
-            position: relative;
-            padding-left: 24px;
-            margin-bottom: 10px;
-            text-align: justify;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-        
-        #md-render-area ul li::before {
-            content: "•";
+        #md-render-area blockquote strong {
             color: var(--primary);
-            font-weight: bold;
-            font-size: 1.4rem;
-            position: absolute;
-            left: 6px;
-            top: -2px;
         }
 
-        /* जुन्या कॉम्पॅक्ट आणि मॉडर्न टेबलसारखे डिझाईन */
+        /* Lists */
+        #md-render-area ul, #md-render-area ol {
+            margin: 12px 0 16px 24px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+        #md-render-area li {
+            margin-bottom: 8px;
+        }
+        #md-render-area ul li::marker {
+            color: var(--primary);
+        }
+
+        /* Tables - same as old article */
         #md-render-area table {
             width: 100%;
             border-collapse: collapse;
@@ -245,56 +203,126 @@
             overflow: hidden;
             box-shadow: var(--shadow);
         }
-
         #md-render-area th {
             background: var(--primary-gradient);
             color: white;
             font-weight: 700;
-            padding: 12px 10px;
+            padding: 10px;
             text-align: left;
         }
-
         #md-render-area td {
-            padding: 12px 10px;
+            padding: 10px;
             border-bottom: 1px solid var(--border-color);
             color: var(--text-main);
         }
-
         #md-render-area tr:last-child td {
             border-bottom: none;
         }
 
-        /* इमेज स्टाईल */
+        /* Images */
         #md-render-area img {
             width: 100%;
-            max-width: 500px;
             height: auto;
-            border-radius: 24px;
-            margin: 16px auto;
-            display: block;
+            border-radius: 16px;
+            margin: 16px 0;
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow);
+            display: block;
         }
 
-        /* हॉरिझॉन्टल रुल (सेपरेटर लाईन) */
+        /* Horizontal Rule - used as separator */
         #md-render-area hr {
-            border: 0;
-            height: 1px;
-            background: var(--border-color);
-            margin: 30px 0;
+            border: none;
+            border-top: 1px dashed var(--border-color);
+            margin: 24px 0;
         }
 
-        /* ॲनिमेशन इफेक्ट */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px);}
-            to { opacity: 1; transform: translateY(0);}
+        /* Special styling for "People Also Ask" section using a custom class in markdown? 
+           We'll target the H2 that contains the PAA text and style it differently, but we'll keep it generic. */
+        #md-render-area h2:last-of-type {
+            background: var(--bg-card);
+            padding: 14px 16px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+            margin-top: 32px;
         }
+
+        /* Key Takeaway Box (if we want to style strong tags inside blockquotes) */
         
-        #md-render-area > * {
-            animation: fadeUp 0.4s ease-out forwards;
+        /* Disclaimer Box */
+        #md-render-area p:last-of-type {
+            background: var(--bg-card);
+            padding: 18px 16px;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin-top: 24px;
         }
 
-        /* Status Messages */
+        /* Utility for number badges in lists - if markdown has ordered lists, we can style them */
+        #md-render-area ol {
+            list-style: none;
+            counter-reset: item;
+            padding-left: 0;
+        }
+        #md-render-area ol li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.2rem;
+            text-align: justify;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            counter-increment: item;
+        }
+        #md-render-area ol li::before {
+            content: counter(item);
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            background-color: #111111 !important;
+            color: white;
+            width: 1.8rem;
+            height: 1.8rem;
+            text-align: center;
+            line-height: 1.8rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+            border-radius: 4px;
+        }
+        [data-theme="dark"] #md-render-area ol li::before {
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+
+        /* Special bullet list style for Do's and Don'ts */
+        #md-render-area ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        #md-render-area ul li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        #md-render-area ul li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.3rem;
+            position: absolute;
+            left: 6px;
+            top: -2px;
+        }
+
+        /* Error/Loading Status */
         .status-message {
             text-align: center;
             padding: 40px 20px;
@@ -350,6 +378,7 @@
         .urja-modal-container {
             background: var(--bg-card); width: 90%; max-width: 380px;
             border-radius: 20px; overflow: hidden; border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
         }
         .urja-modal-header {
             padding: 16px 18px; display: flex; justify-content: space-between; align-items: center;
@@ -374,6 +403,11 @@
         }
         .urja-toast-message { background: #1f2937; color: white; text-align: center; padding: 8px; border-radius: 40px; font-size: 0.7rem; opacity: 0; transition: 0.2s; margin-top: 10px; }
         .urja-toast-message.show { opacity: 1; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
     </style>
 </head>
 <body>
@@ -422,7 +456,7 @@
 
 <script>
     (function() {
-        // थीम मॅनेजमेंट
+        // Theme management
         function applySynchronizedTheme() {
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
@@ -430,20 +464,25 @@
         applySynchronizedTheme();
         window.addEventListener('storage', (e) => { if (e.key === 'theme') applySynchronizedTheme(); });
 
-        // URL मधून .md फाईलचे नाव मिळवणे
+        // Get article name from URL, default to 'article'
         const urlParams = new URLSearchParams(window.location.search);
-        const articleName = urlParams.get('article') || 'mahavitaran-energy-billing-system-guide'; 
-        const mdFileUrl = `Blog/${articleName}.md`; 
+        const articleName = urlParams.get('article') || 'article'; 
+        const mdFileUrl = `Blog/${articleName}.md`;
 
-        // MD फाईल Fetch करून Render करण्याचे लॉजिक
+        // Fetch and render MD file
         fetch(mdFileUrl)
             .then(response => {
                 if (!response.ok) throw new Error('फाईल सापडली नाही');
                 return response.text();
             })
             .then(markdownText => {
-                // Markdown चे HTML मध्ये भाषांतर करणे
-                document.getElementById('md-render-area').innerHTML = marked.parse(markdownText);
+                // Configure marked options for better rendering
+                marked.setOptions({
+                    breaks: true,
+                    gfm: true,
+                });
+                const htmlContent = marked.parse(markdownText);
+                document.getElementById('md-render-area').innerHTML = htmlContent;
             })
             .catch(error => {
                 console.error(error);
@@ -454,23 +493,30 @@
                     </div>`;
             });
 
-        // नेव्हिगेशन आणि शेअर बटण लॉजिक
+        // Navigation and Share Logic
         const backBtn = document.getElementById('backToHomeBtn');
         if(backBtn) backBtn.addEventListener('click', () => window.location.href = 'index.html');
-        
-        function shareCurrentPage() { const modal = document.getElementById('dynamicShareModal'); if(modal) modal.classList.add('active'); window.currentShareUrl = window.location.href; }
-        function closeShareModal() { const modal = document.getElementById('dynamicShareModal'); if(modal) modal.classList.remove('active'); }
-        
+
+        function shareCurrentPage() { 
+            const modal = document.getElementById('dynamicShareModal'); 
+            if(modal) modal.classList.add('active'); 
+            window.currentShareUrl = window.location.href; 
+        }
+        function closeShareModal() { 
+            const modal = document.getElementById('dynamicShareModal'); 
+            if(modal) modal.classList.remove('active'); 
+        }
+
         document.getElementById('nativeShareBtn')?.addEventListener('click', (e) => { e.preventDefault(); shareCurrentPage(); });
         document.getElementById('closeShareModalBtn')?.addEventListener('click', closeShareModal);
         document.getElementById('copyLinkBtn')?.addEventListener('click', () => {
             navigator.clipboard.writeText(window.currentShareUrl).then(() => {
                 const toast = document.getElementById('dynamicToast');
-                toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2000);
+                toast.classList.add('show'); 
+                setTimeout(() => toast.classList.remove('show'), 2000);
             });
         });
-
-        // सोशल मीडिया शेअरिंग लिंक्स
+        // Social media share links
         document.getElementById('whatsappShareBtn')?.addEventListener('click', () => window.open(`https://wa.me/?text=${encodeURIComponent(window.currentShareUrl)}`, '_blank'));
         document.getElementById('facebookShareBtn')?.addEventListener('click', () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.currentShareUrl)}`, '_blank'));
         document.getElementById('twitterShareBtn')?.addEventListener('click', () => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.currentShareUrl)}`, '_blank'));
