@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>About Us | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- index.html मधून घेतलेली आधुनिक रंगसंगती (Theme System) --- */
+        :root {
+            --bg-app: #f4f7fe;
+            --bg-card: #ffffff;
+            --primary: #111111; /* Changed to Dark Black */
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); /* Premium Dark Gradient */
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --icon-bg: #f1f5f9; /* Soft grey background replacing light red */
+            --accent-red: #111111;
+            --accent-red-hover: #000000;
+            --dashed-border: #cbd5e1;
+            --gradient-mastermind: linear-gradient(120deg, #f8fafc, #ffffff);
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827; 
+            --primary: #ffffff; /* Luminous Contrast White for Dark Mode */
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+            --icon-bg: rgba(255, 255, 255, 0.05);
+            --accent-red: #ffffff;
+            --accent-red-hover: #e2e8f0;
+            --dashed-border: #1f2937;
+            --gradient-mastermind: linear-gradient(120deg, #111827, #0b0f19);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Inter', Roboto, Helvetica, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Mobile-first container */
+        .about-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: background 0.3s ease;
+        }
+
+        /* STICKY HEADER BAR */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+        
+        @media (max-width: 360px) {
+            .sharp-header { padding: 12px 16px; }
+        }
+
+        /* Back arrow button */
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            transition: opacity 0.2s ease, transform 0.1s ease;
+            line-height: 1;
+        }
+        
+        @media (max-width: 360px) {
+            .back-arrow { left: 12px; font-size: 1.3rem; }
+        }
+
+        .back-arrow:active {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        /* Header title */
+        .header-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+            text-align: center;
+        }
+        
+        @media (max-width: 360px) {
+            .header-title { font-size: 1.1rem; }
+        }
+
+        /* Main content with cards */
+        .about-content {
+            padding: 24px 16px 0px 16px;
+        }
+        
+        @media (max-width: 360px) {
+            .about-content { padding: 16px 12px 0px 12px; }
+        }
+
+        /* Mission Vision Cards */
+        .mv-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        
+        @media (max-width: 360px) {
+            .mv-grid { gap: 12px; margin-bottom: 20px; }
+        }
+
+        .mv-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 18px 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s, border-color 0.3s;
+        }
+        
+        @media (max-width: 360px) {
+            .mv-card { padding: 14px 12px; border-radius: 20px; }
+        }
+        
+        .intro-image {
+            text-align: center;
+            margin: 16px 0 24px 0;
+        }
+        
+        @media (max-width: 360px) {
+            .intro-image { margin: 10px 0 18px 0; }
+        }
+
+        .about-intro-img {
+            width: 80%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 24px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        @media (max-width: 360px) {
+            .about-intro-img { width: 90%; border-radius: 18px; }
+        }
+
+        .about-intro-img:hover {
+            transform: scale(1.02);
+        }
+
+        .mv-card:active {
+            transform: scale(0.98);
+        }
+
+        /* heading with icon inline */
+        .card-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            flex-wrap: nowrap;
+        }
+        
+        @media (max-width: 360px) {
+            .card-heading { gap: 10px; margin-bottom: 10px; }
+        }
+
+        .card-heading .mv-icon {
+            background: var(--icon-bg);
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0;
+            transition: background 0.3s;
+        }
+        
+        @media (max-width: 360px) {
+            .card-heading .mv-icon { width: 38px; height: 38px; min-width: 38px; }
+            .card-heading .mv-icon i { font-size: 1.2rem; }
+        }
+
+        .card-heading .mv-icon i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .card-heading h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.3;
+            word-break: break-word;
+        }
+        
+        @media (max-width: 360px) {
+            .card-heading h3 { font-size: 1.1rem; }
+        }
+
+        .mv-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-left: 0;
+            word-break: break-word;
+        }
+        
+        @media (max-width: 360px) {
+            .mv-card p { font-size: 0.95rem; line-height: 1.6; }
+        }
+        
+        /* Box numbers styling */
+        .box-numbers li {
+            text-align: justify;
+            position: relative;
+            padding-left: 2.8rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            word-break: break-word;
+            color: var(--text-muted);
+        }
+        
+        @media (max-width: 360px) {
+            .box-numbers li { padding-left: 2.8rem; font-size: 0.95em; margin-bottom: 0.7rem; }
+            .box-numbers li span {
+                width: 2.2rem !important;
+                height: 2.2rem !important;
+                line-height: 2.2rem !important;
+                font-size: 0.95rem !important;
+            }
+        }
+
+        .box-numbers li span {
+            background-color: #111111 !important;
+        }
+        
+        [data-theme="dark"] .box-numbers li span {
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+
+        /* Story Section */
+        .story-section {
+            background: var(--bg-card);
+            border-radius: 28px;
+            padding: 20px 18px;
+            margin: 24px 0;
+            border-left: 5px solid var(--primary);
+            box-shadow: var(--shadow);
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.3s, border-color 0.3s;
+        }
+        
+        @media (max-width: 360px) {
+            .story-section { padding: 16px 14px; margin: 18px 0; border-radius: 22px; }
+        }
+
+        .story-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            flex-wrap: nowrap;
+        }
+        
+        @media (max-width: 360px) {
+            .story-heading { gap: 8px; margin-bottom: 10px; }
+            .story-heading i { font-size: 1.3rem !important; }
+        }
+
+        .story-heading i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .story-heading h2 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0;
+            word-break: break-word;
+        }
+        
+        @media (max-width: 360px) {
+            .story-heading h2 { font-size: 1.1rem; }
+        }
+
+        .story-section p {
+            color: var(--text-main);
+            line-height: 1.6;
+            margin-bottom: 14px;
+            font-size: 0.95rem;
+            word-break: break-word;
+        }
+        
+        @media (max-width: 360px) {
+            .story-section p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 12px; }
+        }
+
+        .story-highlight {
+            background: var(--bg-app);
+            padding: 12px 14px;
+            border-radius: 18px;
+            margin-top: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            border: 1px dashed var(--dashed-border);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            font-size: 0.85rem;
+            word-break: break-word;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        
+        @media (max-width: 360px) {
+            .story-highlight { padding: 10px 12px; font-size: 0.75rem; gap: 8px; margin-top: 12px; }
+            .story-highlight i { font-size: 1rem; }
+        }
+
+        /* Core Values Section */
+        .values-section {
+            margin: 28px 0;
+        }
+        
+        @media (max-width: 360px) {
+            .values-section { margin: 20px 0; }
+        }
+
+        .values-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            flex-wrap: nowrap;
+        }
+        
+        @media (max-width: 360px) {
+            .values-heading { gap: 8px; margin-bottom: 14px; }
+            .values-heading i { font-size: 1.2rem !important; }
+        }
+
+        .values-heading i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .values-heading h2 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            word-break: break-word;
+        }
+        
+        @media (max-width: 360px) {
+            .values-heading h2 { font-size: 1rem; }
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+        
+        @media (max-width: 360px) {
+            .values-grid { gap: 10px; }
+        }
+
+        .value-card {
+            background: var(--bg-card);
+            border-radius: 22px;
+            padding: 18px 10px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: all 0.2s, background 0.3s, border-color 0.3s;
+            cursor: default;
+        }
+        
+        @media (max-width: 360px) {
+            .value-card {
+                padding: 14px 8px;
+                border-radius: 18px;
+            }
+            .value-card i { font-size: 1.6rem !important; margin-bottom: 8px !important; }
+            .value-card h4 { font-size: 0.85rem !important; margin-bottom: 4px !important; }
+            .value-card p { font-size: 0.65rem !important; line-height: 1.3 !important; }
+        }
+
+        .value-card:active {
+            transform: scale(0.97);
+            background: var(--border-color);
+        }
+
+        .value-card i {
+            font-size: 1.9rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .value-card h4 {
+            font-weight: 800;
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+            word-break: break-word;
+            color: var(--text-main);
+        }
+
+        .value-card p {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            line-height: 1.35;
+            word-break: break-word;
+        }
+
+        /* Mastermind Section */
+        .mastermind-section {
+            background: var(--gradient-mastermind);
+            border-radius: 24px;
+            padding: 22px 18px;
+            margin: 24px 0;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: background 0.3s, border-color 0.3s;
+        }
+        
+        @media (max-width: 360px) {
+            .mastermind-section { padding: 16px 14px; margin: 18px 0; border-radius: 20px; }
+        }
+
+        .mastermind-heading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 360px) {
+            .mastermind-heading { margin-bottom: 14px; gap: 6px; }
+            .mastermind-heading i { font-size: 1.3rem !important; }
+            .mastermind-heading h3 { font-size: 1rem !important; }
+        }
+
+        .mastermind-heading i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .mastermind-heading h3 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            letter-spacing: 0.3px;
+            word-break: break-word;
+        }
+
+        .single-image {
+            display: flex;
+            justify-content: center;
+            margin: 16px 0;
+        }
+        
+        @media (max-width: 360px) {
+            .single-image { margin: 12px 0; }
+        }
+
+        .mastermind-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, border-color 0.3s;
+        }
+        
+        @media (max-width: 360px) {
+            .mastermind-img { width: 160px; height: 160px; border-width: 3px; }
+        }
+
+        .mastermind-img:hover {
+            transform: scale(1.02);
+        }
+
+        .mastermind-bio {
+            margin-top: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+            word-break: break-word;
+        }
+        
+        @media (max-width: 360px) {
+            .mastermind-bio { font-size: 0.8rem; margin-top: 8px; }
+            .mastermind-bio span { font-size: 0.7rem !important; }
+        }
+
+        .mastermind-bio span {
+            display: block;
+            font-weight: 400;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-top: 5px;
+        }
+
+        .mastermind-bio strong {
+            font-size: 1.3rem; /* नाव थोडे मोठे करण्यासाठी */
+            font-family: 'Inter', system-ui, sans-serif; /* आकर्षक आणि आधुनिक फॉन्ट */
+            letter-spacing: 0.5px; /* अक्षरांमधील सुटसुटीत अंतर */
+            background: var(--primary-gradient); /* नावाला ग्रेडियंट रंग देण्यासाठी */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; /* टेक्स्ट ग्रेडियंट इफेक्ट */
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 360px) {
+            .mastermind-bio strong { font-size: 1.1rem; } /* लहान मोबाईलसाठी अचूक आकार */
+        }
+
+        /* Stats row */
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 16px 12px;
+            margin: 24px 0 18px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            flex-wrap: wrap;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        
+        @media (max-width: 360px) {
+            .stats-row { padding: 12px 8px; margin: 18px 0 14px; border-radius: 20px; }
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+            min-width: 70px;
+        }
+        
+        @media (max-width: 360px) {
+            .stat-item { min-width: 60px; }
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        @media (max-width: 360px) {
+            .stat-number { font-size: 1.2rem; }
+        }
+
+        .stat-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            word-break: break-word;
+        }
+        
+        @media (max-width: 360px) {
+            .stat-label { font-size: 0.6rem; }
+        }
+
+        /* Contact CTA */
+        .contact-cta {
+            border-radius: 28px;
+            padding: 28px 18px;
+            color: white;
+            margin: 26px 0 20px;
+            text-align: center;
+            background: var(--primary-gradient);
+            box-shadow: var(--shadow);
+            transition: background 0.3s;
+        }
+        
+        @media (max-width: 360px) {
+            .contact-cta { padding: 20px 14px; margin: 20px 0 16px; border-radius: 22px; }
+            .contact-cta h3 { font-size: 1.1rem !important; }
+            .contact-cta p { font-size: 0.75rem !important; margin-bottom: 18px !important; }
+        }
+
+        .contact-cta h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            word-break: break-word;
+        }
+
+        .contact-cta p {
+            font-size: 0.8rem;
+            margin-bottom: 22px;
+            opacity: 0.85;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .contact-btn {
+            background: var(--bg-card);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            color: var(--primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.9rem;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 360px) {
+            .contact-btn { padding: 10px 22px; font-size: 0.8rem; gap: 8px; }
+        }
+
+        .contact-btn:active {
+            transform: scale(0.96);
+            opacity: 0.9;
+        }
+
+        /* Custom Info Banner Style */
+        .info-banner {
+            background: rgba(17, 17, 17, 0.02);
+            border: 1px solid var(--primary);
+            padding: 14px 16px;
+            border-radius: 18px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            text-align: center;
+            margin: 20px 0;
+            font-weight: 600;
+            line-height: 1.5;
+            box-shadow: var(--shadow);
+        }
+
+        [data-theme="dark"] .info-banner {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Value list items */
+        .value-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+            animation: fadeUp 0.4s ease-out forwards;
+        }
+
+        .value-icon-box {
+            width: 40px;
+            height: 40px;
+            background: var(--icon-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .value-details h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+
+        .value-details p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        
+        @media (max-width: 420px) {
+            .bottom-nav { padding: 8px 10px 20px; }
+        }
+        
+        @media (max-width: 360px) {
+            .bottom-nav { padding: 8px 10px 22px 10px; }
+            .nav-item i { font-size: 1.2rem !important; }
+            .nav-item span { font-size: 0.65rem !important; }
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Spacing for bottom nav */
+        .content-spacer {
+            height: 80px;
+        }
+        
+        @media (max-width: 360px) {
+            .content-spacer { height: 70px; }
+        }
+
+        /* animation */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mv-card, .story-section, .values-section, .stats-row, .mastermind-section, .value-item, .info-banner {
+            animation: fadeUp 0.4s ease-out forwards;
+        }
+
+        .mv-card:nth-child(1) { animation-delay: 0.05s; }
+        .mv-card:nth-child(2) { animation-delay: 0.1s; }
+        .story-section { animation-delay: 0.15s; }
+        .values-section { animation-delay: 0.2s; }
+        .stats-row { animation-delay: 0.25s; }
+        .mastermind-section { animation-delay: 0.3s; }
+        .contact-cta { animation-delay: 0.35s; }
+
+        /* --- SHARE MODAL CSS --- */
+        .urja-share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .urja-share-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .urja-modal-container {
+            background: var(--bg-card);
+            width: 90%;
+            max-width: 380px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: slideUp 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .urja-modal-header {
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+        .urja-modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-icon-circle {
+            background-color: var(--pill-active-bg);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-card);
+            font-size: 0.9rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .urja-close-modal {
+            background: var(--border-color);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        .urja-modal-body {
+            padding: 20px 18px 24px;
+        }
+        .urja-share-platforms {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .urja-share-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--bg-app);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .urja-share-icon:active {
+            transform: scale(0.96);
+            background: var(--border-color);
+        }
+        .urja-icon-circle {
+            width: 34px;
+            height: 34px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+        .urja-share-icon span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+        }
+        .urja-copy-link-btn {
+            background: var(--bg-app);
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+        .urja-copy-link-btn:active {
+            background: var(--border-color);
+        }
+        .urja-toast-message {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .urja-toast-message.show { opacity: 1; }
+        
+        @media (max-width: 480px) {
+            .urja-share-icon { padding: 6px 8px; gap: 8px; }
+            .urja-icon-circle { width: 32px; height: 32px; font-size: 1.1rem; }
+            .urja-share-icon span { font-size: 0.75rem; white-space: nowrap; }
+            .urja-modal-container { width: 92%; }
+            .urja-modal-header h3 { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="about-container">
+    <div class="sharp-header" id="stickyHeader">
+        <button class="back-arrow" id="backToHomeBtn" aria-label="Back">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">About Us</div>
+    </div>
+
+    <div class="about-content">
+        <p style="text-align: justify">पारदर्शक सेवा आणि ग्राहक हक्कांचा जागर! ऊर्जा क्षेत्रातील तुमच्या प्रत्येक प्रश्नाचे उत्तर देणाऱ्या डिजिटल दालनात आपले स्वागत आहे.</p><br>
+        
+        <div class="intro-image">
+            <img src="Image/about-us.webp" alt="about-us" class="about-intro-img">
+        </div>
+        
+        <div class="mv-grid">
+            <div class="mv-card">
+                <div class="card-heading">
+                    <div class="mv-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>आमचे उद्दिष्ट</h3>
+                </div>
+                <p style="text-align: justify">UrjaPlus या डिजिटल प्लॅटफॉर्मचा जन्म एका ध्येयातून झाला आहे. अर्थात महावितरणच्या तांत्रिक गुंतागुंतीची साध्या आणि सोप्या भाषेत मांडणी करून प्रत्येक वीज ग्राहकाला ऊर्जा साक्षर बनवणे हेच आमचे ध्येय आहे. केवळ वीज ग्राहकाला माहिती देणे नव्हे, तर ऊर्जा क्षेत्रातील पारदर्शकता आणि विश्वासार्हता प्रस्थापित करणे हे आमचे मुख्य सूत्र आहे.</p><br>
+                <p style="text-align: justify"><strong>आम्ही खालील पंचसूत्रांवर आधारित काम करतो:</strong></p><br>
+
+                <ol class="box-numbers" style="list-style: none; padding: 0; margin: 0; counter-reset: box-counter;">
+                    <li style="text-align: justify; position: relative; padding-left: 3rem; margin-bottom: 1rem; counter-increment: box-counter;"><span style="display: inline-block; position: absolute; left: 0; top: 0; background-color: var(--primary); color: white; width: 2rem; height: 2rem; text-align: center; line-height: 2rem; font-weight: bold; border-radius: 0;">1</span> <strong>वीज समस्यांचे निवारण:</strong> स्मार्ट मीटर असो किंवा बिलिंगमधील त्रुटी, UrjaPlus मध्ये मिळते तांत्रिक अचूकतेसह तुमच्या तक्रारींचे निराकरण करण्यासाठी तंतोतंत आणि शास्त्रशुद्ध मार्गदर्शन.</li>
+                    <li style="text-align: justify; position: relative; padding-left: 3rem; margin-bottom: 1rem; counter-increment: box-counter;"><span style="display: inline-block; position: absolute; left: 0; top: 0; background-color: var(--primary); color: white; width: 2rem; height: 2rem; text-align: center; line-height: 2rem; font-weight: bold; border-radius: 0;">2</span> <strong>कायदेशीर सक्षमीकरण:</strong> ग्राहकांना त्यांच्या हक्कांची आणि सेवेच्या कालमर्यादेची जाणीव करून देऊन त्यांना आम्ही एक जागरूक आणि सशक्त ग्राहक बनवतो.</li>
+                    <li style="text-align: justify; position: relative; padding-left: 3rem; margin-bottom: 1rem; counter-increment: box-counter;"><span style="display: inline-block; position: absolute; left: 0; top: 0; background-color: var(--primary); color: white; width: 2rem; height: 2rem; text-align: center; line-height: 2rem; font-weight: bold; border-radius: 0;">3</span> <strong>ऊर्जा साक्षरता:</strong> सोलर रूफटॉप संदर्भात ऊर्जा बचतीचे प्रगत तंत्रज्ञान प्रत्येक घरापर्यंत पोहोचवून, पर्यावरणाभिमुख भविष्य घडवणे ही आमची बांधिलकी आहे.</li>
+                    <li style="text-align: justify; position: relative; padding-left: 3rem; margin-bottom: 1rem; counter-increment: box-counter;"><span style="display: inline-block; position: absolute; left: 0; top: 0; background-color: var(--primary); color: white; width: 2rem; height: 2rem; text-align: center; line-height: 2rem; font-weight: bold; border-radius: 0;">4</span> <strong>प्रशासकीय कामातील सुलभता:</strong> वीज बिलावरील नावातील बदल किंवा पत्ता दुरुस्तीसाठी तसेच जोडभार बदलण्यासाठी लागणाऱ्या अर्जांची अचूक माहिती आणि नमुने UrjaPlus वर त्वरित उपलब्ध.</li>
+                    <li style="text-align: justify; position: relative; padding-left: 3rem; margin-bottom: 1rem; counter-increment: box-counter;"><span style="display: inline-block; position: absolute; left: 0; top: 0; background-color: var(--primary); color: white; width: 2rem; height: 2rem; text-align: center; line-height: 2rem; font-weight: bold; border-radius: 0;">5</span> <strong>ऊर्जा क्रांतीचा संकल्प:</strong> ऊर्जा साक्षरतेच्या माध्यमातून वीज चोरी रोखणे आणि भारताच्या ऊर्जा भविष्याला प्रगत व पारदर्शक दिशा देणे ही UrjaPlus ची प्राथमिकता आहे.</li>
+                </ol>
+            </div>
+
+            <div class="mv-card">
+                <div class="card-heading">
+                    <div class="mv-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>आमची मूल्ये</h3>
+                </div>
+                <p style="text-align: justify">UrjaPlus हे ॲप केवळ माहितीचे स्त्रोत नसून, ते वीज ग्राहकांच्या विश्वासाचा मूलाधार आहे. आमची कार्यपद्धती खालील पाच स्तंभांवर आधारलेली आहे, जी आम्हाला अधिक पारदर्शक आणि प्रोफेशनल बनवते.</p><br>
+
+                <ol class="box-numbers" style="list-style: none; padding: 0; margin: 0; counter-reset: box-counter;">
+                    <li style="text-align: justify; position: relative; padding-left: 3rem; margin-bottom: 1rem; counter-increment: box-counter;"><span style="display: inline-block; position: absolute; left: 0; top: 0; background-color: var(--primary); color: white; width: 2rem; height: 2rem; text-align: center; line-height: 2rem; font-weight: bold; border-radius: 0;">1</span> <strong>पारदर्शकता:</strong> ऊर्जा क्षेत्रातील प्रत्येक नियमाची पारदर्शक आणि सत्य मांडणी करून ग्राहकांना सक्षम करणे, हे आमचे प्रधान मूल्य आहे.</li>
+                    <li style="text-align: justify; position: relative; padding-left: 3rem; margin-bottom: 1rem; counter-increment: box-counter;"><span style="display: inline-block; position: absolute; left: 0; top: 0; background-color: var(--primary); color: white; width: 2rem; height: 2rem; text-align: center; line-height: 2rem; font-weight: bold; border-radius: 0;">2</span> <strong>ग्राहक केंद्रित दृष्टीकोन:</strong> आमच्यासाठी प्रत्येक वीज ग्राहक हा महत्त्वाचा घटक आहे. त्यांच्या समस्यांचे निराकरण करणे आणि त्यांना स्मार्ट निर्णय घेण्यास सक्षम करणे, यालाच आम्ही आमचे यश मानतो.</li>
+                    <li style="text-align: justify; position: relative; padding-left: 3rem; margin-bottom: 1rem; counter-increment: box-counter;"><span style="display: inline-block; position: absolute; left: 0; top: 0; background-color: var(--primary); color: white; width: 2rem; height: 2rem; text-align: center; line-height: 2rem; font-weight: bold; border-radius: 0;">3</span> <strong>अचूकता आणि विश्वासार्हता:</strong> विजेचे बिलिंग असो किंवा त्यासंबंधीचे शासकीय नियम, आम्ही केवळ प्रमाणित आणि तांत्रिकदृष्ट्या अचूक माहितीच पुरवतो. विश्वासार्ह माहिती हीच आमची खरी ओळख आहे.</li>
+                    <li style="text-align: justify; position: relative; padding-left: 3rem; margin-bottom: 1rem; counter-increment: box-counter;"><span style="display: inline-block; position: absolute; left: 0; top: 0; background-color: var(--primary); color: white; width: 2rem; height: 2rem; text-align: center; line-height: 2rem; font-weight: bold; border-radius: 0;">4</span> <strong>सक्षमीकरण:</strong> ग्राहकांना त्यांच्या कायदेशीर हक्कांची जाणीव करून देऊन त्यांना आत्मविश्वासाने आपली बाजू मांडण्यासाठी आम्ही सज्ज करतो.</li>
+                    <li style="text-align: justify; position: relative; padding-left: 3rem; margin-bottom: 1rem; counter-increment: box-counter;"><span style="display: inline-block; position: absolute; left: 0; top: 0; background-color: var(--primary); color: white; width: 2rem; height: 2rem; text-align: center; line-height: 2rem; font-weight: bold; border-radius: 0;">5</span> <strong>नावीन्य आणि सुलभता:</strong> बदलत्या तंत्रज्ञानाची ओळख करून घेताना, ती माहिती अत्यंत सोप्या आणि सुलभ भाषेत डिजिटल स्वरूपात उपलब्ध करून देण्याचे आमचे लक्ष आहे.</li>
+                </ol>
+            </div>
+
+            <div class="mv-card">
+                <div class="card-heading">
+                    <div class="mv-icon">
+                        <i class="fas fa-fist-raised"></i>
+                    </div>
+                    <h3>सामाजिक जबाबदारी</h3>
+                </div>
+                <p style="text-align: justify">UrjaPlus हे ऊर्जा क्षेत्रातील सामाजिक बदलाचे ते एक सशक्त माध्यम देखील आहे. समाजाप्रती असलेल्या आमच्या कर्तव्याची जाणीव ठेवून आम्ही पावले उचलतो.</p><br>
+                <p style="text-align: justify">प्रत्येक नागरिकाला त्याच्या हक्कांची जाणीव करून देऊन आणि वीज वितरण कंपनीच्या तांत्रिक प्रक्रियेची पारदर्शक माहिती देणे, ही आम्ही आमची नैतिक जबाबदारी मानतो.</p><br>
+                <p style="text-align: justify">वीज चोरीसारख्या अनिष्ट प्रथांना आळा घालून राष्ट्राच्या संपत्तीचे जतन करणे आणि सौर ऊर्जेसारख्या अक्षय स्रोतांचा प्रचार करून पर्यावरणाचे रक्षण करणे, हे आमच्या कार्याचे केंद्रस्थान आहे.</p><br>
+                <p style="text-align: justify">आमची बांधिलकी केवळ माहिती देण्यापुरती मर्यादित नाही, तर ऊर्जेचा सुजाण वापर करणारा एक जबाबदार समाज घडविण्याशी निगडित आहे. समाजातील शेवटच्या घटकापर्यंत अचूक माहिती पोहोचवून प्रत्येक वीज ग्राहकाला प्रशासकीय प्रक्रियेत पूर्णतः सक्षम करणे हेच आमच्या सामाजिक कार्याचे उद्दिष्ट आणि UrjaPlus च्या अस्तित्वाचे मूळ सूत्र आहे.</p>
+            </div>
+        </div>
+
+        <div class="story-section">
+            <div class="story-heading">
+                <i class="fas fa-history"></i>
+                <h2>आमची कहाणी</h2>
+            </div>
+            <p style="text-align: justify">वीज ग्राहकांना त्यांचे हक्क आणि तक्रार निवारणाची प्रक्रिया खरोखर समजते का? या मूलभूत प्रश्नातूनच UrjaPlus आकारास आले. तसेच संशोधनाअंती असे आढळले की, वीज वितरणातील तांत्रिक गुंतागुंत आणि माहितीचा अभाव हे ग्राहकांसाठी सर्वात मोठे अडथळे ठरत होते. म्हणूनच आम्ही UrjaPlus हे एक असे डिजिटल व्यासपीठ निर्माण केले, जिथे ग्राहकांना खरोखरच ऊर्जा साक्षर बनविले जाते.</p>
+            <div class="story-highlight">
+                <i class="fas fa-chart-line" style="font-size: 1.3rem;"></i>
+                <span>आजवर 2,50,000+ ग्राहकांना ऊर्जा मार्गदर्शन, 10,000+ तक्रार निवारणात मदत</span>
+            </div>
+        </div>
+
+        <div class="values-section">
+            <div class="values-heading">
+                <i class="fas fa-gem"></i>
+                <h2>आमची कार्यतत्त्वे</h2>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <h4>पारदर्शकता</h4>
+                    <p style="text-align: justify">प्रत्येक माहिती, नियम आणि प्रक्रिया उघडपणे मांडणे.</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-clock"></i>
+                    <h4>जलद निवारण</h4>
+                    <p style="text-align: justify">तक्रारीच्या प्रत्येक टप्प्यावर वेळेवर आणि अचूक मार्गदर्शन.</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-microchip"></i>
+                    <h4>परिवर्तन</h4>
+                    <p style="text-align: justify">स्मार्ट मीटरपासून सोलर रुफटॉप तंत्रज्ञानापर्यंत अद्ययावतता.</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-users"></i>
+                    <h4>ग्राहक केंद्रित</h4>
+                    <p style="text-align: justify">प्रत्येक निर्णय ग्राहकांच्या हितासाठी.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="values-section" style="margin-bottom: 14px;">
+            <div class="values-heading">
+                <i class="fas fa-briefcase"></i>
+                <h2>आम्ही काय सेवा पुरवतो?</h2>
+            </div>
+            
+            <div class="value-item">
+                <div class="value-icon-box"><i class="fas fa-graduation-cap"></i></div>
+                <div class="value-details">
+                    <h4>ऊर्जा साक्षरता (Energy Literacy)</h4>
+                    <p>बिलांमधील छुपे आकार, वीज बचत आणि सोलर प्रणालीची अचूक माहिती देणे.</p>
+                </div>
+            </div>
+
+            <div class="value-item">
+                <div class="value-icon-box"><i class="fas fa-gavel"></i></div>
+                <div class="value-details">
+                    <h4>तक्रार निवारण मार्गदर्शक</h4>
+                    <p>चुकीचे बिल किंवा मीटर दोषांविरुद्ध CGRF आणि ग्राहक मंचाकडे दाद मागण्याची पद्धत.</p>
+                </div>
+            </div>
+
+            <div class="value-item">
+                <div class="value-icon-box"><i class="fas fa-file-lines"></i></div>
+                <div class="value-details">
+                    <h4>सुलभ अर्ज प्रारूपे</h4>
+                    <p>नाव बदलणे, नवीन कनेक्शन किंवा माहिती अधिकाराचे (RTI) रेडीमेड अर्ज आराखडे.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-item">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">समस्यांचे समाधान</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">विनावूल्य मार्गदर्शन</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">अर्जांचा संचय</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">तक्रार निवारण</div>
+            </div>
+        </div>
+
+        <div class="mastermind-section">
+            <div class="mastermind-heading">
+                <i class="fas fa-crown"></i>
+                <h3>Mastermind Behind the Mission</h3>
+            </div>
+            <div class="single-image">
+                <img id="mastermindPhoto" class="mastermind-img" src="Image/author.webp" alt="Architect of Energy Literacy">
+            </div>
+            <div class="mastermind-bio">
+                <strong>BHARAT SK</strong>
+                <span>Architect of Energy Literacy</span>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 12px;">Our strategic focus is to digitalize consumer rights and streamline grievance redressal across the energy ecosystem.</p>
+        </div>
+
+        <div class="story-section" style="margin-top: 10px;">
+            <div class="story-heading">
+                <i class="fas fa-file-contract"></i>
+                <h2>Standard of Performance</h2>
+            </div>
+            <p style="text-align: justify">UrjaPlus हे ॲप पूर्णतः शासकीय मार्गदर्शक तत्त्वांवर आधारित असून, Standard of Performance अंतर्गत ग्राहकांना त्यांचे हक्क मिळवून देण्यासाठी आम्ही वचनबद्ध आहोत. आम्ही तुम्हाला ऊर्जा विभागाच्या मार्गदर्शक तत्त्वांनुसार तक्रार निवारणाच्या प्रत्येक पायरीवर मार्गदर्शन करतो.</p>
+            <div class="story-highlight">
+                <i class="fas fa-shield-heart"></i>
+                <span>आमची प्रत्येक संकल्पना आणि कृती केवळ ग्राहकांच्या हितासाठीच समर्पित आहे.</span>
+            </div>
+        </div>
+
+        <div class="contact-cta">
+            <h3><i class="fas fa-envelope-open-text"></i> Need Help?</h3>
+            <p style="text-align: justify">कोणत्याही तांत्रिक माहितीसाठी किंवा सूचनांसाठी आमच्या Contact Us पेज द्वारे आम्हाला कळवा, आम्ही आपल्या सेवेसाठी तत्पर आहोत.</p>
+            <button class="contact-btn" id="contactPageBtn"><i class="fas fa-paper-plane"></i> Contact Us</button>
+        </div>
+
+        <div class="content-spacer"></div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="tools.html" class="nav-item"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="search.html" class="nav-item"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="rti-plus.html" class="nav-item"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<div id="dynamicShareModal" class="urja-share-modal">
+    <div class="urja-modal-container">
+        <div class="urja-modal-header">
+            <h3>
+                <span class="header-icon-circle"><i class="fas fa-share-alt"></i></span>
+                Share Now
+            </h3>
+            <button class="urja-close-modal" id="closeShareModalBtn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="urja-modal-body">
+            <div class="urja-share-platforms">
+                <button class="urja-share-icon" id="whatsappShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-whatsapp" style="color:#25D366;"></i></div>
+                    <span>WhatsApp</span>
+                </button>
+                <button class="urja-share-icon" id="facebookShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-facebook-f" style="color:#1877F2;"></i></div>
+                    <span>Facebook</span>
+                </button>
+                <button class="urja-share-icon" id="instagramShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-instagram" style="color:#E4405F;"></i></div>
+                    <span>Instagram</span>
+                </button>
+                <button class="urja-share-icon" id="twitterShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-x-twitter"></i></div>
+                    <span>X (Twitter)</span>
+                </button>
+            </div>
+            <button class="urja-copy-link-btn" id="copyLinkBtn">
+                <span><i class="fas fa-link"></i> लिंक कॉपी करा</span> 
+                <i class="fas fa-copy"></i>
+            </button>
+            <div id="dynamicToast" class="urja-toast-message">✅ लिंक कॉपी झाली!</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ---- AUTOMATIC THEME DETECTION FROM LOCALSTORAGE ----
+    function applySynchronizedTheme() {
+        const activeTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', activeTheme);
+    }
+    
+    applySynchronizedTheme();
+    
+    // बॅक टू होम बटण कार्यपद्धती
+    const backBtn = document.getElementById('backToHomeBtn');
+    if (backBtn) {
+        backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'index.html';
+        });
+    }
+
+    // कॉन्टॅक्ट अस रिडायरेक्शन
+    const contactPageBtn = document.getElementById('contactPageBtn');
+    if (contactPageBtn) {
+        contactPageBtn.addEventListener('click', () => window.location.href = 'contact-us.html');
+    }
+    
+    // कार्ड्सवर क्लिक केल्यानंतर येणारा स्लाईट इफेक्ट
+    const allCards = document.querySelectorAll('.mv-card, .value-card, .mastermind-section, .value-item');
+    allCards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            if (e.target.closest('.contact-btn')) return;
+            card.style.transform = 'scale(0.99)';
+            setTimeout(() => { card.style.transform = ''; }, 130);
+        });
+    });
+    
+    // स्टिकी हेडर परफॉर्मन्स फिक्स
+    const stickyHeader = document.getElementById('stickyHeader');
+    if (stickyHeader) {
+        stickyHeader.style.transform = 'translateZ(0)';
+        stickyHeader.style.backfaceVisibility = 'hidden';
+    }
+
+    // ---- ADVANCED SHARE MODAL LOGIC ----
+    let currentShareUrl = window.location.href;
+    let currentShareTitle = "About Us | UrjaPlus";
+    let currentShareDesc = "पारदर्शक सेवा आणि ग्राहक हक्कांचा जागर! ऊर्जा क्षेत्रातील तुमच्या प्रत्येक प्रश्नाचे उत्तर देणाऱ्या डिजिटल दालनात आपले स्वागत आहे.";
+
+    function updateMetaTagsForShare(ogTitle, ogDescription, ogImage, ogUrl) {
+        let meta = document.querySelector('meta[property="og:title"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:title'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogTitle);
+        
+        meta = document.querySelector('meta[property="og:description"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:description'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogDescription);
+        
+        meta = document.querySelector('meta[property="og:image"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:image'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogImage);
+        
+        meta = document.querySelector('meta[property="og:url"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:url'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogUrl);
+    }
+
+    function addUTMParameters(url, source) {
+        try {
+            const u = new URL(url);
+            u.searchParams.set('utm_source', source);
+            u.searchParams.set('utm_medium', 'social_share');
+            u.searchParams.set('utm_campaign', 'urjaplus_about');
+            return u.toString();
+        } catch(e) { return url; }
+    }
+
+    function showToastMessage(msg) {
+        const toast = document.getElementById('dynamicToast');
+        if(toast) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2000); }
+        else alert(msg);
+    }
+
+    function openCustomShareModal(title, desc, imgUrl, articleLink) {
+        updateMetaTagsForShare(title, desc, imgUrl, articleLink);
+        const modal = document.getElementById('dynamicShareModal');
+        if(modal) modal.classList.add('active');
+        currentShareUrl = addUTMParameters(articleLink, 'share_modal');
+        currentShareTitle = title;
+        currentShareDesc = desc;
+    }
+
+    function closeShareModal() {
+        const modal = document.getElementById('dynamicShareModal');
+        if(modal) modal.classList.remove('active');
+    }
+
+    function shareOnWhatsApp() { window.open(`https://wa.me/?text=${encodeURIComponent(currentShareTitle + "\n" + currentShareDesc + "\n" + currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(currentShareTitle)}&url=${encodeURIComponent(currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnInstagram() { navigator.clipboard.writeText(currentShareUrl).then(() => showToastMessage("📸 Instagram साठी लिंक कॉपी झाली! पेस्ट करा.")); closeShareModal(); }
+    function copyLink() { navigator.clipboard.writeText(currentShareUrl).then(() => showToastMessage("✅ लिंक कॉपी झाली!")); closeShareModal(); }
+
+    function attachShareModalEvents() {
+        document.getElementById('closeShareModalBtn')?.addEventListener('click', closeShareModal);
+        document.getElementById('whatsappShareBtn')?.addEventListener('click', shareOnWhatsApp);
+        document.getElementById('facebookShareBtn')?.addEventListener('click', shareOnFacebook);
+        document.getElementById('instagramShareBtn')?.addEventListener('click', shareOnInstagram);
+        document.getElementById('twitterShareBtn')?.addEventListener('click', shareOnTwitter);
+        document.getElementById('copyLinkBtn')?.addEventListener('click', copyLink);
+        document.getElementById('dynamicShareModal')?.addEventListener('click', (e) => { if(e.target === document.getElementById('dynamicShareModal')) closeShareModal(); });
+    }
+
+    function shareCurrentPage() {
+        const defaultTitle = "About Us | UrjaPlus - Energy Literacy Platform";
+        const defaultDesc = "पारदर्शक सेवा आणि ग्राहक हक्कांचा जागर! ऊर्जा क्षेत्रातील तुमच्या प्रत्येक प्रश्नेचे उत्तर देणाऱ्या डिजिटल दालनात आपले स्वागत आहे.";
+        const defaultImg = "Image/about-us.webp";
+        openCustomShareModal(defaultTitle, defaultDesc, defaultImg, window.location.href);
+    }
+    
+    attachShareModalEvents();
+
+    // फुटर नेव्हिगेशन शेअर बटण इव्हेंट
+    const nativeShareBtn = document.getElementById('nativeShareBtn');
+    if(nativeShareBtn) {
+        nativeShareBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            shareCurrentPage();
+        });
+    }
+
+    // लोकल स्टोरेज चेंज लिसनर (थीम सिंक्रोनायझेशनसाठी)
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'theme') {
+            applySynchronizedTheme();
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Contact Us | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- index/about-us/disclaimer मधून घेतलेली आधुनिक रंगसंगती (Theme System) --- */
+        :root {
+            --bg-app: #f4f7fe;
+            --bg-card: #ffffff;
+            --primary: #111111; /* Changed to Dark Black */
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); /* Premium Dark Gradient */
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --icon-bg: #f1f5f9; /* Soft grey background replacing light red */
+            --accent-red: #111111;
+            --accent-red-hover: #000000;
+            --dashed-border: #cbd5e1;
+            --gradient-mastermind: linear-gradient(120deg, #f8fafc, #ffffff);
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827; 
+            --primary: #ffffff; /* Luminous Contrast White for Dark Mode */
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+            --icon-bg: rgba(255, 255, 255, 0.05);
+            --accent-red: #ffffff;
+            --accent-red-hover: #e2e8f0;
+            --dashed-border: #1f2937;
+            --gradient-mastermind: linear-gradient(120deg, #111827, #0b0f19);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Inter', Roboto, Helvetica, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Mobile-first container - about-us आणि disclaimer प्रमाणे तंतोतंत */
+        .contact-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: background 0.3s ease;
+        }
+
+        /* STICKY HEADER BAR */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+        
+        @media (max-width: 360px) {
+            .sharp-header { padding: 12px 16px; }
+        }
+
+        /* Back arrow button */
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            transition: opacity 0.2s ease, transform 0.1s ease;
+            line-height: 1;
+        }
+        
+        @media (max-width: 360px) {
+            .back-arrow { left: 12px; font-size: 1.3rem; }
+        }
+
+        .back-arrow:active {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        /* Header title */
+        .header-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+            text-align: center;
+        }
+        
+        @media (max-width: 360px) {
+            .header-title { font-size: 1.1rem; }
+        }
+
+        /* Main content padding alignment */
+        .contact-content {
+            padding: 24px 16px 0px 16px;
+            overflow-x: hidden;
+        }
+        
+        @media (max-width: 360px) {
+            .contact-content { padding: 16px 12px 0px 12px; }
+        }
+
+        /* Intro text / subtle tagline */
+        .contact-intro {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 18px 16px;
+            margin-bottom: 24px;
+            border-left: 5px solid var(--primary);
+            box-shadow: var(--shadow);
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .contact-intro p {
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 0.95rem;
+            text-align: justify;
+            word-break: break-word;
+        }
+
+        .contact-intro i {
+            color: var(--primary);
+            margin-right: 8px;
+        }
+
+        /* Contact Form Card */
+        .form-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 22px 18px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 28px;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s, border-color 0.3s;
+        }
+
+        /* Form Heading styled like .card-heading */
+        .form-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 14px;
+            flex-wrap: nowrap;
+        }
+
+        .form-heading .icon-circle {
+            background: var(--icon-bg);
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .form-heading .icon-circle i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .form-heading h2 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.3;
+            word-break: break-word;
+        }
+
+        /* Input group styling */
+        .input-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            word-break: break-word;
+        }
+
+        .input-group label i {
+            color: var(--primary);
+            font-size: 0.95rem;
+            width: 20px;
+        }
+
+        /* Input fields with crisp premium theme accents */
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            background: var(--bg-app);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            color: var(--text-main);
+            transition: all 0.25s ease;
+            outline: none;
+            width: 100%;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            border-color: var(--primary);
+            background: var(--bg-card);
+        }
+
+        [data-theme="dark"] .input-group input:focus,
+        [data-theme="dark"] .input-group select:focus,
+        [data-theme="dark"] .input-group textarea:focus {
+            border-color: #ffffff;
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        /* Send button styling */
+        .send-btn {
+            background: var(--primary-gradient);
+            border: none;
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow);
+            margin-top: 16px;
+        }
+
+        [data-theme="dark"] .send-btn {
+            background: #ffffff;
+            color: #111111;
+        }
+
+        .send-btn:active {
+            transform: scale(0.97);
+            opacity: 0.9;
+        }
+
+        /* Bottom Navigation - about-us आणि disclaimer सह तंतोतंत जुळणारा मेनू */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        
+        @media (max-width: 420px) {
+            .bottom-nav { padding: 8px 10px 20px; }
+        }
+        
+        @media (max-width: 360px) {
+            .bottom-nav { padding: 8px 10px 22px 10px; }
+            .nav-item i { font-size: 1.2rem !important; }
+            .nav-item span { font-size: 0.65rem !important; }
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Spacer for bottom nav */
+        .content-spacer {
+            height: 80px;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .contact-intro, .form-card {
+            animation: fadeUp 0.4s ease-out forwards;
+        }
+
+        /* Toast notification container */
+        .toast-message {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: #1f2937;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+            pointer-events: none;
+            white-space: normal;
+            text-align: center;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+            max-width: 85%;
+            word-break: break-word;
+        }
+
+        .toast-message.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        /* --- SHARE MODAL CSS --- */
+        .urja-share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .urja-share-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .urja-modal-container {
+            background: var(--bg-card);
+            width: 90%;
+            max-width: 380px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: slideUp 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .urja-modal-header {
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+        .urja-modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-icon-circle {
+            background-color: var(--pill-active-bg);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-card);
+            font-size: 0.9rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .urja-close-modal {
+            background: var(--border-color);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        .urja-modal-body {
+            padding: 20px 18px 24px;
+        }
+        .urja-share-platforms {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .urja-share-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--bg-app);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .urja-share-icon:active {
+            transform: scale(0.96);
+            background: var(--border-color);
+        }
+        .urja-icon-circle {
+            width: 34px;
+            height: 34px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+        .urja-share-icon span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+        }
+        .urja-copy-link-btn {
+            background: var(--bg-app);
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+        .urja-copy-link-btn:active {
+            background: var(--border-color);
+        }
+        .urja-toast-message {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .urja-toast-message.show { opacity: 1; }
+
+        /* Small screen refinements */
+        @media (max-width: 480px) {
+            .form-card { padding: 20px 16px; }
+            .form-heading h2 { font-size: 1.15rem; }
+            .input-group label { font-size: 0.9rem; }
+            .input-group input, .input-group select, .input-group textarea { font-size: 0.85rem; padding: 11px 14px; }
+            .contact-intro p { font-size: 0.85rem; }
+            .urja-share-icon { padding: 6px 8px; gap: 8px; }
+            .urja-icon-circle { width: 32px; height: 32px; font-size: 1.1rem; }
+            .urja-share-icon span { font-size: 0.75rem; white-space: nowrap; }
+            .urja-modal-container { width: 92%; }
+            .urja-modal-header h3 { font-size: 1.1rem; }
+        }
+
+        @media (max-width: 380px) {
+            .contact-content { padding: 20px 12px 0px 12px; }
+            .form-card { padding: 18px 14px; }
+            .form-heading { gap: 10px; margin-bottom: 22px; }
+            .form-heading .icon-circle { width: 36px; height: 36px; min-width: 36px; }
+            .form-heading .icon-circle i { font-size: 1.1rem; }
+            .form-heading h2 { font-size: 1rem; }
+            .input-group { margin-bottom: 18px; }
+            .input-group label { font-size: 0.85rem; gap: 8px; }
+            .input-group label i { font-size: 0.85rem; width: 18px; }
+            .input-group input, .input-group select, .input-group textarea { padding: 10px 12px; font-size: 0.8rem; }
+            .send-btn { padding: 12px 16px; font-size: 0.85rem; gap: 10px; }
+            .bottom-nav { padding: 6px 10px 18px; }
+            .nav-item i { font-size: 1.1rem; }
+            .nav-item span { font-size: 0.55rem; }
+            .toast-message { font-size: 0.75rem; padding: 8px 16px; bottom: 90px; max-width: 90%; }
+        }
+
+        @media (max-width: 360px) {
+            .sharp-header { padding: 12px 12px; }
+            .header-title { font-size: 1rem; padding: 0 36px; }
+            .back-arrow { left: 12px; width: 34px; height: 34px; font-size: 1.2rem; }
+            .contact-intro { padding: 14px 14px; margin-bottom: 20px; }
+            .contact-intro p { font-size: 0.75rem; line-height: 1.45; }
+            .form-heading h2 { font-size: 0.95rem; }
+            .input-group label { font-size: 0.8rem; }
+            .send-btn { padding: 10px 14px; font-size: 0.8rem; }
+            .content-spacer { height: 70px; }
+        }
+    </style>
+</head>
+<body>
+<div class="contact-container">
+    <!-- STICKY HEADER BAR -->
+    <div class="sharp-header" id="stickyHeader">
+        <button class="back-arrow" id="backToHomeBtn" aria-label="Back">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">Contact Us</div>
+    </div>
+
+    <div class="contact-content">
+        <!-- Intro consistent with about page style -->
+        <div class="contact-intro">
+            <p><i class="fas fa-envelope-open-text"></i> तुमच्या प्रत्येक प्रश्नाचे समाधान करणे ही आमची प्राथमिकता आहे. यासाठी खालील फॉर्मच्या माध्यमातून आमच्याशी संपर्क साधा.</p>
+        </div>
+
+        <!-- Main Form Card with updated header & input styling -->
+        <div class="form-card">
+            <div class="form-heading">
+                <div class="icon-circle">
+                    <i class="fas fa-comment-dots"></i>
+                </div>
+                <h2>Get In Touch With Us</h2>
+            </div>
+
+            <form id="contactForm">
+                <!-- Your Name -->
+                <div class="input-group">
+                    <label><i class="fas fa-user"></i> Your Name</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Enter your name" required>
+                </div>
+
+                <!-- Email Address -->
+                <div class="input-group">
+                    <label><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" id="emailAddress" name="emailAddress" placeholder="Enter your email" required>
+                </div>
+
+                <!-- Subject Dropdown -->
+                <div class="input-group">
+                    <label><i class="fas fa-tag"></i> Subject</label>
+                    <select id="subjectSelect" name="subject" required>
+                        <option value="" disabled selected>— Select a Subject —</option>
+                        <option value="General Inquiry">General Inquiry</option>
+                        <option value="Business Inquiry">Business Inquiry</option>
+                        <option value="Feedback">Feedback</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+
+                <!-- Your Message -->
+                <div class="input-group">
+                    <label><i class="fas fa-pen-fancy"></i> Your Message</label>
+                    <textarea id="messageText" name="message" placeholder="Type your message here..." required></textarea>
+                </div>
+
+                <!-- Send Message Button -->
+                <button type="submit" class="send-btn" id="sendMessageBtn">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+        </div>
+
+        <div class="content-spacer"></div>
+    </div>
+
+    <!-- Bottom Navigation - about-us आणि disclaimer सह तंतोतंत जुळणारा मेनू -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item" data-nav="home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="tools.html" class="nav-item" data-nav="Tools"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="search.html" class="nav-item" data-nav="Search"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="rti-plus.html" class="nav-item" data-nav="Favorites"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn" data-nav="Share"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<!-- Toast notification container -->
+<div id="toastMsg" class="toast-message">✨ Message sent successfully!</div>
+
+<!-- Share Modal -->
+<div id="dynamicShareModal" class="urja-share-modal">
+    <div class="urja-modal-container">
+        <div class="urja-modal-header">
+            <h3>
+                <span class="header-icon-circle"><i class="fas fa-share-alt"></i></span>
+                Share Now
+            </h3>
+            <button class="urja-close-modal" id="closeShareModalBtn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="urja-modal-body">
+            <div class="urja-share-platforms">
+                <button class="urja-share-icon" id="whatsappShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-whatsapp" style="color:#25D366;"></i></div>
+                    <span>WhatsApp</span>
+                </button>
+                <button class="urja-share-icon" id="facebookShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-facebook-f" style="color:#1877F2;"></i></div>
+                    <span>Facebook</span>
+                </button>
+                <button class="urja-share-icon" id="instagramShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-instagram" style="color:#E4405F;"></i></div>
+                    <span>Instagram</span>
+                </button>
+                <button class="urja-share-icon" id="twitterShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-x-twitter"></i></div>
+                    <span>X (Twitter)</span>
+                </button>
+            </div>
+            <button class="urja-copy-link-btn" id="copyLinkBtn">
+                <span><i class="fas fa-link"></i> लिंक कॉपी करा</span> 
+                <i class="fas fa-copy"></i>
+            </button>
+            <div id="shareToastMsg" class="urja-toast-message">✅ लिंक कॉपी झाली!</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ---- AUTOMATIC THEME DETECTION FROM LOCALSTORAGE ----
+    function applySynchronizedTheme() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+    applySynchronizedTheme();
+
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'theme') {
+            applySynchronizedTheme();
+        }
+    });
+
+    // Back button functionality
+    const backBtn = document.getElementById('backToHomeBtn');
+    if (backBtn) {
+        backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'index.html';
+        });
+    }
+
+    // Toast handling
+    const toast = document.getElementById('toastMsg');
+    function showToast(message, isError = false) {
+        toast.textContent = message || (isError ? '⚠️ Something went wrong' : '✨ Message sent successfully!');
+        toast.style.background = isError ? '#c53030' : '#1f2937';
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    function resetFieldErrors() {
+        const inputs = document.querySelectorAll('.input-group input, .input-group select, .input-group textarea');
+        inputs.forEach(field => {
+            field.style.borderColor = '';
+        });
+    }
+
+    function validateForm(name, email, subject, message) {
+        if (!name.trim()) {
+            showToast('❌ Please enter your name', true);
+            return false;
+        }
+        const emailRegex = /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/;
+        if (!email.trim() || !emailRegex.test(email)) {
+            showToast('❌ Please enter a valid email address', true);
+            return false;
+        }
+        if (!subject || subject === "" || subject === "— Select a Subject —") {
+            showToast('❌ Please select a subject from the dropdown', true);
+            return false;
+        }
+        if (!message.trim()) {
+            showToast('❌ Message cannot be empty', true);
+            return false;
+        }
+        return true;
+    }
+
+    // Form submission handler
+    const contactForm = document.getElementById('contactForm');
+    const sendBtn = document.getElementById('sendMessageBtn');
+
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const fullName = document.getElementById('fullName').value;
+        const emailAddress = document.getElementById('emailAddress').value;
+        const subjectSelect = document.getElementById('subjectSelect').value;
+        const messageText = document.getElementById('messageText').value;
+
+        if (!validateForm(fullName, emailAddress, subjectSelect, messageText)) {
+            return;
+        }
+
+        const formData = {
+            name: fullName,
+            email: emailAddress,
+            subject: subjectSelect,
+            message: messageText,
+            timestamp: new Date().toISOString()
+        };
+
+        const originalBtnText = sendBtn.innerHTML;
+        sendBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Sending...';
+        sendBtn.disabled = true;
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                document.getElementById('fullName').value = '';
+                document.getElementById('emailAddress').value = '';
+                document.getElementById('subjectSelect').value = '';
+                document.getElementById('messageText').value = '';
+                showToast('✅ Message sent successfully! We will get back to you soon.', false);
+                resetFieldErrors();
+                const selectEl = document.getElementById('subjectSelect');
+                if (selectEl) selectEl.value = '';
+            } else {
+                let errorMsg = '⚠️ Failed to send message. Please try again later.';
+                try {
+                    const errorData = await response.json();
+                    if (errorData && errorData.message) errorMsg = errorData.message;
+                } catch (err) {}
+                showToast(errorMsg, true);
+            }
+        } catch (error) {
+            console.error('Contact form submission error:', error);
+            showToast('⚠️ Network error. Please check your connection or try again.', true);
+        } finally {
+            sendBtn.innerHTML = originalBtnText;
+            sendBtn.disabled = false;
+        }
+    });
+
+    // --- Share Modal Logic (`about-us.html` पॅटर्न) ---
+    function updateMetaTagsForShare(ogTitle, ogDescription, ogImage, ogUrl) {
+        let meta = document.querySelector('meta[property="og:title"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:title'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogTitle);
+        meta = document.querySelector('meta[property="og:description"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:description'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogDescription);
+        meta = document.querySelector('meta[property="og:image"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:image'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogImage);
+        meta = document.querySelector('meta[property="og:url"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:url'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogUrl);
+    }
+
+    function addUTMParameters(url, source) {
+        try { const u = new URL(url); u.searchParams.set('utm_source', source); u.searchParams.set('utm_medium', 'social_share'); u.searchParams.set('utm_campaign', 'urjaplus_contact'); return u.toString(); } catch(e) { return url; }
+    }
+
+    function showShareToastMessage(msg) { const toast = document.getElementById('shareToastMsg'); if(toast) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2000); } else alert(msg); }
+    function closeShareModal() { const modal = document.getElementById('dynamicShareModal'); if(modal) modal.classList.remove('active'); }
+
+    function openCustomShareModal(title, desc, imgUrl, articleLink) {
+        updateMetaTagsForShare(title, desc, imgUrl, articleLink);
+        const modal = document.getElementById('dynamicShareModal');
+        if(modal) modal.classList.add('active');
+        window.currentShareUrl = addUTMParameters(articleLink, 'share_modal');
+        window.currentShareTitle = title;
+        window.currentShareDesc = desc;
+    }
+
+    function shareCurrentPage() {
+        const defaultTitle = "Contact Us | UrjaPlus";
+        const defaultDesc = "ऊर्जा साक्षरता आणि महावितरण सेवांसाठी UrjaPlus टीमशी संपर्क साधा. तुमच्या प्रश्नांसाठी आम्ही येथे आहोत.";
+        const defaultImg = "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop";
+        openCustomShareModal(defaultTitle, defaultDesc, defaultImg, window.location.href);
+    }
+
+    function shareOnWhatsApp() { window.open(`https://wa.me/?text=${encodeURIComponent(window.currentShareTitle + "\n" + window.currentShareDesc + "\n" + window.currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(window.currentShareTitle)}&url=${encodeURIComponent(window.currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnInstagram() { navigator.clipboard.writeText(window.currentShareUrl).then(() => showShareToastMessage("📸 Instagram साठी लिंक कॉपी झाली! पेस्ट करा.")); closeShareModal(); }
+    function copyLink() { navigator.clipboard.writeText(window.currentShareUrl).then(() => showShareToastMessage("✅ लिंक कॉपी झाली!")); closeShareModal(); }
+
+    document.getElementById('closeShareModalBtn')?.addEventListener('click', closeShareModal);
+    document.getElementById('whatsappShareBtn')?.addEventListener('click', shareOnWhatsApp);
+    document.getElementById('facebookShareBtn')?.addEventListener('click', shareOnFacebook);
+    document.getElementById('instagramShareBtn')?.addEventListener('click', shareOnInstagram);
+    document.getElementById('twitterShareBtn')?.addEventListener('click', shareOnTwitter);
+    document.getElementById('copyLinkBtn')?.addEventListener('click', copyLink);
+    document.getElementById('dynamicShareModal')?.addEventListener('click', (e) => { if(e.target === document.getElementById('dynamicShareModal')) closeShareModal(); });
+
+    // Bottom Navigation Handlers
+    const navButtons = document.querySelectorAll('.nav-item');
+    function setActiveNav(clickedBtn) { navButtons.forEach(btn => btn.classList.remove('active')); clickedBtn.classList.add('active'); }
+    
+    navButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const navValue = btn.getAttribute('data-nav');
+            if (navValue === 'Share') {
+                e.preventDefault();
+                e.stopPropagation();
+                shareCurrentPage();
+            } else {
+                setActiveNav(btn);
+            }
+        });
+    });
+
+    const defaultActive = document.querySelector('.nav-item.active');
+    if (defaultActive) defaultActive.classList.remove('active');
+
+    // UI Click effect
+    const formCard = document.querySelector('.form-card');
+    if (formCard) {
+        formCard.addEventListener('click', (e) => {
+            if (e.target.closest('.send-btn')) return;
+            formCard.style.transform = 'scale(0.99)';
+            setTimeout(() => { formCard.style.transform = ''; }, 130);
+        });
+    }
+
+    const stickyHeader = document.getElementById('stickyHeader');
+    if (stickyHeader) {
+        stickyHeader.style.transform = 'translateZ(0)';
+        stickyHeader.style.backfaceVisibility = 'hidden';
+    }
+</script>
+</body>
+</html>
