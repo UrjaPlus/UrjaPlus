@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
 
     <style>
-        /* --- Theme System --- */
+        /* --- Theme System (Retained from article_old.html) --- */
         :root {
             --bg-app: #f4f7fe;
             --bg-card: #ffffff;
@@ -25,6 +25,7 @@
             --accent-red: #111111;
             --accent-red-hover: #000000;
             --dashed-border: #cbd5e1;
+            --gradient-mastermind: linear-gradient(120deg, #f8fafc, #ffffff);
         }
 
         [data-theme="dark"] {
@@ -42,6 +43,7 @@
             --accent-red: #ffffff;
             --accent-red-hover: #e2e8f0;
             --dashed-border: #1f2937;
+            --gradient-mastermind: linear-gradient(120deg, #111827, #0b0f19);
         }
 
         * {
@@ -94,6 +96,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 4px;
         }
 
         .header-title {
@@ -105,73 +108,164 @@
             gap: 8px;
         }
 
-        /* DYNAMIC CONTENT AREA & MARKDOWN STYLING */
+        /* DYNAMIC CONTENT AREA & PREMIUM MARKDOWN RENDERING */
         .article-content {
             padding: 24px 16px 0px 16px;
             overflow-x: hidden;
         }
 
-        /* Markdown मधून येणारे Elements व्यवस्थित दिसण्यासाठी CSS */
+        /* Title Styling */
         #md-render-area h1 {
-            font-size: 1.4rem;
-            font-weight: 800;
             text-align: center;
             margin-bottom: 20px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
             line-height: 1.3;
         }
 
-        #md-render-area h2 {
-            font-size: 1.25rem;
-            font-weight: 800;
-            margin: 24px 0 12px;
-            border-bottom: 1px dashed var(--border-color);
-            padding-bottom: 6px;
+        /* Premium Section Cards (Morphed via JS dynamically) */
+        .markdown-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 20px 18px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            animation: fadeUp 0.4s ease-out forwards;
         }
 
-        #md-render-area h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin: 16px 0 8px;
+        .markdown-card h2 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 16px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        /* H2 मधील चिन्हांसाठी डीफॉल्ट आयकॉन (पर्यायी बॅकअप) */
+        .markdown-card h2::before {
+            content: "\f0ba"; /* Bolt icon as placeholder if not handled */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--primary);
+            font-size: 1.3rem;
         }
 
         #md-render-area p {
             font-size: 0.95rem;
             line-height: 1.6;
-            margin-bottom: 12px;
+            color: var(--text-muted);
             text-align: justify;
+            margin-bottom: 12px;
         }
 
+        /* Blockquote styling matching the Key Takeaway style */
         #md-render-area blockquote {
-            background: var(--bg-card);
-            border-left: 4px solid var(--primary);
-            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 16px;
+            background: var(--bg-app);
             margin: 16px 0;
-            border-radius: 0 16px 16px 0;
             box-shadow: var(--shadow);
-            font-style: italic;
         }
 
-        #md-render-area ul, #md-render-area ol {
-            margin: 12px 0 16px 24px;
+        #md-render-area blockquote p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Styled Ordered Lists with Badges */
+        #md-render-area ol {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+
+        #md-render-area ol li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.2rem;
+            text-align: justify;
             font-size: 0.95rem;
+            color: var(--text-muted);
             line-height: 1.6;
         }
 
-        #md-render-area li {
-            margin-bottom: 8px;
+        #md-render-area ol li strong {
+            color: var(--text-main);
+            font-weight: 700;
         }
 
+        /* Custom Dynamic Counter for ordered list badges */
+        #md-render-area ol { counter-reset: urja-counter; }
+        #md-render-area ol li::before {
+            counter-increment: urja-counter;
+            content: counter(urja-counter);
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            background-color: #111111 !important;
+            color: white;
+            width: 1.8rem;
+            height: 1.8rem;
+            text-align: center;
+            line-height: 1.8rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        [data-theme="dark"] #md-render-area ol li::before {
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+
+        /* Bullet List Styling */
+        #md-render-area ul {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+        }
+        #md-render-area ul li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 8px;
+            text-align: justify;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        #md-render-area ul li strong {
+            color: var(--text-main);
+        }
+        #md-render-area ul li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.3rem;
+            position: absolute;
+            left: 6px;
+            top: -2px;
+        }
+
+        /* Compact Dynamic Tables */
         #md-render-area table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin: 16px 0;
             font-size: 0.85rem;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             overflow: hidden;
         }
-
         #md-render-area th {
             background: var(--primary-gradient);
             color: white;
@@ -179,58 +273,90 @@
             padding: 10px;
             text-align: left;
         }
-
         #md-render-area td {
             padding: 10px;
             border-bottom: 1px solid var(--border-color);
             color: var(--text-main);
         }
+        #md-render-area tr:last-child td {
+            border-bottom: none;
+        }
 
-        #md-render-area img {
-            width: 100%;
-            height: auto;
-            border-radius: 16px;
-            margin: 12px 0;
+        /* Dynamic Accordion Styling (People Also Ask) */
+        .paa-block-container {
+            background: var(--bg-card);
+            border-radius: 24px;
+            margin: 24px 0 28px;
+            padding: 14px 6px;
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow);
         }
+        .paa-block-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 14px 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 6px;
+        }
+        .paa-block-header i { font-size: 1.5rem; color: var(--primary); }
+        .paa-block-header h3 { font-size: 1.3rem; font-weight: 800; color: var(--text-main); }
+        
+        .dynamic-paa-item {
+            background: var(--bg-card);
+            border-radius: 18px;
+            margin: 10px 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .dynamic-paa-q {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            cursor: pointer;
+            gap: 10px;
+        }
+        .dynamic-paa-q-text { flex: 1; font-weight: 700; font-size: 0.95rem; color: var(--text-main); }
+        .dynamic-paa-icon {
+            display: flex; align-items: center; justify-content: center;
+            width: 26px; height: 26px; background: var(--icon-bg);
+            border-radius: 50%; color: var(--text-main); font-size: 0.85rem;
+            transition: all 0.25s ease; border: 1px solid var(--border-color); flex-shrink: 0;
+        }
+        .dynamic-paa-item.active-paa .dynamic-paa-icon {
+            background: var(--primary); color: #ffffff; transform: rotate(135deg);
+        }
+        [data-theme="dark"] .dynamic-paa-item.active-paa .dynamic-paa-icon { color: #111111; }
+        
+        .dynamic-paa-a {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+            background: var(--bg-card); border-top: 0px solid var(--border-color);
+        }
+        .dynamic-paa-item.active-paa .dynamic-paa-a {
+            max-height: 500px; border-top-width: 1px; padding: 14px 18px;
+        }
 
-        /* Error/Loading Alert */
-        .status-message {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-muted);
-            font-size: 1rem;
+        /* Status & Animations */
+        .status-message { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 1rem; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
         }
 
         /* Bottom Navigation */
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            max-width: 480px;
-            margin: 0 auto;
-            background: var(--nav-bg);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 12px 22px;
-            border-top: 1px solid var(--border-color);
-            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
-            z-index: 200;
+            position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto;
+            background: var(--nav-bg); display: flex; justify-content: space-around;
+            padding: 10px 12px 22px; border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04); z-index: 200;
         }
         .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            background: none;
-            border: none;
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            cursor: pointer;
-            text-decoration: none;
+            display: flex; flex-direction: column; align-items: center; gap: 3px;
+            background: none; border: none; font-size: 0.65rem; font-weight: 700;
+            color: var(--text-muted); cursor: pointer; text-decoration: none;
         }
         .nav-item i { font-size: 1.2rem; }
         .nav-item.active { color: var(--primary); }
@@ -238,13 +364,9 @@
 
         /* --- SHARE MODAL --- */
         .urja-share-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 10000;
-            align-items: center; justify-content: center;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
+            z-index: 10000; align-items: center; justify-content: center;
             opacity: 0; transition: opacity 0.3s ease;
         }
         .urja-share-modal.active { display: flex; opacity: 1; }
@@ -323,7 +445,7 @@
 
 <script>
     (function() {
-        // थीम मॅनेजमेंट
+        // 1. Theme Management System
         function applySynchronizedTheme() {
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
@@ -331,21 +453,150 @@
         applySynchronizedTheme();
         window.addEventListener('storage', (e) => { if (e.key === 'theme') applySynchronizedTheme(); });
 
-        // URL मधून .md फाईलचे नाव मिळवणे (उदा: Log.html?article=billing-guide)
-        // जर कोणतीही फाईल दिली नसेल तर बाय-डिफॉल्ट 'article.md' लोड होईल
+        // 2. Fetch Markdown and Structure to article_old.html Design Layout
         const urlParams = new URLSearchParams(window.location.search);
-        const articleName = urlParams.get('article') || 'article'; 
-        const mdFileUrl = `Blog/${articleName}.md`; // तुमच्या .md फाईल्स 'Blog' फोल्डरमध्ये ठेवा
+        const articleName = urlParams.get('article') || 'mahavitaran-energy-billing-system-guide'; 
+        const mdFileUrl = `Blog/${articleName}.md`; 
 
-        // MD फाईल Fetch करून Render करण्याचे लॉजिक
         fetch(mdFileUrl)
             .then(response => {
                 if (!response.ok) throw new Error('फाईल सापडली नाही');
                 return response.text();
             })
             .then(markdownText => {
-                // Markdown चे HTML मध्ये भाषांतर करून डिव्ह (Div) मध्ये दाखवणे
-                document.getElementById('md-render-area').innerHTML = marked.parse(markdownText);
+                // Parse markdown content to temporary HTML context
+                const rawHtml = marked.parse(markdownText);
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = rawHtml;
+
+                // Restructure the plain elements to Premium UI Layout Cards
+                const beautifulContainer = document.createElement('div');
+                beautifulContainer.id = "beautiful-article";
+
+                // Get Main Article Title (H1)
+                const mainTitle = tempDiv.querySelector('h1');
+                if(mainTitle) {
+                    beautifulContainer.appendChild(mainTitle.cloneNode(true));
+                }
+
+                // Custom Icon Mapper for Section Headings (H2)
+                const headingIcons = {
+                    "परिचय": "fa-info-circle",
+                    "एनर्जी बिलिंग सिस्टीम म्हणजे नक्की काय?": "fa-file-invoice",
+                    "एनर्जी बिलिंग सिस्टीमची संपुर्ण प्रक्रिया": "fa-chart-line",
+                    "एनर्जी बिलिंग सिस्टीमची संपुर्ण प्रक्रिया.": "fa-chart-line",
+                    "बिलिंगमधील ग्राहकांच्या सामान्य समस्या": "fa-circle-exclamation",
+                    "बिलिंगमधील ग्राहकांच्या सामान्य समस्या.": "fa-circle-exclamation",
+                    "एनर्जी बिलिंग सिस्टीमचे फायदे": "fa-square-plus",
+                    "एनर्जी बिलिंग सिस्टीमचे फायदे.": "fa-square-plus",
+                    "वीज ग्राहकांनी काय करावे आणि काय टाळावे?": "fa-clipboard-check",
+                    "महत्त्वाचे निष्कर्ष": "fa-trophy",
+                    "महत्वाचे अस्वीकरण (Disclaimer)": "fa-exclamation-triangle"
+                };
+
+                let currentCard = null;
+                let paaBlockContainer = null;
+
+                // Iterate over markdown output elements to style them dynamically
+                Array.from(tempDiv.children).forEach(element => {
+                    if (element.tagName === 'H1') return; // Already Handled
+
+                    // If it is 'People Also Ask' Section, initiate Accordion Logic
+                    if (element.tagName === 'H2' && (element.textContent.trim().toLowerCase().includes('people also ask') || element.textContent.trim().includes('वारंवार विचारले जाणारे प्रश्न'))) {
+                        paaBlockContainer = document.createElement('div');
+                        paaBlockContainer.className = "paa-block-container";
+                        paaBlockContainer.innerHTML = `
+                            <div class="paa-block-header">
+                                <i class="fas fa-users"></i>
+                                <h3>People Also Ask</h3>
+                            </div>
+                        `;
+                        beautifulContainer.appendChild(paaBlockContainer);
+                        currentCard = null;
+                        return;
+                    }
+
+                    // Structure other main content sections as premium card blocks
+                    if (element.tagName === 'H2') {
+                        currentCard = document.createElement('div');
+                        currentCard.className = "markdown-card";
+                        
+                        const headingText = element.textContent.trim();
+                        const iconClass = headingIcons[headingText] || "fa-bolt";
+                        
+                        // Inject dynamic premium font-awesome icons to H2
+                        element.style.setProperty('--primary-icon', `"${iconClass}"`);
+                        element.innerHTML = `<i class="fas ${iconClass}"></i> ` + headingText;
+                        
+                        currentCard.appendChild(element.cloneNode(true));
+                        beautifulContainer.appendChild(currentCard);
+                        return;
+                    }
+
+                    // Map QA items to stylized Accordions inside the PAA block
+                    if (paaBlockContainer) {
+                        if (element.tagName === 'P' && element.querySelector('strong')) {
+                            const qaItem = document.createElement('div');
+                            qaItem.className = "dynamic-paa-item";
+                            
+                            const qText = element.querySelector('strong').textContent.replace('प्रश्न:', '').replace('उत्तर:', '').trim();
+                            
+                            const qDiv = document.createElement('div');
+                            qDiv.className = "dynamic-paa-q";
+                            qDiv.innerHTML = `<span class="dynamic-paa-q-text">${qText}</span><span class="dynamic-paa-icon"><i class="fas fa-plus"></i></span>`;
+                            
+                            const aDiv = document.createElement('div');
+                            aDiv.className = "dynamic-paa-a";
+                            
+                            qaItem.appendChild(qDiv);
+                            qaItem.appendChild(aDiv);
+                            paaBlockContainer.appendChild(qaItem);
+                            return;
+                        }
+                        
+                        // Append answer to the active initialized accordion item
+                        const lastPaaItem = paaBlockContainer.querySelector('.dynamic-paa-item:last-child .dynamic-paa-a');
+                        if (lastPaaItem) {
+                            lastPaaItem.appendChild(element.cloneNode(true));
+                            return;
+                        }
+                    }
+
+                    // Append sub-elements (tables, paragraphs, lists) to their active parent cards
+                    if (currentCard) {
+                        currentCard.appendChild(element.cloneNode(true));
+                    } else if (element.tagName !== 'HR') {
+                        beautifulContainer.appendChild(element.cloneNode(true));
+                    }
+                });
+
+                // Display structured context inside render engine area
+                const renderArea = document.getElementById('md-render-area');
+                renderArea.innerHTML = '';
+                renderArea.appendChild(beautifulContainer);
+
+                // Initialize click events for the dynamic PAA accordions
+                const paaItems = document.querySelectorAll('.dynamic-paa-item');
+                paaItems.forEach(paa => {
+                    const questionDiv = paa.querySelector('.dynamic-paa-q');
+                    if(questionDiv) {
+                        questionDiv.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const isActive = paa.classList.contains('active-paa');
+                            paaItems.forEach(other => { if(other !== paa) other.classList.remove('active-paa'); });
+                            paa.classList.toggle('active-paa', !isActive);
+                        });
+                    }
+                });
+
+                // UI Click Transformation Card Scaling effect
+                document.querySelectorAll('.markdown-card, .dynamic-paa-item').forEach(box => {
+                    box.addEventListener('click', function(e) {
+                        if(e.target.closest('.dynamic-paa-q') || e.target.closest('button')) return;
+                        box.style.transform = 'scale(0.99)';
+                        setTimeout(() => { box.style.transform = ''; }, 130);
+                    });
+                });
             })
             .catch(error => {
                 console.error(error);
@@ -356,7 +607,7 @@
                     </div>`;
             });
 
-        // नेव्हिगेशन आणि शेअर बटण लॉजिक
+        // 3. Navigation and Native Sharing Modal Core Systems
         const backBtn = document.getElementById('backToHomeBtn');
         if(backBtn) backBtn.addEventListener('click', () => window.location.href = 'index.html');
         
@@ -371,7 +622,8 @@
                 toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2000);
             });
         });
-        // सोशल मीडिया शेअरिंग लिंक्स
+
+        // Social Platform Handlers
         document.getElementById('whatsappShareBtn')?.addEventListener('click', () => window.open(`https://wa.me/?text=${encodeURIComponent(window.currentShareUrl)}`, '_blank'));
         document.getElementById('facebookShareBtn')?.addEventListener('click', () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.currentShareUrl)}`, '_blank'));
         document.getElementById('twitterShareBtn')?.addEventListener('click', () => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.currentShareUrl)}`, '_blank'));
