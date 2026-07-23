@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>वीज बिलावरील तक्रारीकडे दुर्लक्ष होत असल्यास काय कराल? | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Theme System --- */
+        :root {
+            --bg-app: #f4f7fe;
+            --bg-card: #ffffff;
+            --primary: #111111; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); 
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --icon-bg: #f1f5f9; 
+            --accent-red: #111111;
+            --accent-red-hover: #000000;
+            --dashed-border: #cbd5e1;
+            --gradient-mastermind: linear-gradient(120deg, #f8fafc, #ffffff);
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827; 
+            --primary: #ffffff; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+            --icon-bg: rgba(255, 255, 255, 0.05);
+            --accent-red: #ffffff;
+            --accent-red-hover: #e2e8f0;
+            --dashed-border: #1f2937;
+            --gradient-mastermind: linear-gradient(120deg, #111827, #0b0f19);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Inter', Roboto, Helvetica, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .article-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: background 0.3s ease;
+        }
+
+        /* STICKY HEADER BAR */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .article-content {
+            padding: 24px 16px 0px 16px;
+            overflow-x: hidden;
+        }
+
+        .plain-article-title {
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+
+        .intro-image {
+            text-align: center;
+            margin: 10px 0 20px 0;
+        }
+
+        .about-intro-img {
+            width: 90%;
+            max-width: 90%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .simple-outline-box {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 18px 16px;
+            margin: 24px 0 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .simple-outline-box .box-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .simple-outline-box .box-header i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .simple-outline-box .box-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .intro-description-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            text-align: justify;
+        }
+
+        /* --- FAQ Section Styles --- */
+        .faq-section {
+            margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 20px 18px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        
+        .faq-question-static {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .faq-question-static i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .faq-question-static h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .answer-content-static {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .answer-content-static strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .faq-key-box {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 16px;
+            background: var(--bg-app);
+            margin: 16px 0;
+            box-shadow: var(--shadow);
+        }
+        .faq-key-box h4 {
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+        }
+        .faq-key-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .faq-key-box li {
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .box-numbers-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+        .box-numbers-list li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.2rem;
+            text-align: justify;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .number-badge {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            background-color: #111111 !important;
+            color: white;
+            width: 1.8rem;
+            height: 1.8rem;
+            text-align: center;
+            line-height: 1.8rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        [data-theme="dark"] .number-badge {
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+
+        /* Bullet List Styling */
+        .urja-bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+        }
+        .urja-bullet-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        .urja-bullet-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.3rem;
+            position: absolute;
+            left: 6px;
+            top: -2px;
+        }
+
+        .takeaway-simple-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .takeaway-simple-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border-left: 3px solid var(--primary);
+            padding: 10px 12px;
+            background: var(--bg-app);
+            border-radius: 0 12px 12px 0;
+        }
+        .takeaway-simple-item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            width: 26px;
+            text-align: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .takeaway-simple-item p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            flex: 1;
+            color: var(--text-main);
+        }
+
+        /* --- People Also Ask Section --- */
+        .people-also-ask {
+            background: var(--bg-card);
+            border-radius: 24px;
+            margin: 24px 0 28px;
+            padding: 14px 6px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        .paa-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 14px 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 6px;
+        }
+        .paa-header i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .paa-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        .paa-item {
+            background: var(--bg-card);
+            border-radius: 18px;
+            margin: 10px 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .paa-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            cursor: pointer;
+            gap: 10px;
+        }
+        .paa-toggle-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            background: var(--icon-bg);
+            border-radius: 50%;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+        .paa-item.active-paa .paa-toggle-icon {
+            background: var(--primary);
+            color: #ffffff;
+            transform: rotate(135deg);
+        }
+        .paa-question-text {
+            flex: 1;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .paa-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+            background: var(--bg-card);
+        }
+        .paa-item.active-paa .paa-answer {
+            max-height: 400px;
+            border-top: 1px solid var(--border-color);
+            padding: 14px 18px;
+            border-bottom: none;
+        }
+        .paa-answer p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Survey Animation */
+        .urja-premium-survey label:active {
+            transform: scale(0.98);
+        }
+        @keyframes thumbPop {
+            0% { transform: scale(0.4) rotate(-30deg); opacity: 0; }
+            70% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+        .content-spacer {
+            height: 80px;
+        }
+        
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .plain-article-title, .intro-image, .simple-outline-box, .faq-item, .people-also-ask {
+            animation: fadeUp 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+<div class="article-container">
+    <div class="sharp-header" id="stickyHeader">
+        <button class="back-arrow" id="backToHomeBtn" aria-label="Back">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">
+            <i class="fas fa-bolt"></i> 
+            <span>UrjaPlus</span>
+        </div>
+    </div>
+
+    <div class="article-content">
+        <div class="plain-article-title">
+            वीज बिलावरील तक्रारीकडे दुर्लक्ष होत असल्यास काय कराल?
+        </div>
+
+        <div class="intro-image">
+            <img src="../Image/what-to-do-if-electricity-complaint-is-ignored.webp" alt="what-to-do-if-electricity-complaint-is-ignored" class="about-intro-img">
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-info-circle"></i>
+                <h3>परिचय</h3>
+            </div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">चुकीचे वीज बिल आले म्हणून ग्राहकांनी तक्रार दाखल केली, तरीही प्रशासनाकडून अनेकदा त्याकडे दुर्लक्ष केले जाते किंवा वारंवार फेऱ्या मारायला लावल्या जातात. यामुळे सामान्य ग्राहक हतबल होतो आणि शेवटी अन्यायकारक बिल भरण्यास भाग पडतो. मात्र, वीज ग्राहकांना ग्राहक संरक्षण कायदे आणि वीज नियामक आयोगाचे (MERC) कडक संरक्षण उपलब्ध आहे. जर तुमच्या वीज तक्रारीची वेळेत दखल घेतली जात नसेल, तर तक्रारीचा पाठपुरावा कसा करावा आणि प्रशासनाला कारवाई करणे कसे भाग पाडावे, याबद्दलची सविस्तर माहिती खालीलप्रमाणे आहे.</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h2>१. वीज तक्रारींकडे दुर्लक्ष होण्यामागील 5 मुख्य कारणे.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">तक्रार दुर्लक्षित होण्यामागे बऱ्याचदा तोंडी तक्रार करणे, तक्रार क्रमांक न घेणे किंवा पुराव्यांची कमतरता असणे ही मुख्य कारणे असतात.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">ग्राहक म्हणून तक्रार दाखल केल्यानंतर त्यावर योग्य कारवाई न होण्याची प्रमुख ५ कारणे खालीलप्रमाणे आहेत:</p>
+                    
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>फक्त तोंडी तक्रार करणे:</strong> स्थानिक वायरमन किंवा कार्यालयात जाऊन केवळ तोंडी सांगण्याने तक्रारीची कोणतीही अधिकृत नोंद होत नाही.</li>
+                        <li><span class="number-badge">2</span> <strong>तक्रार क्रमांक (Token/Grievance No.) न घेणे:</strong> ऑनलाईन किंवा ऑफलाईन तक्रार करताना युनिक टोकन नंबर घेतला नाही तर त्याचा पाठपुरावा करता येत नाही.</li>
+                        <li><span class="number-badge">3</span> <strong>अपूर्ण पुरावे व दस्तावेज:</strong> अर्जासोबत मीटरचा फोटो, चालू व जुनी बिले यांसारखे आवश्यक पुरावे न जोडल्याने तक्रार प्रलंबित राहते.</li>
+                        <li><span class="number-badge">4</span> <strong>तक्रारीत मोघम माहिती असणे:</strong> ग्राहक क्रमांक (Consumer ID), अचूक पत्ता किंवा समस्येचे स्पष्ट वर्णन नसलेले अर्ज बाजूला पडतात.</li>
+                        <li><span class="number-badge">5</span> <strong>योग्य अधिकाऱ्याकडे अर्ज न जाणे:</strong> चुकीच्या विभागात किंवा कनिष्ठ कर्मचाऱ्यांकडे अर्ज सादर केल्याने तो योग्य टेबलपर्यंत पोहोचत नाही.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">या ५ कारणांचा विचार करून तक्रार दाखल केल्यास दुर्लक्ष होण्याची शक्यता कमी होईल, असे तुम्हाला वाटते का?</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-sync-alt"></i>
+                    <h2>२. दुर्लक्षित तक्रारींना पुन्हा सक्रिय करण्याचे उपाय.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">प्रलंबित तक्रार री-ओपन (Re-open) करण्यासाठी रिमायंडर पाठवणे, ऑनलाईन पोर्टलवरून एस्कलेट करणे आणि पोचपावतीचा वापर करणे आवश्यक ठरते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">अनेक दिवस पडून राहिलेल्या तक्रारीला पुन्हा गती देण्यासाठी खालील उपायांचा वापर करा:</p>
+
+                    <ul class="urja-bullet-list">
+                        <li><strong>तक्रार री-ओपन (Re-open) किंवा एस्कलेट करणे:</strong> ऑनलाईन महावितरण पोर्टल किंवा मोबाईल ॲपवर जाऊन जुन्या तक्रार क्रमांकाचा संदर्भ देऊन 'Re-open' किंवा 'Escalate' हा पर्याय निवडा.</li>
+                        <li><strong>लेखी स्मरणपत्र (Written Reminder):</strong> उपकार्यकारी अभियंता (Sub-Divisional Officer) यांच्या नावे जुन्या तक्रारीच्या पोचपावतीसह (Acknowledgement Copy) 'स्मरणपत्र' अर्ज सादर करा.</li>
+                        <li><strong>सोशल मीडियाचा वापर:</strong> महावितरण किंवा संबंधित वीज वितरण कंपनीच्या अधिकृत X (ट्विटर) व फेसबूक हँडलवर तक्रार टोकन नंबरसह पोस्ट करून वरिष्ठांना टॅग करा.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">स्मरणपत्र (Reminder) पाठवल्याने थांबलेली प्रशासकीय प्रक्रिया पुन्हा वेगाने सुरू होऊ शकते का?</p>
+                </div>
+            </div>
+
+            <div class="urja-premium-survey" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 22px 18px 18px 18px; margin: 5px 0 5px 0; box-shadow: var(--shadow); position: relative; overflow: hidden; font-family: inherit;">
+                <div style="position: absolute; top: 0; left: 18px; background: var(--primary-gradient); color: #ffffff; padding: 3px 12px; font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; border-radius: 0 0 8px 8px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <i class="fas fa-poll" style="margin-right: 4px;"></i> Urja Survey
+                </div>
+                
+                <div id="surveyPremiumMain" style="display: block; opacity: 1; transform: scale(1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);">
+                    <h4 style="margin: 14px 0 16px 0; color: var(--text-main); font-size: 1.05rem; font-weight: 800; line-height: 1.5; text-align: justify;">
+                        तुमच्या वीज बिलाच्या तक्रारीवर वेळेत कारवाई झाली नाही, तर तुम्ही कोणता पर्याय निवडाल?
+                    </h4>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">CGRF (ग्राहक तक्रार निवारण मंच) कडे कायदेशीर दाद मागणे</span>
+                        </label>
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">माहिती अधिकाराचा (RTI) वापर करून अर्जाच्या स्थितीचा जाब विचारणे</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="surveyPremiumSuccess" style="display: none; opacity: 0; text-align: center; padding: 30px 10px 15px 10px; transition: all 0.4s ease;">
+                    <div class="survey-thumb-icon" style="width: 70px; height: 70px; background: var(--primary-gradient); color: #ffffff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.15);">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <h4 style="margin: 0 0 6px 0; color: var(--text-main); font-size: 1.2rem; font-weight: 800;">नोंदणी केल्याबद्दल धन्यवाद!</h4>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; font-weight: 500;">तुमचा अभिप्राय आमच्यासाठी अत्यंत महत्त्वाचा आहे.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-bolt-lightning"></i>
+                    <h2>३. फक्त आश्वासने मिळत असल्यास थेट कृती करण्याची गरज.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">कार्यालयातून केवळ आश्वासने मिळत असल्यास वरिष्ठ अधिकाऱ्यांना थेट भेटणे किंवा ग्राहक तक्रार निवारण मंचाकडे (CGRF) अर्ज करणे आवश्यक ठरते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">जर अधिकारी केवळ "पुढच्या महिन्यात बघू" असे उत्तर देत असतील, तर खालील कडक पावले उचला:</p>
+
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>कार्यकारी अभियंत्यांना (Executive Engineer) थेट भेट:</strong> उपविभागीय स्तरावर काम होत नसेल तर मंडल/विभाग कार्यालयातील वरिष्ठ अधिकाऱ्यांची भेट घेऊन परिस्थिती स्पष्ट करा.</li>
+                        <li><span class="number-badge">2</span> <strong>IGRC कडे अर्ज करा:</strong> अंतर्गत तक्रार निवारण कक्षाकडे (Internal Grievance Redressal Cell) अधिकृत नमुन्यात तक्रार दाखल करा.</li>
+                        <li><span class="number-badge">3</span> <strong>CGRF कडे कायदेशीर तक्रार:</strong> IGRC ने २ महिन्यांत तोडगा न काढल्यास किंवा निर्णय अमान्य असल्यास थेट 'ग्राहक तक्रार निवारण मंच' (CGRF) मध्ये दावा दाखल करा.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">कायदेशीर मंचाचा (CGRF) वापर केल्याने प्रशासनाला विहित मुदतीत निर्णय देणे बंधनकारक होते का?</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-bullseye"></i>
+                    <h2>४. तुमच्या तक्रारीला त्वरित प्रतिसाद मिळवण्यासाठी योग्य उपाय कोणते?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">माहिती अधिकार (RTI) आणि 'Standard of Performance' (SOP) नियमावलीचा वापर केल्यास तक्रारीवर त्वरित कारवाई होते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">प्रशासनाकडून झटपट प्रतिसाद मिळवण्यासाठी खालील परिणामकारक उपायांचा वापर करा:</p>
+
+                    <ul class="urja-bullet-list">
+                        <li><strong>माहिती अधिकार अर्ज (RTI Filing):</strong> "माझ्या तक्रारीवर कोणत्या अधिकाऱ्याने काय कारवाई केली?" याबद्दल RTI अंतर्गत माहिती मागा. यामुळे फाईल वेगाने हलते.</li>
+                        <li><strong>SOP आणि भरपाईचा नियम (Standard of Performance):</strong> MERC च्या नियमांनुसार ठरवून दिलेल्या मुदतीत काम न झाल्यास ग्राहकाला प्रतिदिवस भरपाई मिळण्याचा हक्क आहे. अर्जात या नियमाचा उल्लेख करा.</li>
+                        <li><strong>मध्यवर्ती जनतक्रार निवारण प्रणाली (PG Portal):</strong> राज्य सरकारच्या किंवा केंद्रीय ऑनलाईन पोर्टलवर तक्रार नोंदवून वरिष्ठ प्रशासनाचे लक्ष वेधून घ्या.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">RTI आणि SOP च्या नियमांचा धाक दाखवल्यामुळे अधिकारी त्वरित काम करतात, असे तुम्हाला वाटते का?</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-pen-nib"></i>
+                    <h2>५. प्रभावी तक्रार लेखनाची कला, ज्यामुळे प्रशासनाला दखल घेणे अनिवार्य ठरेल.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">स्पष्ट भाषा, अचूक आकडेवारी, पूर्वीच्या तक्रारींचे संदर्भ आणि कायदेशीर नियमांचा उल्लेख असलेला तक्रार अर्ज त्वरित मंजूर होतो.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">असा तक्रार अर्ज तयार करा जो अधिकारी सहजासहजी दुर्लक्षित करू शकणार नाहीत:</p>
+
+                    <ul class="urja-bullet-list">
+                        <li><strong>विषय स्पष्ट व संक्षिप्त असावा:</strong> उदा. "ग्राहक क्र. XXXXXXX - चुकीचे बिल दुरुस्त न झाल्याबाबत व स्मरणपत्र".</li>
+                        <li><strong>मुद्देसूद माहिती व पुरावे:</strong> अर्जात तुमचा ग्राहक क्रमांक, मीटर क्रमांक, तक्रार नोंदवलेली तारीख आणि पूर्वीचा टोकन नंबर स्पष्ट लिहा.</li>
+                        <li><strong>कायदेशीर संदर्भ जोडा:</strong> MERC नियमावलीतील संबंधित कलमांचा किंवा ग्राहक हक्कांचा उल्लेख अर्जाच्या शेवटी आवर्जून करा.</li>
+                        <li><strong>दोन प्रती तयार ठेवा:</strong> अर्जाची मूळ प्रत कार्यालयात देऊन दुसऱ्या प्रतीवर (Office Copy) स्पष्ट सही, शिक्का आणि तारीख असलेली पोचपावती अवश्य घ्या.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">अचूक आणि कायदेशीर भाषेत लिहिलेला अर्ज प्रशासकीय यंत्रणेला कारवाई करण्यास भाग पाडतो का?</p>
+                </div>
+            </div>
+
+        </div> 
+
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-trophy"></i><h3>महत्त्वाचे निष्कर्ष</h3></div>
+            <div class="takeaway-simple-list">
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">फक्त तोंडी तक्रार किंवा आश्वासनांवर अवलंबून न राहता प्रत्येक संवादाचा ऑनलाईन किंवा ऑफलाईन पुरावा आणि टोकन नंबर सुरक्षित ठेवा.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">स्थानिक स्तरावर दुर्लक्ष झाल्यास IGRC, CGRF आणि वीज लोकपाल यांसारख्या वैधानिक मंचाचा टप्प्याटप्प्याने वापर करा.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">माहिती अधिकार (RTI) आणि MERC SOP नियमांनुसार भरपाईचा दावा करण्याची तयारी दाखवल्यास तक्रारीचे निवारण वेगाने होते.</p></div>
+            </div>
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-arrow-alt-circle-right"></i><h3>पुढचं पाऊल:</h3></div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">जर तुमची वीज बिलाची तक्रार अनेक दिवसांपासून प्रलंबित असेल, तर आजच जुन्या तक्रार क्रमांकासह उपकार्यकारी अभियंत्यांना पोचपावतीसह लेखी स्मरणपत्र द्या. तरीही उत्तर न मिळाल्यास CGRF मध्ये दाद मागण्यासाठी सर्व कागदपत्रे एकत्र करून पुढील कारवाई सुरू करा.</p>
+            </div>
+        </div>
+
+        <div class="people-also-ask">
+            <div class="paa-header">
+                <i class="fas fa-users"></i>
+                <h3>People Also Ask</h3>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">तक्रारीवर किती दिवसांत कारवाई होणे कायदेशीररीत्या बंधनकारक आहे?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">MERC च्या नियमांनुसार, बिलाशी संबंधित तक्रारींवर सामान्यत: ७ ते १५ दिवसांच्या आत आणि मीटर खराबीवर २४ ते ४८ तासांच्या आत कारवाई करणे वीज कंपनीवर बंधनकारक असते.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">CGRF (ग्राहक तक्रार निवारण मंच) कडे तक्रार करण्यासाठी काही शुल्क लागते का?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">नाही, CGRF मध्ये तक्रार दाखल करण्यासाठी कोणतेही सरकारी शुल्क किंवा वकिलाची आवश्यकता नसते. ग्राहक स्वतः साध्या कागदावर अर्ज करून आपली बाजू मांडू शकतात.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">अधिकारी तक्रारीची पोचपावती (Acknowledgement) देण्यास नकार देत असतील तर काय करावे?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">जर स्थानिक कार्यालय पोचपावती देत नसेल, तर तुमचा तक्रार अर्ज नोंदणीकृत पत्राद्वारे (Registered Post AD) पाठवा. पोस्टाची पावती ही कायदेशीर पोच मानली जाते.</p></div>
+            </div>
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>महत्वाचे अस्वीकरण (Disclaimer):</h3>
+            </div>
+            <div class="disclaimer-text" style="font-size: 0.85rem; line-height: 1.5; text-align: justify;">
+                या लेखात दिलेली माहिती केवळ सामान्य जनजागृती आणि ग्राहक हक्कांच्या मार्गदर्शनासाठी आहे. विविध राज्य वीज वितरण कंपन्यांचे (उदा. महावितरण, अदानी पॉवर, बेस्ट, टाटा पॉवर इ.) तक्रार निवारणाचे नियम, मुदत आणि प्रशासनिक प्रक्रिया भिन्न असू शकतात. कोणतीही कायदेशीर कारवाई करण्यापूर्वी तुमच्या क्षेत्रातील अधिकृत वीज कंपनीच्या नियमावलीचा आणि MERC च्या मार्गदर्शक तत्त्वांचा अभ्यास करा. या माहितीच्या आधारे घेतलेल्या निर्णयाच्या परिणामास <strong>UrjaPlus</strong> जबाबदार राहणार नाही.
+            </div>
+        </div>
+
+        <div class="content-spacer"></div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="../index.html" class="nav-item" data-nav="home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="../tools.html" class="nav-item" data-nav="Tools"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="../search.html" class="nav-item" data-nav="Search"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="../rti-plus.html" class="nav-item" data-nav="Favorites"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn" data-nav="Share"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Light / Dark Theme Sync
+        function applySynchronizedTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+        applySynchronizedTheme();
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                applySynchronizedTheme();
+            }
+        });
+        
+        // People Also Ask Accordion Logic
+        const paaItems = document.querySelectorAll('.paa-item');
+        paaItems.forEach(paa => {
+            const questionDiv = paa.querySelector('.paa-question');
+            if(questionDiv) {
+                questionDiv.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isActive = paa.classList.contains('active-paa');
+                    paaItems.forEach(other => {
+                        if(other !== paa && other.classList.contains('active-paa')) {
+                            other.classList.remove('active-paa');
+                        }
+                    });
+                    if(!isActive) {
+                        paa.classList.add('active-paa');
+                    } else {
+                        paa.classList.remove('active-paa');
+                    }
+                });
+            }
+        });
+        
+        const backBtn = document.getElementById('backToHomeBtn');
+        if(backBtn) {
+            backBtn.addEventListener('click', () => {
+                window.location.href = '../electricity-complaint-process.html'; 
+            });
+        }        
+        
+        // Smooth Click Effect for Boxes
+        document.addEventListener('click', function(e) {
+            const box = e.target.closest('.simple-outline-box, .faq-item');
+            if(box && !e.target.closest('button') && !e.target.closest('.people-also-ask')) {
+                box.style.transform = 'scale(0.99)';
+                setTimeout(() => { box.style.transform = ''; }, 130);
+            }
+        });
+    })();
+
+    // Survey Response Interaction
+    function handleSurveySelection(selectedLabel) {
+        const allLabels = selectedLabel.parentElement.querySelectorAll('label');
+        allLabels.forEach(label => {
+            const checkOuter = label.querySelector('.survey-custom-check');
+            const checkInner = checkOuter.querySelector('span');
+            checkOuter.style.borderColor = 'var(--text-muted)';
+            checkInner.style.background = 'transparent';
+            label.style.borderColor = 'var(--border-color)';
+            label.style.background = 'var(--bg-app)';
+        });
+
+        const activeCheckOuter = selectedLabel.querySelector('.survey-custom-check');
+        const activeCheckInner = activeCheckOuter.querySelector('span');
+        activeCheckOuter.style.borderColor = 'var(--primary)';
+        activeCheckInner.style.background = 'var(--primary)';
+        selectedLabel.style.borderColor = 'var(--primary)';
+        selectedLabel.style.background = 'var(--bg-card)';
+
+        setTimeout(function() {
+            const mainContent = document.getElementById('surveyPremiumMain');
+            const successContent = document.getElementById('surveyPremiumSuccess');
+            const thumbIcon = successContent.querySelector('.survey-thumb-icon');
+            
+            mainContent.style.opacity = '0';
+            mainContent.style.transform = 'scale(0.9)';
+            
+            setTimeout(function() {
+                mainContent.style.display = 'none';
+                successContent.style.display = 'block';
+                setTimeout(function() {
+                    successContent.style.opacity = '1';
+                    if(thumbIcon) thumbIcon.style.animation = 'thumbPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                }, 50);
+            }, 300);
+        }, 350);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>सोलर बसवल्यावर महावितरणच्या वीज जोडणीत होणारे तांत्रिक बदल | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Theme System --- */
+        :root {
+            --bg-app: #f4f7fe;
+            --bg-card: #ffffff;
+            --primary: #111111; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); 
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --icon-bg: #f1f5f9; 
+            --accent-red: #111111;
+            --accent-red-hover: #000000;
+            --dashed-border: #cbd5e1;
+            --gradient-mastermind: linear-gradient(120deg, #f8fafc, #ffffff);
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827; 
+            --primary: #ffffff; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+            --icon-bg: rgba(255, 255, 255, 0.05);
+            --accent-red: #ffffff;
+            --accent-red-hover: #e2e8f0;
+            --dashed-border: #1f2937;
+            --gradient-mastermind: linear-gradient(120deg, #111827, #0b0f19);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Inter', Roboto, Helvetica, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .article-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: background 0.3s ease;
+        }
+
+        /* STICKY HEADER BAR */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .article-content {
+            padding: 24px 16px 0px 16px;
+            overflow-x: hidden;
+        }
+
+        .plain-article-title {
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+
+        .intro-image {
+            text-align: center;
+            margin: 10px 0 20px 0;
+        }
+
+        .about-intro-img {
+            width: 90%;
+            max-width: 90%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .simple-outline-box {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 18px 16px;
+            margin: 24px 0 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+
+        .simple-outline-box .box-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .simple-outline-box .box-header i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .simple-outline-box .box-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .intro-description-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            text-align: justify;
+        }
+
+        /* --- Section Styles --- */
+        .faq-section {
+            margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 20px 18px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease;
+        }
+        
+        .faq-question-static {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .faq-question-static i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .faq-question-static h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .answer-content-static {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .sub-heading-h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 14px 0 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .faq-key-box {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 16px;
+            background: var(--bg-app);
+            margin: 16px 0;
+            box-shadow: var(--shadow);
+        }
+        .faq-key-box h4 {
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+        }
+        .faq-key-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .faq-key-box li {
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .box-numbers-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+        .box-numbers-list li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.2rem;
+            text-align: justify;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .number-badge {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            background-color: #111111 !important;
+            color: white;
+            width: 1.8rem;
+            height: 1.8rem;
+            text-align: center;
+            line-height: 1.8rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+            border-radius: 50%;
+        }
+        [data-theme="dark"] .number-badge {
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+
+        /* Bullet List Styling */
+        .urja-bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+        }
+        .urja-bullet-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        .urja-bullet-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.3rem;
+            position: absolute;
+            left: 6px;
+            top: -2px;
+        }
+
+        /* --- Custom Table Styling --- */
+        .custom-table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 16px 0;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+        .custom-table th {
+            background: var(--primary);
+            color: #ffffff;
+            padding: 10px 12px;
+            font-weight: 700;
+        }
+        .custom-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+        .custom-table tr:last-child td {
+            border-bottom: none;
+        }
+        .custom-table tr:nth-child(even) {
+            background: var(--bg-app);
+        }
+
+        .takeaway-simple-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .takeaway-simple-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border-left: 3px solid var(--primary);
+            padding: 10px 12px;
+            background: var(--bg-app);
+            border-radius: 0 12px 12px 0;
+        }
+        .takeaway-simple-item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            width: 26px;
+            text-align: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .takeaway-simple-item p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            flex: 1;
+            color: var(--text-main);
+        }
+
+        /* --- People Also Ask Section --- */
+        .people-also-ask {
+            background: var(--bg-card);
+            border-radius: 24px;
+            margin: 24px 0 28px;
+            padding: 14px 6px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        .paa-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 14px 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 6px;
+        }
+        .paa-header i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .paa-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        .paa-item {
+            background: var(--bg-card);
+            border-radius: 18px;
+            margin: 10px 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .paa-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            cursor: pointer;
+            gap: 10px;
+        }
+        .paa-toggle-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            background: var(--icon-bg);
+            border-radius: 50%;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+        .paa-item.active-paa .paa-toggle-icon {
+            background: var(--primary);
+            color: #ffffff;
+            transform: rotate(135deg);
+        }
+        .paa-question-text {
+            flex: 1;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .paa-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+            background: var(--bg-card);
+        }
+        .paa-item.active-paa .paa-answer {
+            max-height: 400px;
+            border-top: 1px solid var(--border-color);
+            padding: 14px 18px;
+            border-bottom: none;
+        }
+        .paa-answer p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Survey Style */
+        .urja-premium-survey label:active {
+            transform: scale(0.98);
+        }
+        @keyframes thumbPop {
+            0% { transform: scale(0.4) rotate(-30deg); opacity: 0; }
+            70% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+        .content-spacer {
+            height: 80px;
+        }
+        
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .plain-article-title, .intro-image, .simple-outline-box, .faq-item, .people-also-ask {
+            animation: fadeUp 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+<div class="article-container">
+    <div class="sharp-header" id="stickyHeader">
+        <button class="back-arrow" id="backToHomeBtn" aria-label="Back">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">
+            <i class="fas fa-microchip"></i> 
+            <span>UrjaPlus</span>
+        </div>
+    </div>
+
+    <div class="article-content">
+        <div class="plain-article-title">
+            सोलर बसवल्यावर महावितरणच्या वीज जोडणीत होणारे तांत्रिक बदल
+        </div>
+
+        <div class="intro-image">
+            <img src="../Image/technical-changes-in-electricity-connection-after-solar.webp" alt="technical-changes-in-electricity-connection-after-solar" class="about-intro-img">
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-plug-circle-bolt"></i>
+                <h3>परिचय</h3>
+            </div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">छतावर रूफटॉप सोलर (Rooftop Solar) सिस्टीम बसवणे म्हणजे केवळ पॅनेल्स जोडणे नव्हे, तर तुमच्या संपूर्ण वीज जोडणीच्या संरचनेत होणारा एक मोठा तांत्रिक बदल आहे. सोलर बसवल्यानंतर तुमची वीज जोडणी केवळ एकतर्फी (Uni-directional) न राहता द्विमार्गी (Bi-directional) बनते. या लेखात आपण सोलर बसवल्यानंतर महावितरणच्या इन्फ्रास्ट्रक्चर, मीटरिंग आणि वायरिंगमध्ये होणाऱ्या मुख्य तांत्रिक बदलांचा सविस्तर आढावा घेणार आहोत.</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            
+            <!-- SECTION 1 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <h2>१. पारंपरिक मीटर ऐवजी 'बाय-डायरेक्शनल' नेट मीटरचा वापर</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">सोलर जोडणीनंतर जुने नेहमीचे मीटर बदलून ग्रिडला वीज देणारे आणि घेणारे दोन्ही मोजणारे नेट मीटर बसवले जाते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">पारंपरिक वीज जोडणीत मीटर फक्त महावितरणकडून आलेल्या विजेची (Import) नोंद ठेवते. परंतु ऑन-ग्रिड सोलर बसवल्यानंतर मीटर सिस्टीममध्ये खालील बदल होतात:</p>
+                    
+                    <h3 class="sub-heading-h3"><i class="fas fa-angle-right"></i> १.१ तीन महत्त्वाच्या रीडिंगची नोंद</h3>
+                    <ul class="urja-bullet-list">
+                        <li><strong>इम्पोर्ट (Import Units):</strong> रात्री किंवा उन्हाअभावी महावितरण ग्रिडकडून वापरलेली एकूण वीज.</li>
+                        <li><strong>एक्सपोर्ट (Export Units):</strong> दिवसा सौर पॅनेलद्वारे निर्माण होऊन ग्रिडमध्ये पाठवलेली अतिरिक्त वीज.</li>
+                        <li><strong>नेट युनिट्स (Net Units):</strong> 'इम्पोर्ट वजा एक्सपोर्ट' या दोन्हीतील निव्वळ फरक ज्यावर तुमचे बिल आकारले जाते.</li>
+                    </ul>
+
+                    <h3 class="sub-heading-h3"><i class="fas fa-angle-right"></i> १.२ सोलर जनरेशन मीटर (Generation Meter)</h3>
+                    <p style="text-align: justify;">काही विशिष्ट व्यावसायिक किंवा मोठ्या क्षमतेच्या जोडणीत इनव्हर्टरजवळ सोलरने एकूण किती वीज निर्माण केली हे मोजण्यासाठी स्वतंत्र 'जनरेशन मीटर' देखील बसवले जाते.</p>
+
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">बाय-डायरेक्शनल मीटरमुळे ग्राहकांना स्वतःच्या वीज उत्पादन आणि वापराचे अचूक नियोजन करता येते का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-solar-panel"></i>
+                    <h2>२. सोलर इनव्हर्टर आणि ग्रिड सिंक्रोनायझेशन (Grid Synchronization)</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">ऑन-ग्रिड इनव्हर्टर सौर ऊर्जेची (DC) रूपांतरित AC वीज महावितरणच्या फ्रिक्वेन्सी आणि व्होल्टेजशी जुळवून घेतो.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">सोलर सिस्टीममधून मिळणारी वीज डीसी (Direct Current) असते. घरातील उपकरणांसाठी आणि ग्रिडला देण्यासाठी ती एसी (Alternating Current) मध्ये बदलावी लागते:</p>
+
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>व्होल्टेज मॅचिंग (Voltage Sync):</strong> इनव्हर्टर महावितरणच्या ग्रिडचा व्होल्टेज (उदा. 230V Single Phase / 415V Three Phase) आपोआप डिटेक्ट करून त्याच व्होल्टेजवर वीज पुरवतो.</li>
+                        <li><span class="number-badge">2</span> <strong>फ्रिक्वेन्सी सिंक्रोनायझेशन:</strong> महावितरणच्या ५० Hz (Hertz) या मानक फ्रिक्वेन्सीशी जुळवून घेतल्याशिवाय इनव्हर्टर ग्रिडमध्ये वीज सोडू शकत नाही.</li>
+                        <li><span class="number-badge">3</span> <strong>ऑटो ट्रिपिंग:</strong> जर महावितरणचा व्होल्टेज खूप कमी किंवा जास्त झाला, तर इनव्हर्टर सुरक्षिततेसाठी वीज निर्मिती थांबवतो.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">ग्रिड सिंक्रोनायझेशनमुळे घरातील संवेदनशील इलेक्ट्रॉनिक उपकरणांना व्होल्टेज फ्लक्चुएशनपासून संरक्षण मिळते का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-shield-halved"></i>
+                    <h2>३. अँटी-आयलँडिंग सुरक्षा वैशिष्ट्य (Anti-Islanding Feature)</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">महावितरणची मुख्य वीज बंद असल्यास तंत्रज्ञांच्या सुरक्षिततेसाठी सोलर इनव्हर्टर आपोआप वीज पुरवठा थांबवतो.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">सोलर जोडणीतील हे अत्यंत महत्त्वाचे तांत्रिक सुरक्षा फीचर आहे. जेव्हा महावितरणच्या भागात लोड शेडिंग किंवा फॉल्टमुळे वीज जाते, तेव्हा काय घडते ते खालीलप्रमाणे स्पष्ट केले आहे:</p>
+
+                    <div class="custom-table-container">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>स्थिती</th>
+                                    <th>सोलर सिस्टीमची कृती</th>
+                                    <th>तांत्रिक कारण</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ग्रिड चालू (MSEDCL ON)</td>
+                                    <td>सोलर वीज निर्मिती व ग्रिड फिडिंग सुरू</td>
+                                    <td>ग्रिड रेफरन्स व्होल्टेज उपलब्ध असणे</td>
+                                </tr>
+                                <tr>
+                                    <td>ग्रिड बंद (MSEDCL Cut-off)</td>
+                                    <td>इनव्हर्टर आपोआप वीज निर्मिती बंद करतो</td>
+                                    <td>अँटी-आयलँडिंग (Anti-Islanding) सुरक्षा नियम</td>
+                                </tr>
+                                <tr>
+                                    <td>लाइन दुरुस्ती काम</td>
+                                    <td>ग्रिडमध्ये रिव्हर्स करंट जात नाही</td>
+                                    <td>लाइनमन अपघातापासून सुरक्षित राहणे</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p style="text-align: justify; margin-top: 10px;">अनेक ग्राहकांना असे वाटते की सोलर बसवल्यावर लाईट गेल्यावरही घरची वीज चालू राहील; परंतु सुरक्षेच्या नियमांमुळे ऑन-ग्रिड सोलर लाईट गेल्यावर बंद होतो.</p>
+
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">महावितरण कर्मचाऱ्यांच्या जीविताच्या सुरक्षिततेसाठी अँटी-आयलँडिंग फीचर अनिवार्य आहे का?</p>
+                </div>
+            </div>
+
+            <!-- SURVEY SECTION -->
+            <div class="urja-premium-survey" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 22px 18px 18px 18px; margin: 5px 0 5px 0; box-shadow: var(--shadow); position: relative; overflow: hidden; font-family: inherit;">
+                <div style="position: absolute; top: 0; left: 18px; background: var(--primary-gradient); color: #ffffff; padding: 3px 12px; font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; border-radius: 0 0 8px 8px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <i class="fas fa-poll" style="margin-right: 4px;"></i> Urja Survey
+                </div>
+                
+                <div id="surveyPremiumMain" style="display: block; opacity: 1; transform: scale(1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);">
+                    <h4 style="margin: 14px 0 16px 0; color: var(--text-main); font-size: 1.05rem; font-weight: 800; line-height: 1.5; text-align: justify;">
+                        सोलर बसवताना जोडणीत होणारा कोणता तांत्रिक बदल तुम्हाला सर्वात महत्त्वाचा वाटतो?
+                    </h4>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%; display: block; margin: 3px auto;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">द्विमार्गी (Bi-directional) नेट मीटरिंग सिस्टीम</span>
+                        </label>
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%; display: block; margin: 3px auto;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">स्वतंत्र अर्थिंग (Earthing) आणि AC/DC प्रोटेक्शन स्विचबोर्ड</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="surveyPremiumSuccess" style="display: none; opacity: 0; text-align: center; padding: 30px 10px 15px 10px; transition: all 0.4s ease;">
+                    <div class="survey-thumb-icon" style="width: 70px; height: 70px; background: var(--primary-gradient); color: #ffffff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.15);">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <h4 style="margin: 0 0 6px 0; color: var(--text-main); font-size: 1.2rem; font-weight: 800;">प्रतिसादाबद्दल धन्यवाद!</h4>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; font-weight: 500;">तुमचा अभिप्राय इतर युझर्सना तांत्रिक साक्षरता मिळवण्यास मदत करेल.</p>
+                </div>
+            </div>
+
+            <!-- SECTION 4 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-bolt"></i>
+                    <h2>४. वायरिंग, स्वतंत्र अर्थिंग आणि प्रोटेक्शन डिव्हाइसेस</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">सुरक्षिततेसाठी सोलर सिस्टीमसाठी स्वतंत्र अर्थिंग पिड्स आणि विद्युत संरक्षणासाठी SPD / MCB चा वापर आवश्यक असतो.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">वीज जोडणीमध्ये खालीलप्रमाणे नवीन हार्डवेअर आणि वायरिंगचा समावेश होतो:</p>
+
+                    <ul class="urja-bullet-list">
+                        <li><strong>डीसी आणि एसी डीबी (DCDB & ACDB):</strong> पॅनेल्स आणि इनव्हर्टरच्या सुरक्षेसाठी Surge Protection Devices (SPD) आणि Fuse असणारे स्वतंत्र डिस्ट्रीब्यूशन बॉक्सेस बसवले जातात.</li>
+                        <li><strong>किमान ३ अर्थिंग पिड्स (Dedicated Earthing):</strong> १) सोलर स्ट्रक्चरसाठी, २) इनव्हर्टरसाठी आणि ३) लाईटनिंग अरेस्टर (Lightning Arrester) साठी स्वतंत्र अर्थिंग आवश्यक असते.</li>
+                        <li><strong>सोलर केबल्स (UV Resistant Cables):</strong> ऊन आणि पावसाचा परिणाम होऊ नये म्हणून छतावर खास डबल इन्सुलेटेड डीसी कॉपर केबल्स वापरल्या जातात.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">योग्य अर्थिंग आणि प्रोटेक्शनमुळे विजांचा कडकडाट किंवा शॉक सर्जपासून सोलर सिस्टीम सुरक्षित राहते का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 5 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-chart-line"></i>
+                    <h2>५. फेज इन्क्रिज आणि मंजूर भार (Sanctioned Load) बदल?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">३ KW पेक्षा जास्त क्षमतेच्या सोलर प्लांटसाठी सिंगल फेजचे रूपांतर थ्री-फेज (Three-Phase) जोडणीत करावे लागते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">महावितरणच्या नियमांनुसार क्षमतेनुसार जोडणीच्या प्रकारात तांत्रिक बदल होतात:</p>
+
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>३ KW पर्यंत सोलर:</strong> सध्याच्या सिंगल फेज (Single Phase) जोडणीवर सहजरीत्या जोडता येतो.</li>
+                        <li><span class="number-badge">2</span> <strong>३ KW पेक्षा जास्त सोलर:</strong> महावितरणच्या नियमानुसार ग्राहकाला आपली जोडणी **थ्री-फेज (Three Phase)** मध्ये श्रेणीसुधारित (Upgrade) करावी लागते.</li>
+                        <li><span class="number-badge">3</span> <strong>मंजूर भारात वाढ (Load Enhancement):</strong> तुमचा मंजूर भार (Sanctioned Load) जितका असेल, तितक्याच क्षमतेचा सोलर प्लांट जोडता येतो. भार कमी असल्यास महावितरणकडे ऑनलाईन अर्ज करून आधी भार वाढवून घ्यावा लागतो.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">मोठ्या क्षमतेच्या सोलरसाठी थ्री-फेज मीटर आणि व्होल्टेज बॅलन्सिंग आवश्यक ठरते का?</p>
+                </div>
+            </div>
+
+        </div> 
+
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-trophy"></i><h3>महत्त्वाचे निष्कर्ष</h3></div>
+            <div class="takeaway-simple-list">
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">सोलर जोडणीमुळे घरातील वीज सिस्टीम अधिक सुरक्षित आणि अत्याधुनिक द्विमार्गी स्वरूपाची बनते.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">ऑन-ग्रिड सिस्टीममध्ये महावितरणची वीज बंद असल्यास अँटी-आयलँडिंग सुरक्षा वैशिष्ट्यामुळे सोलर देखील आपोआप बंद होतो.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">३ KW पेक्षा जास्त क्षमतेच्या सोलरसाठी महावितरणकडे Single Phase वरून Three Phase मध्ये लोड ट्रान्सफर करणे आवश्यक आहे.</p></div>
+            </div>
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-arrow-alt-circle-right"></i><h3>पुढचं पाऊल:</h3></div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">सोलर बसवण्यापूर्वी तुमच्या घरातील सध्याची वायरिंग, अर्थिंग आणि मंजूर भार (Sanctioned Load) तपासण्यासाठी मान्यताप्राप्त इलेक्ट्रिकल कंत्राटदार किंवा महावितरणच्या तंत्रज्ञांचा सल्ला घ्या.</p>
+            </div>
+        </div>
+
+        <!-- PEOPLE ALSO ASK SECTION -->
+        <div class="people-also-ask">
+            <div class="paa-header">
+                <i class="fas fa-users"></i>
+                <h3>People Also Ask</h3>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">सोलर बसवल्यावर घरातील जुनी वायरिंग बदलावी लागते का?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">सामान्यतः संपूर्ण अंतर्गत वायरिंग बदलण्याची गरज नसते. केवळ मुख्य मीटर बोर्ड ते सोलर इनव्हर्टर आणि डिस्ट्रीब्यूशन बॉक्स (ACDB/DCDB) दरम्यान नवीन केबलिंग व स्वतंत्र अर्थिंग जोडली जाते.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">महावितरणची लाईट गेल्यावर ऑन-ग्रिड सोलर का काम करत नाही?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">अँटी-आयलँडिंग (Anti-Islanding) सुरक्षा नियमांनुसार, ग्रिड बंद असताना सोलरची वीज तारांमध्ये गेल्यास लाईन दुरुस्त करणाऱ्या महावितरण कर्मचाऱ्यांना शॉक बसण्याचा धोका असतो. म्हणूनच इनव्हर्टर आपोआप बंद होतो.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">सोलर बसवण्यासाठी स्वतंत्र अर्थिंग का आवश्यक असते?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">सौर पॅनेल्स उंचावर आणि उघड्या छतावर असतात. विजांचा कडकडाट, हाय व्होल्टेज सर्ज किंवा डीसी लीकेजपासून इनव्हर्टर व घरातील उपकरणांचे रक्षण करण्यासाठी स्वतंत्र अर्थिंग अनिवार्य असते.</p></div>
+            </div>
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>महत्वाचे अस्वीकरण (Disclaimer):</h3>
+            </div>
+            <div class="disclaimer-text" style="font-size: 0.85rem; line-height: 1.5; text-align: justify;">
+                या लेखात दिलेली तांत्रिक माहिती ही सामान्य जनजागृती आणि मार्गदर्शनासाठी आहे. महावितरण (MSEDCL) आणि केंद्रीय विद्युत प्राधिकरणाच्या (CEA) सुरक्षा नियमावलीनुसार तांत्रिक मानकांमध्ये बदल होऊ शकतात. प्रत्यक्ष इन्स्टॉलेशन करताना परवानाधारक विद्युत कंत्राटदाराचा (Licensed Electrical Contractor) सल्ला आवर्जून घ्यावा. <strong>UrjaPlus</strong> कोणत्याही तांत्रिक नुकसानीस जबाबदार राहणार नाही.
+            </div>
+        </div>
+
+        <div class="content-spacer"></div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="../index.html" class="nav-item" data-nav="home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="../tools.html" class="nav-item" data-nav="Tools"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="../search.html" class="nav-item" data-nav="Search"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="../rti-plus.html" class="nav-item" data-nav="Favorites"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn" data-nav="Share"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Light / Dark Theme Sync
+        function applySynchronizedTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+        applySynchronizedTheme();
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                applySynchronizedTheme();
+            }
+        });
+        
+        // People Also Ask Accordion Logic
+        const paaItems = document.querySelectorAll('.paa-item');
+        paaItems.forEach(paa => {
+            const questionDiv = paa.querySelector('.paa-question');
+            if(questionDiv) {
+                questionDiv.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isActive = paa.classList.contains('active-paa');
+                    
+                    // Close other opened items
+                    paaItems.forEach(other => {
+                        if(other !== paa && other.classList.contains('active-paa')) {
+                            other.classList.remove('active-paa');
+                        }
+                    });
+                    
+                    // Toggle active item
+                    if(!isActive) {
+                        paa.classList.add('active-paa');
+                    } else {
+                        paa.classList.remove('active-paa');
+                    }
+                });
+            }
+        });
+        
+        const backBtn = document.getElementById('backToHomeBtn');
+        if(backBtn) {
+            backBtn.addEventListener('click', () => {
+                window.location.href = '../solar-rooftop.html'; 
+            });
+        }        
+        
+        // Smooth Click Effect for Boxes
+        document.addEventListener('click', function(e) {
+            const box = e.target.closest('.simple-outline-box, .faq-item');
+            if(box && !e.target.closest('button') && !e.target.closest('.people-also-ask') && !e.target.closest('.urja-premium-survey')) {
+                box.style.transform = 'scale(0.99)';
+                setTimeout(() => { box.style.transform = ''; }, 130);
+            }
+        });
+    })();
+
+    // Survey Response Interaction
+    function handleSurveySelection(selectedLabel) {
+        const allLabels = selectedLabel.parentElement.querySelectorAll('label');
+        allLabels.forEach(label => {
+            const checkOuter = label.querySelector('.survey-custom-check');
+            const checkInner = checkOuter.querySelector('span');
+            checkOuter.style.borderColor = 'var(--text-muted)';
+            checkInner.style.background = 'transparent';
+            label.style.borderColor = 'var(--border-color)';
+            label.style.background = 'var(--bg-app)';
+        });
+
+        const activeCheckOuter = selectedLabel.querySelector('.survey-custom-check');
+        const activeCheckInner = activeCheckOuter.querySelector('span');
+        activeCheckOuter.style.borderColor = 'var(--primary)';
+        activeCheckInner.style.background = 'var(--primary)';
+        selectedLabel.style.borderColor = 'var(--primary)';
+        selectedLabel.style.background = 'var(--bg-card)';
+
+        // Delay for smooth visual transition
+        setTimeout(function() {
+            const mainContent = document.getElementById('surveyPremiumMain');
+            const successContent = document.getElementById('surveyPremiumSuccess');
+            const thumbIcon = successContent.querySelector('.survey-thumb-icon');
+            
+            mainContent.style.opacity = '0';
+            mainContent.style.transform = 'scale(0.9)';
+            
+            setTimeout(function() {
+                mainContent.style.display = 'none';
+                successContent.style.display = 'block';
+                setTimeout(function() {
+                    successContent.style.opacity = '1';
+                    if(thumbIcon) thumbIcon.style.animation = 'thumbPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                }, 50);
+            }, 300);
+        }, 350);
+    }
+</script>
+</body>
+</html>

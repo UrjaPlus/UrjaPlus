@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>रूफटॉप सोलर म्हणजे नेमकं काय आणि ते कसं काम करतं? | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Theme System --- */
+        :root {
+            --bg-app: #f4f7fe;
+            --bg-card: #ffffff;
+            --primary: #111111; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); 
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --icon-bg: #f1f5f9; 
+            --accent-red: #111111;
+            --accent-red-hover: #000000;
+            --dashed-border: #cbd5e1;
+            --gradient-mastermind: linear-gradient(120deg, #f8fafc, #ffffff);
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827; 
+            --primary: #ffffff; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+            --icon-bg: rgba(255, 255, 255, 0.05);
+            --accent-red: #ffffff;
+            --accent-red-hover: #e2e8f0;
+            --dashed-border: #1f2937;
+            --gradient-mastermind: linear-gradient(120deg, #111827, #0b0f19);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Inter', Roboto, Helvetica, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .article-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: background 0.3s ease;
+        }
+
+        /* STICKY HEADER BAR */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .article-content {
+            padding: 24px 16px 0px 16px;
+            overflow-x: hidden;
+        }
+
+        .plain-article-title {
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+
+        .intro-image {
+            text-align: center;
+            margin: 10px 0 20px 0;
+        }
+
+        .about-intro-img {
+            width: 90%;
+            max-width: 90%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .simple-outline-box {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 18px 16px;
+            margin: 24px 0 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+
+        .simple-outline-box .box-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .simple-outline-box .box-header i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .simple-outline-box .box-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .intro-description-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            text-align: justify;
+        }
+
+        /* --- FAQ Section Styles --- */
+        .faq-section {
+            margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 20px 18px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease;
+        }
+        
+        .faq-question-static {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .faq-question-static i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .faq-question-static h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .answer-content-static {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .faq-key-box {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 16px;
+            background: var(--bg-app);
+            margin: 16px 0;
+            box-shadow: var(--shadow);
+        }
+        .faq-key-box h4 {
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+        }
+        .faq-key-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .faq-key-box li {
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .box-numbers-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+        .box-numbers-list li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.2rem;
+            text-align: justify;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .number-badge {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            background-color: #111111 !important;
+            color: white;
+            width: 1.8rem;
+            height: 1.8rem;
+            text-align: center;
+            line-height: 1.8rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        [data-theme="dark"] .number-badge {
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+
+        /* Bullet List Styling */
+        .urja-bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+        }
+        .urja-bullet-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        .urja-bullet-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.3rem;
+            position: absolute;
+            left: 6px;
+            top: -2px;
+        }
+
+        .takeaway-simple-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .takeaway-simple-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border-left: 3px solid var(--primary);
+            padding: 10px 12px;
+            background: var(--bg-app);
+            border-radius: 0 12px 12px 0;
+        }
+        .takeaway-simple-item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            width: 26px;
+            text-align: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .takeaway-simple-item p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            flex: 1;
+            color: var(--text-main);
+        }
+
+        /* --- People Also Ask Section --- */
+        .people-also-ask {
+            background: var(--bg-card);
+            border-radius: 24px;
+            margin: 24px 0 28px;
+            padding: 14px 6px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        .paa-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 14px 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 6px;
+        }
+        .paa-header i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .paa-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        .paa-item {
+            background: var(--bg-card);
+            border-radius: 18px;
+            margin: 10px 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .paa-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            cursor: pointer;
+            gap: 10px;
+        }
+        .paa-toggle-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            background: var(--icon-bg);
+            border-radius: 50%;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+        .paa-item.active-paa .paa-toggle-icon {
+            background: var(--primary);
+            color: #ffffff;
+            transform: rotate(135deg);
+        }
+        .paa-question-text {
+            flex: 1;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .paa-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+            background: var(--bg-card);
+        }
+        .paa-item.active-paa .paa-answer {
+            max-height: 400px;
+            border-top: 1px solid var(--border-color);
+            padding: 14px 18px;
+            border-bottom: none;
+        }
+        .paa-answer p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Survey Style */
+        .urja-premium-survey label:active {
+            transform: scale(0.98);
+        }
+        @keyframes thumbPop {
+            0% { transform: scale(0.4) rotate(-30deg); opacity: 0; }
+            70% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+        .content-spacer {
+            height: 80px;
+        }
+        
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .plain-article-title, .intro-image, .simple-outline-box, .faq-item, .people-also-ask {
+            animation: fadeUp 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+<div class="article-container">
+    <div class="sharp-header" id="stickyHeader">
+        <button class="back-arrow" id="backToHomeBtn" aria-label="Back">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">
+            <i class="fas fa-bolt"></i> 
+            <span>UrjaPlus</span>
+        </div>
+    </div>
+
+    <div class="article-content">
+        <div class="plain-article-title">
+            रूफटॉप सोलर म्हणजे नेमकं काय आणि ते कसं काम करतं?
+        </div>
+
+        <div class="intro-image">
+            <img src="../Image/what-is-rooftop-solar-and-how-it-works.webp" alt="what-is-rooftop-solar-and-how-it-works" class="about-intro-img">
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-sun"></i>
+                <h3>परिचय</h3>
+            </div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">वाढते वीज बिल आणि निसर्गाचा समतोल राखण्याची गरज यांमुळे आज घराघरांवर सोलर पॅनेल्स बसवण्याचा कल वेगाने वाढतो आहे. परंतु, रूफटॉप सोलर म्हणजे नक्की काय आणि हे तंत्रज्ञान छतावर बसवल्यानंतर आपल्याला मोफत वीज कशी पुरवते, याबद्दल अनेकांच्या मनात संभ्रम असतो. हा लेख सौर ऊर्जेची निर्मिती कशी होते, त्यातील विविध घटक कोणते आणि आपल्या घरासाठी सर्वात फायदेशीर प्रणाली कोणती, या सर्व तांत्रिक बाबी सोप्या मराठीत स्पष्ट करतो.</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            
+            <!-- SECTION 1 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-lightbulb"></i>
+                    <h2>१. रूफटॉप सोलरची सोपी व्याख्या | सूर्याच्या किरणांपासून वीज निर्मितीपर्यंत!</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">छतावरील रिकाम्या जागेत सोलर पॅनेल्स बसवून सूर्याच्या प्रकाशापासून थेट वीज बनवण्याच्या संपूर्ण सेटअपला रूफटॉप सोलर म्हणतात.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">रूफटॉप सोलर म्हणजे घराच्या किंवा इमारतीच्या छतावर सौर पॅनेल्स बसवून केलेली वीज निर्मिती व्यवस्था होय. हे तंत्रज्ञान खालील टप्प्यांवर काम करते:</p>
+                    
+                    <ul class="urja-bullet-list">
+                        <li><strong>जागेचा अचूक वापर:</strong> छतावरील रिकामी जागा वापरली जात असल्याने वेगळ्या जमिनीची आवश्यकता नसते.</li>
+                        <li><strong>प्रकाश ऊर्जा ग्रहण:</strong> हे पॅनेल्स सूर्याच्या उष्णतेवर नव्हे, तर 'सूर्यप्रकाशावर' (Photons) चालतात.</li>
+                        <li><strong>प्रदूषणमुक्त पर्याय:</strong> कोळशाची किंवा पाण्याची गरज नसल्याने कार्बन उत्सर्जन पूर्णपणे शून्य राहते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">सौर उर्जेचा हा अमर्याद स्त्रोत भविष्यात पारंपारिक विजेला पूर्णपणे पर्याय ठरू शकतो का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-network-wired"></i>
+                    <h2>२. इलेक्ट्रिकल सोलर सिस्टमची मूलभूत संरचना.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">सोलर सिस्टम ही केवळ पॅनेल्सपुरती मर्यादित नसून इन्व्हर्टर, बॅटरी आणि कंट्रोलर यांसारख्या विविध घटकांनी मिळून बनलेली असते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">एक कार्यक्षम सोलर सिस्टम तयार होण्यासाठी खालील मुख्य घटकांचे जाळे आवश्यक असते:</p>
+
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>सोलर मॉड्यूल्स (पॅनेल्स):</strong> छतावर बसवले जाणारे मुख्य युनिट जे वीज जनरेट करते.</li>
+                        <li><span class="number-badge">2</span> <strong>सोलर इन्व्हर्टर:</strong> निर्मित झालेली कच्ची वीज घरातील उपकरणांसाठी योग्य बनवणारा मुख्य मेंदू.</li>
+                        <li><span class="number-badge">3</span> <strong>माउंटिंग स्ट्रक्चर्स व वायर्स:</strong> पॅनेल्स वादळ-वाऱ्यातही स्थिर ठेवण्यासाठी मजबूत जीआय (GI) स्ट्रक्चर व डीसी वायर्स.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">सर्व घटकांचा दर्जा उत्तम राखल्यास सिस्टीमचे आयुष्य २५ वर्षांपेक्षा जास्त काळ टिकू शकते का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-atom"></i>
+                    <h2>३. सूर्यकिरणे इलेक्ट्रॉनिक चार्जमध्ये कशी बदलतात?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">सिलिकॉनच्या मदतीने सूर्यप्रकाशाचे रूपांतर थेट विद्युत प्रवाहामध्ये करण्याच्या प्रक्रियेला 'फोटोव्होल्टेइक इफेक्ट' म्हणतात.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">पॅनेल्समधील विज्ञानाची जादू अतिशय साधी आणि रंजक आहे:</p>
+
+                    <ul class="urja-bullet-list">
+                        <li><strong>सिलिकॉन सेमीकंडक्टर:</strong> सोलर सेल्स हे सिलिकॉनच्या दोन थरांपासून बनवलेले असतात.</li>
+                        <li><strong>इलेक्ट्रॉन्सची हालचाल:</strong> सूर्यकिरण जेव्हा सेल्सवर आदळतात, तेव्हा त्यातील धन आणि ऋण थरांमध्ये असलेले इलेक्ट्रॉन्स वेगाने वाहू लागतात.</li>
+                        <li><strong>विद्युत प्रवाह निर्मिती:</strong> या इलेक्ट्रॉन्सच्या सातत्यपूर्ण प्रवाहामुळे डीसी (Direct Current) विद्युत प्रवाहाची निर्मिती होते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">निसर्गातील केवळ प्रकाशाच्या कणांपासून अशा प्रकारे सातत्यपूर्ण वीज मिळवणे विज्ञानाचा चमत्कार नाही का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 4 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-border-all"></i>
+                    <h2>४. सोलर पॅनलचे प्रकार: मोनोक्रिस्टलाइन vs पॉलीक्रिस्टलाइन.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">जागा कमी असल्यास अधिक कार्यक्षम मोनोक्रिस्टलाइन आणि बजेट कमी असल्यास पॉलीक्रिस्टलाइन पॅनेल्सची निवड केली जाते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">बाजारपेठेत मुख्यत्वे दोन तंत्रज्ञानाचे पॅनेल्स उपलब्ध असतात, ज्यांचे विश्लेषण खालीलप्रमाणे आहे:</p>
+
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>मोनोक्रिस्टलाइन (Mono-SI):</strong> हे शुद्ध सिलिकॉनच्या एकाच क्रिस्टलपासून बनतात. यांचा रंग गडद काळा असतो आणि कमी सूर्यप्रकाशात व ढगाळ वातावरणातही यांची कार्यक्षमता अप्रतिम असते.</li>
+                        <li><span class="number-badge">2</span> <strong>पॉलीक्रिस्टलाइन (Poly-SI):</strong> हे अनेक सिलिकॉन क्रिस्टल्स एकत्र वितळवून बनवले जातात. यांचा रंग निळा असतो, कार्यक्षमता थोडी कमी असते परंतु हे अत्यंत स्वस्त आणि बजेट-फ्रेंडली असतात.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">जागेची टंचाई असलेल्या भागात मोनोक्रिस्टलाइन पॅनेल्स वापरणे हाच सर्वोत्तम मार्ग आहे का?</p>
+                </div>
+            </div>
+
+            <!-- SURVEY SECTION (WORKING & VERIFIED) -->
+            <div class="urja-premium-survey" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 22px 18px 18px 18px; margin: 5px 0 5px 0; box-shadow: var(--shadow); position: relative; overflow: hidden; font-family: inherit;">
+                <div style="position: absolute; top: 0; left: 18px; background: var(--primary-gradient); color: #ffffff; padding: 3px 12px; font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; border-radius: 0 0 8px 8px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <i class="fas fa-poll" style="margin-right: 4px;"></i> Urja Survey
+                </div>
+                
+                <div id="surveyPremiumMain" style="display: block; opacity: 1; transform: scale(1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);">
+                    <h4 style="margin: 14px 0 16px 0; color: var(--text-main); font-size: 1.05rem; font-weight: 800; line-height: 1.5; text-align: justify;">
+                        तुमच्या मते रूफटॉप सोलर बसवताना ग्राहकांच्या मनात सर्वात मोठी शंका कोणती असते?
+                    </h4>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%; display: block; margin: 3px auto;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">सुरुवातीला करावी लागणारी मोठी गुंतवणूक (खर्च)</span>
+                        </label>
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%; display: block; margin: 3px auto;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">पावसाळ्यात किंवा ढगाळ हवेत वीज मिळेल की नाही याची काळजी</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="surveyPremiumSuccess" style="display: none; opacity: 0; text-align: center; padding: 30px 10px 15px 10px; transition: all 0.4s ease;">
+                    <div class="survey-thumb-icon" style="width: 70px; height: 70px; background: var(--primary-gradient); color: #ffffff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.15);">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <h4 style="margin: 0 0 6px 0; color: var(--text-main); font-size: 1.2rem; font-weight: 800;">नोंदणी केल्याबद्दल धन्यवाद!</h4>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; font-weight: 500;">तुमचा अभिप्राय आमच्यासाठी अत्यंत महत्त्वाचा आहे.</p>
+                </div>
+            </div>
+
+            <!-- SECTION 5 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-bolt"></i>
+                    <h2>५. सौर ऊर्जेचा DC करंट AC मध्ये कसा रूपांतरित होतो?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">सोलर पॅनेल्समधून तयार झालेला डीसी (DC) करंट आपल्या घरातील उपकरणांना चालवण्यासाठी इन्व्हर्टरद्वारे एसी (AC) मध्ये बदलावा लागतो.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">इन्व्हर्टरच्या परिवर्तनाची प्रक्रिया घरातील यंत्रणांसाठी अत्यंत महत्त्वाची असते:</p>
+
+                    <ul class="urja-bullet-list">
+                        <li><strong>कच्चा डीसी करंट:</strong> पॅनेल्स एकाच दिशेने वाहणारा संथ विद्युतप्रवाह (Direct Current) तयार करतात.</li>
+                        <li><strong>इन्व्हर्टरचे कार्य:</strong> इन्व्हर्टर या प्रवाहाला सेकंदात अनेकदा दिशा बदलणाऱ्या अल्टरनेटिंग करंट (AC) मध्ये रुपांतरित करतो.</li>
+                        <li><strong>फ्रिक्वेन्सी मॅचिंग:</strong> इन्व्हर्टर विजेची फ्रिक्वेन्सी अचूकपणे ५० हर्ट्झ (Hz) वर सेट करतो जेणेकरून घरातील टीव्ही, फ्रीज, पंखे सुरक्षित चालतील.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">इन्व्हर्टरशिवाय सौर ऊर्जेचा आपल्या दैनंदिन घरगुती उपकरणांसाठी वापर करणे अशक्य आहे का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 6 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-toggle-on"></i>
+                    <h2>६. ऑनग्रिड आणि ऑफग्रिड सोलर सिस्टम्सचे फरक आणि फायदे.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">शहरी भागासाठी नेट-मीटरिंग असणारी ऑनग्रिड सिस्टीम आणि लोडशेडिंग असलेल्या भागासाठी बॅटरी असणारी ऑफग्रिड सिस्टीम उत्तम ठरते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">या दोन अत्यंत महत्त्वाच्या सोलर प्रणाली खालीलप्रमाणे वेगळ्या ठरतात:</p>
+
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>ऑनग्रिड सोलर (On-Grid):</strong> ही सिस्टीम थेट सरकारी वीज जोडणीशी (Grid) जोडलेली असते. यामध्ये जास्तीची वीज सरकारला विकता येते (Net Metering), परंतु वीज गेल्यास (Power Cut) ही बंद पडते.</li>
+                        <li><span class="number-badge">2</span> <strong>ऑफग्रिड सोलर (Off-Grid):</strong> यामध्ये बॅटरी बँक जोडलेली असते. दिवसा तयार झालेली वीज बॅटरीमध्ये साठवून रात्री वापरता येते. ही पूर्णपणे स्वतंत्र असून सरकारी ग्रिडवर अवलंबून नसते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">महावितरणच्या ग्राहकांसाठी ऑनग्रिड सिस्टीमद्वारे वीज बिल झिरो करणे अधिक सुलभ आहे का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 7 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-chart-line"></i>
+                    <h2>७. सोलर पॅनलची कार्यक्षमता कोणत्या घटकांवर अवलंबून असते?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">सोलर पॅनेल्सची दिशा, कोन आणि धूळ-मातीचा थर हे पॅनेल्सच्या एकूण वीज निर्मिती क्षमतेवर परिणाम करतात.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">पॅनेल्सची कमाल कार्यक्षमता (Efficiency) मिळवण्यासाठी खालील गोष्टी महत्त्वाच्या ठरतात:</p>
+
+                    <ul class="urja-bullet-list">
+                        <li><strong>योग्य दिशा व कोन (Angle):</strong> भारतात पॅनेल्स नेहमी दक्षिण (South-Facing) दिशेकडे झुकवून बसवले पाहिजेत, जेणेकरून दिवसभर सर्वाधिक प्रकाश मिळेल.</li>
+                        <li><strong>धुलीकण आणि स्वच्छता:</strong> पॅनेल्सवर साचलेली धूळ सूर्यप्रकाश अडवते, त्यामुळे १५ दिवसांतून एकदा ते पाण्याने धुणे आवश्यक आहे.</li>
+                        <li><strong>तापमानाचा प्रभाव:</strong> अति उष्णतेमुळे (४५ अंश सेल्सिअसच्या वर) पॅनेल्सची कार्यक्षमता वाढण्याऐवजी काही प्रमाणात मंदावते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">योग्य निगा राखल्यास सोलर सिस्टीमची कार्यक्षमता वर्षानुवर्षे स्थिर राखता येते का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 8 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-scale-balanced"></i>
+                    <h2>८. पारंपारिक वीज विरुद्ध सौर ऊर्जा यामधील तुमच्यासाठी काय सर्वोत्तम आहे?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">सुरुवातीचा खर्च वगळल्यास सौर ऊर्जा ही सरकारी विजेच्या तुलनेत अतिशय स्वस्त, मोफत आणि प्रदूषणमुक्त पर्याय ठरते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">दोन्हींची तुलना केल्यास योग्य चित्र समोर येते:</p>
+
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>खर्च आणि परतावा (ROI):</strong> सरकारी वीज ही दरमहा महाग होत जाते. याउलट, सोलरचा खर्च एकदाच असून केवळ ४ ते ५ वर्षांत संपूर्ण पैसे वसूल होतात.</li>
+                        <li><span class="number-badge">2</span> <strong>स्वातंत्र्य:</strong> सौर ऊर्जेमुळे ग्राहकांना वीज बिल वाढीपासून आणि भारनियमनापासून कायमची सुटका मिळते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">आजच्या वाढत्या वीजदराचा विचार करता सोलर बसवणे ही काळाची गरज बनली आहे का?</p>
+                </div>
+            </div>
+
+        </div> 
+
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-trophy"></i><h3>महत्त्वाचे निष्कर्ष</h3></div>
+            <div class="takeaway-simple-list">
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">रूफटॉप सोलर हे छतावरील जागेचा वापर करून मोफत वीज मिळवण्याचे सर्वात विश्वासार्ह साधन आहे.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">तुमच्या भागात वीज जाण्याचे प्रमाण नगण्य असल्यास सरकारी सबसिडीचा लाभ मिळवून देणारी 'ऑनग्रिड सोलर' प्रणाली सर्वोत्तम आहे.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">नियमित स्वच्छता आणि दक्षिण दिशेकडील योग्य कोन पॅनेल्सचे आयुष्य व कार्यक्षमता अखंडितपणे चालू ठेवतात.</p></div>
+            </div>
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-arrow-alt-circle-right"></i><h3>पुढचं पाऊल:</h3></div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">तुमच्या घरातील वीज बिलाचे सरासरी युनिट्स तपासा. जर तुमचे दरमहा बिल १५०० रुपयांपेक्षा जास्त येत असेल, तर केंद्र सरकारच्या <strong>'पीएम सूर्य घर मोफत वीज योजने'</strong> अंतर्गत अधिकृत सोलर वेंडरशी संपर्क साधून सबसिडीसह सोलर इन्स्टॉलेशनसाठी अर्ज करा.</p>
+            </div>
+        </div>
+
+        <!-- PEOPLE ALSO ASK SECTION (WORKING & VERIFIED ACCORDION) -->
+        <div class="people-also-ask">
+            <div class="paa-header">
+                <i class="fas fa-users"></i>
+                <h3>People Also Ask</h3>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">पावसाळ्यात किंवा ढगाळ वातावरणात सोलर पॅनेल्स वीज तयार करतात का?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">होय, परंतु अत्यंत कमी प्रमाणात. सोलर पॅनेल्स उन्हावर नव्हे, तर दिवसाच्या प्रकाशावर कार्य करतात. ढगाळ हवेत थेट प्रकाश नसल्याने वीज निर्मितीची क्षमता ५० ते ७० टक्क्यांपर्यंत खालावते.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">केंद्र सरकारकडून रूफटॉप सोलरसाठी किती सबसिडी मिळते?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">'पीएम सूर्य घर मोफत वीज योजने' अंतर्गत १ किलोवॅटसाठी अंदाजे ३०,००० रुपये, २ किलोवॅटसाठी ६०,००० रुपये तर ३ किलोवॅट किंवा त्याहून अधिक क्षमतेसाठी कमाल ७८,००० रुपयांपर्यंत थेट बँक खात्यात सबसिडी मिळते.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">सोलर पॅनेल्सचे आयुष्यमान नेमके किती वर्षे असते?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">दर्जेदार सोलर पॅनेल्सची कार्यक्षमता गॅरंटी २५ ते ३० वर्षांपर्यंत असते. २५ वर्षांनंतरही हे पॅनेल्स काम करतात, परंतु त्यांची वीज जनरेट करण्याची क्षमता ८० टक्क्यांपर्यंत खाली येते.</p></div>
+            </div>
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>महत्वाचे अस्वीकरण (Disclaimer):</h3>
+            </div>
+            <div class="disclaimer-text" style="font-size: 0.85rem; line-height: 1.5; text-align: justify;">
+                या लेखात दिलेली माहिती केवळ सामान्य तांत्रिक जनजागृती आणि माहितीच्या हेतूने दिली आहे. सरकारी सबसिडी, विजेचे नियम आणि तांत्रिक निकष राज्यानुसार बदलू शकतात. कोणतीही सोलर सिस्टीम बसवण्यापूर्वी अधिकृत शासकीय पोर्टल आणि मान्यताप्राप्त वेंडरकडून अचूक माहितीची पडताळणी करून घ्यावी. योग्य सर्वेक्षणाशिवाय केलेल्या कोणत्याही गुंतवणुकीच्या नुकसानीस <strong>UrjaPlus</strong> जबाबदार राहणार नाही.
+            </div>
+        </div>
+
+        <div class="content-spacer"></div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="../index.html" class="nav-item" data-nav="home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="../tools.html" class="nav-item" data-nav="Tools"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="../search.html" class="nav-item" data-nav="Search"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="../rti-plus.html" class="nav-item" data-nav="Favorites"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn" data-nav="Share"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Light / Dark Theme Sync
+        function applySynchronizedTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+        applySynchronizedTheme();
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                applySynchronizedTheme();
+            }
+        });
+        
+        // --- FIXED AND WORKING: People Also Ask Accordion Logic ---
+        const paaItems = document.querySelectorAll('.paa-item');
+        paaItems.forEach(paa => {
+            const questionDiv = paa.querySelector('.paa-question');
+            if(questionDiv) {
+                questionDiv.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isActive = paa.classList.contains('active-paa');
+                    
+                    // Close other opened items
+                    paaItems.forEach(other => {
+                        if(other !== paa && other.classList.contains('active-paa')) {
+                            other.classList.remove('active-paa');
+                        }
+                    });
+                    
+                    // Toggle active item
+                    if(!isActive) {
+                        paa.classList.add('active-paa');
+                    } else {
+                        paa.classList.remove('active-paa');
+                    }
+                });
+            }
+        });
+        
+        const backBtn = document.getElementById('backToHomeBtn');
+        if(backBtn) {
+            backBtn.addEventListener('click', () => {
+                window.location.href = '../solar-rooftop.html'; 
+            });
+        }        
+        
+        // Smooth Click Effect for Boxes
+        document.addEventListener('click', function(e) {
+            const box = e.target.closest('.simple-outline-box, .faq-item');
+            if(box && !e.target.closest('button') && !e.target.closest('.people-also-ask') && !e.target.closest('.urja-premium-survey')) {
+                box.style.transform = 'scale(0.99)';
+                setTimeout(() => { box.style.transform = ''; }, 130);
+            }
+        });
+    })();
+
+    // --- FIXED AND WORKING: Survey Response Interaction ---
+    function handleSurveySelection(selectedLabel) {
+        const allLabels = selectedLabel.parentElement.querySelectorAll('label');
+        allLabels.forEach(label => {
+            const checkOuter = label.querySelector('.survey-custom-check');
+            const checkInner = checkOuter.querySelector('span');
+            checkOuter.style.borderColor = 'var(--text-muted)';
+            checkInner.style.background = 'transparent';
+            label.style.borderColor = 'var(--border-color)';
+            label.style.background = 'var(--bg-app)';
+        });
+
+        const activeCheckOuter = selectedLabel.querySelector('.survey-custom-check');
+        const activeCheckInner = activeCheckOuter.querySelector('span');
+        activeCheckOuter.style.borderColor = 'var(--primary)';
+        activeCheckInner.style.background = 'var(--primary)';
+        selectedLabel.style.borderColor = 'var(--primary)';
+        selectedLabel.style.background = 'var(--bg-card)';
+
+        // Delay for smooth visual transition
+        setTimeout(function() {
+            const mainContent = document.getElementById('surveyPremiumMain');
+            const successContent = document.getElementById('surveyPremiumSuccess');
+            const thumbIcon = successContent.querySelector('.survey-thumb-icon');
+            
+            mainContent.style.opacity = '0';
+            mainContent.style.transform = 'scale(0.9)';
+            
+            setTimeout(function() {
+                mainContent.style.display = 'none';
+                successContent.style.display = 'block';
+                setTimeout(function() {
+                    successContent.style.opacity = '1';
+                    if(thumbIcon) thumbIcon.style.animation = 'thumbPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                }, 50);
+            }, 300);
+        }, 350);
+    }
+</script>
+</body>
+</html>
