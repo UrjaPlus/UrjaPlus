@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>घरावर सोलर बसवल्यानंतर वीज बिल पूर्णतः शून्य होऊ शकते का? | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Theme System --- */
+        :root {
+            --bg-app: #f4f7fe;
+            --bg-card: #ffffff;
+            --primary: #111111; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); 
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --icon-bg: #f1f5f9; 
+            --accent-red: #111111;
+            --accent-red-hover: #000000;
+            --dashed-border: #cbd5e1;
+            --gradient-mastermind: linear-gradient(120deg, #f8fafc, #ffffff);
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827; 
+            --primary: #ffffff; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+            --icon-bg: rgba(255, 255, 255, 0.05);
+            --accent-red: #ffffff;
+            --accent-red-hover: #e2e8f0;
+            --dashed-border: #1f2937;
+            --gradient-mastermind: linear-gradient(120deg, #111827, #0b0f19);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Inter', Roboto, Helvetica, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .article-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: background 0.3s ease;
+        }
+
+        /* STICKY HEADER BAR */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .article-content {
+            padding: 24px 16px 0px 16px;
+            overflow-x: hidden;
+        }
+
+        .plain-article-title {
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+
+        .intro-image {
+            text-align: center;
+            margin: 10px 0 20px 0;
+        }
+
+        .about-intro-img {
+            width: 90%;
+            max-width: 90%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .simple-outline-box {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 18px 16px;
+            margin: 24px 0 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+
+        .simple-outline-box .box-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .simple-outline-box .box-header i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .simple-outline-box .box-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .intro-description-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            text-align: justify;
+        }
+
+        /* --- FAQ Section Styles --- */
+        .faq-section {
+            margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 20px 18px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease;
+        }
+        
+        .faq-question-static {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .faq-question-static i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .faq-question-static h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .answer-content-static {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .faq-key-box {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 16px;
+            background: var(--bg-app);
+            margin: 16px 0;
+            box-shadow: var(--shadow);
+        }
+        .faq-key-box h4 {
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+        }
+        .faq-key-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .faq-key-box li {
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .box-numbers-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+        .box-numbers-list li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.2rem;
+            text-align: justify;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .number-badge {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            background-color: #111111 !important;
+            color: white;
+            width: 1.8rem;
+            height: 1.8rem;
+            text-align: center;
+            line-height: 1.8rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        [data-theme="dark"] .number-badge {
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+
+        /* Bullet List Styling */
+        .urja-bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+        }
+        .urja-bullet-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        .urja-bullet-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.3rem;
+            position: absolute;
+            left: 6px;
+            top: -2px;
+        }
+
+        .takeaway-simple-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .takeaway-simple-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border-left: 3px solid var(--primary);
+            padding: 10px 12px;
+            background: var(--bg-app);
+            border-radius: 0 12px 12px 0;
+        }
+        .takeaway-simple-item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            width: 26px;
+            text-align: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .takeaway-simple-item p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            flex: 1;
+            color: var(--text-main);
+        }
+
+        /* --- People Also Ask Section --- */
+        .people-also-ask {
+            background: var(--bg-card);
+            border-radius: 24px;
+            margin: 24px 0 28px;
+            padding: 14px 6px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        .paa-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 14px 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 6px;
+        }
+        .paa-header i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .paa-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        .paa-item {
+            background: var(--bg-card);
+            border-radius: 18px;
+            margin: 10px 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .paa-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            cursor: pointer;
+            gap: 10px;
+        }
+        .paa-toggle-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            background: var(--icon-bg);
+            border-radius: 50%;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+        .paa-item.active-paa .paa-toggle-icon {
+            background: var(--primary);
+            color: #ffffff;
+            transform: rotate(135deg);
+        }
+        .paa-question-text {
+            flex: 1;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .paa-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+            background: var(--bg-card);
+        }
+        .paa-item.active-paa .paa-answer {
+            max-height: 400px;
+            border-top: 1px solid var(--border-color);
+            padding: 14px 18px;
+            border-bottom: none;
+        }
+        .paa-answer p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Survey Style */
+        .urja-premium-survey label:active {
+            transform: scale(0.98);
+        }
+        @keyframes thumbPop {
+            0% { transform: scale(0.4) rotate(-30deg); opacity: 0; }
+            70% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+        .content-spacer {
+            height: 80px;
+        }
+        
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .plain-article-title, .intro-image, .simple-outline-box, .faq-item, .people-also-ask {
+            animation: fadeUp 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+<div class="article-container">
+    <div class="sharp-header" id="stickyHeader">
+        <button class="back-arrow" id="backToHomeBtn" aria-label="Back">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">
+            <i class="fas fa-bolt"></i> 
+            <span>UrjaPlus</span>
+        </div>
+    </div>
+
+    <div class="article-content">
+        <div class="plain-article-title">
+            घरावर सोलर बसवल्यानंतर वीज बिल पूर्णतः शून्य होऊ शकते का?
+        </div>
+
+        <div class="intro-image">
+            <img src="../Image/can-rooftop-solar-make-your-electricity-bill-zero.webp" alt="can-rooftop-solar-make-your-electricity-bill-zero" class="about-intro-img">
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-receipt"></i>
+                <h3>परिचय</h3>
+            </div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">सौर ऊर्जा बसवताना "आता तुमचे वीज बिल शून्य होणार" अशी जाहिरात आपण अनेकदा ऐकतो. यामुळे बहुतांश ग्राहकांना असे वाटते की सोलर पॅनल बसवल्यानंतर महावितरणकडून एक रुपयाचेही बिल येणार नाही. परंतु, सोलर बसवल्यानंतरही काही महिने कमी-अधिक प्रमाणात बिल येतेच. वीज बिल खरोखरच झिरो (Rs. 0) होऊ शकते का? नक्की नेट-मीटरिंग कसे काम करते आणि बिलावर फिक्स्ड चार्जेस का लागू होतात? या सर्व शंकांचे निरसन या लेखात सविस्तर केले आहे.</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            
+            <!-- SECTION 1 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-piggy-bank"></i>
+                    <h2>१. सोलर सिस्टीममुळे वीज बिलात कशाप्रकारे बचत होते?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">सोलर पॅनेल्स दिवसा लागणारी वीज थेट पुरवतात आणि उरलेली जास्तीची वीज महावितरणच्या ग्रिडला पाठवून बिलात युनिट समायोजन (Unit Offset) करतात.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">ऑन-ग्रिड सोलर सिस्टीम नेट-मीटरिंगच्या (Net Metering) तत्त्वावर काम करते. यामुळे बचतीची प्रक्रिया पुढीलप्रमाणे घडते:</p>
+                    
+                    <ul class="urja-bullet-list">
+                        <li><strong>थेट वापर (Self Consumption):</strong> दिवसा सोलरद्वारे तयार होणारी वीज घरातील उपकरणे थेट वापरतात, ज्यामुळे महावितरणची वीज वापरावी लागत नाही.</li>
+                        <li><strong>ग्रिडला वीज पुरवठा:</strong> जेव्हा घरातील वापर कमी असतो, तेव्हा तयार झालेली जास्तीची वीज नेट-मीटरद्वारे महावितरणच्या ग्रिडला पाठवली जाते.</li>
+                        <li><strong>युनिट बँक (Export vs Import):</strong> महिन्याच्या शेवटी तुम्ही वापरलेले युनिट्स (Import) आणि ग्रिडला दिलेले युनिट्स (Export) यांची वजावट करून उरलेल्या युनिट्सचे बिल तयार होते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">नेट-मीटरिंग तंत्रज्ञानामुळे युनिट्सची वजावट होऊन वीज बिलावरील मूळ ऊर्जा आकार (Energy Charge) पूर्णपणे कमी होतो का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-calculator"></i>
+                    <h2>२. सोलर बसवल्यानंतर वीज बिल खरोखरच शून्यावर येते का?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">तांत्रिकदृष्ट्या वापरलेल्या युनिट्सचे बिल शून्य (0 Units) होऊ शकते, परंतु बिलावरील स्थिर आकार (Fixed Charges) आणि करामुळे एकूण रक्कम पूर्ण शून्य होत नाही.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">'झिरो बिल' या कल्पनेमागील वास्तव खालील मुद्द्यांवरून स्पष्ट होते:</p>
+
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>युनिट्स झिरो होणे:</strong> जर तुम्ही जेवढी वीज वापरली तितकी किंवा त्याहून अधिक वीज सौर ऊर्जेतून तयार करून ग्रिडला दिली, तर तुमचे 'एनर्जी चार्जेस' ० रुपये होतात.</li>
+                        <li><span class="number-badge">2</span> <strong>किमान बिल रक्कम:</strong> युनिट्स ० झाले तरीही महावितरण मीटर भाडे, स्थिर आकार (Fixed Charge) आणि त्यावर लागणारा कर (Electricity Duty) वसूल करते. त्यामुळे बिल रु. ० येण्याऐवजी १०० ते २५० रुपयांच्या आसपास येते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">म्हणूनच 'शून्य बिल' याचा व्यावहारिक अर्थ युनिट बिलातून ९०% ते ९५% पर्यंतची प्रचंड बचत असा घ्यावा का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-business-time"></i>
+                    <h2>३. दिवस आणि रात्रीचा वीज वापर बिलावर कसा प्रभाव टाकतो?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">सोलर पॅनेल्स केवळ दिवसा सूर्यप्रकाशातच वीज तयार करतात, त्यामुळे रात्रीचा वापर हा महावितरणच्या ग्रिडवरच अवलंबून असतो.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">दिवस आणि रात्रीच्या वापरामधील फरक समजून घेणे अत्यंत महत्त्वाचे आहे:</p>
+
+                    <ul class="urja-bullet-list">
+                        <li><strong>दिवसाची स्थिती (Solar Generation):</strong> दिवसा सौर ऊर्जा मुबलक प्रमाणात तयार होते. घरातील वापर भागवून उरलेले युनिट्स ग्रिडला 'एक्सपोर्ट' केले जातात.</li>
+                        <li><strong>रात्रीची स्थिती (Grid Consumption):</strong> रात्री सूर्य नसतो, त्यामुळे घरातील एसी, पंखे आणि दिवे महावितरणच्या विजेवर चालतात (Import).</li>
+                        <li><strong>बॅलन्स सिस्टीम:</strong> जर तुम्ही दिवसा १०० युनिट्स एक्सपोर्ट केले आणि रात्री ८० युनिट्स इम्पोर्ट केले, तर तुमचा महिन्याचा वापर 'शून्य युनिट' मानला जाईल.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">रात्रीच्या वेळी जास्त वीज वापरणाऱ्या गृहोपकरणांमुळे बॅलन्स बिघडून अतिरिक्त बिल येऊ शकते का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 4 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <h2>४. सौर ऊर्जा वापरत असतानाही वीज बिल का येते?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">क्षमतेपेक्षा जास्त वीज वापरणे, हवामानातील बदल किंवा चुकीच्या क्षमतेची सोलर सिस्टीम बसवणे यांमुळे सोलर असूनही बिल येते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">जर तुमचे वीज बिल अपेक्षेपेक्षा जास्त येत असेल, तर त्याची मुख्य कारणे खालीलप्रमाणे आहेत:</p>
+
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>वाढलेला वीज वापर (Over Consumption):</strong> सोलर बसवल्यानंतर बिनधास्तपणे जास्त प्रमाणात एसी किंवा गिझर वापरल्यास सोलर निर्मितीपेक्षा वापर जास्त होतो.</li>
+                        <li><span class="number-badge">2</span> <strong>पावसाळा व ढगाळ हवामान:</strong> पावसाळ्यात किंवा हिवाळ्यात सूर्यप्रकाश कमी असल्याने निर्मिती घटते आणि महावितरणची वीज जास्त वापरावी लागते.</li>
+                        <li><span class="number-badge">3</span> <strong>पॅनेल्सची निगा न राखणे:</strong> पॅनेल्सवर साचलेली धूळ किंवा कचऱ्यामुळे वीज निर्मिती २० ते ३० टक्क्यांनी कमी होते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">सोलर पॅनेल्सची नियमित स्वच्छता न केल्यास दरमहा आर्थिक नुकसान सहन करावे लागते का?</p>
+                </div>
+            </div>
+
+            <!-- SURVEY SECTION -->
+            <div class="urja-premium-survey" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 22px 18px 18px 18px; margin: 5px 0 5px 0; box-shadow: var(--shadow); position: relative; overflow: hidden; font-family: inherit;">
+                <div style="position: absolute; top: 0; left: 18px; background: var(--primary-gradient); color: #ffffff; padding: 3px 12px; font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; border-radius: 0 0 8px 8px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <i class="fas fa-poll" style="margin-right: 4px;"></i> Urja Survey
+                </div>
+                
+                <div id="surveyPremiumMain" style="display: block; opacity: 1; transform: scale(1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);">
+                    <h4 style="margin: 14px 0 16px 0; color: var(--text-main); font-size: 1.05rem; font-weight: 800; line-height: 1.5; text-align: justify;">
+                        सोलर बसवल्यानंतरही बिल येण्याचे मुख्य कारण तुमच्या मते कोणते आहे?
+                    </h4>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%; display: block; margin: 3px auto;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">महावितरणचे फिक्स्ड चार्जेस व कर लागू असणे</span>
+                        </label>
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%; display: block; margin: 3px auto;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">सोलर क्षमतेपेक्षा जास्त वीज वापरणे</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="surveyPremiumSuccess" style="display: none; opacity: 0; text-align: center; padding: 30px 10px 15px 10px; transition: all 0.4s ease;">
+                    <div class="survey-thumb-icon" style="width: 70px; height: 70px; background: var(--primary-gradient); color: #ffffff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.15);">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <h4 style="margin: 0 0 6px 0; color: var(--text-main); font-size: 1.2rem; font-weight: 800;">नोंदणी केल्याबद्दल धन्यवाद!</h4>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; font-weight: 500;">तुमचा अभिप्राय आमच्यासाठी अत्यंत महत्त्वाचा आहे.</p>
+                </div>
+            </div>
+
+            <!-- SECTION 5 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-coins"></i>
+                    <h2>५. सौर ऊर्जा वापरूनही फिक्स्ड चार्जेस का लागू राहतात?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">वितरण व्यवस्था (Grid Infrastructure) २४ तास उपलब्ध ठेवण्यासाठी महावितरण सर्व ग्राहकांकडून मंजुर भारानुसार (Sanctioned Load) स्थिर आकार वसूल करते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">स्थिर आकार (Fixed Charges) आकारण्यामागे वीज नियमन आयोगाचे (MERC) स्पष्ट नियम आहेत:</p>
+
+                    <ul class="urja-bullet-list">
+                        <li><strong>ग्रिड सेवा भाडे:</strong> तुम्ही रात्री किंवा ढगाळ वातावरणात महावितरणची वीज वापरता, ती पायाभूत सुविधा पुरवल्याबद्दल हा आकार घेतला जातो.</li>
+                        <li><strong>मंजुर भार (Sanctioned Load):</strong> तुमच्या कनेक्शनच्या किलोवॅट क्षमतेनुसार (उदा. 1 KW, 3 KW) दरमहा ठराविक स्थिर आकार बिलात जोडला जातो.</li>
+                        <li><strong>वीज शुल्क (Electricity Duty):</strong> राज्य सरकारच्या नियमानुसार या स्थिर आकारावर ठराविक टक्के कर (Tax) आकारला जातो.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">ऑन-ग्रिड सिस्टीम महावितरणच्या नेटवर्कवर आधारित असल्याने स्थिर आकार टाळणे शक्य आहे का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 6 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-list-check"></i>
+                    <h2>६. महावितरणच्या वीज बिलावर नियंत्रण मिळवण्यासाठी 5 प्रभावी मार्ग.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">योग्य क्षमतेची निवड, नियमित निगा आणि वापरावर नियंत्रण ठेवून तुम्ही तुमचे वीज बिल किमान मर्यादेवर आणू शकता.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">सोलर बसवल्यानंतर बिल शक्य तितके कमी ठेवण्यासाठी खालील ५ उपाय योजावेत:</p>
+
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>अचूक क्षमतेची निवड:</strong> तुमच्या वार्षिक सरासरी वापरापेक्षा १० ते १५% जास्त क्षमतेची सिस्टीम (उदा. ३ KW ऐवजी ३.५ KW) बसवा.</li>
+                        <li><span class="number-badge">2</span> <strong>दिवसा जास्त वापर करा:</strong> कपडे धुणे, पाणी उपसणे (पंप) किंवा इंडक्शन वापरणे यांसारखी जास्त विजेची कामे सूर्यप्रकाशाच्या वेळी (सकाळी १० ते ४) करा.</li>
+                        <li><span class="number-badge">3</span> <strong>दर १५ दिवसांनी पॅनेल्स धुणे:</strong> पॅनेल्स स्वच्छ ठेवल्यास वीज निर्मिती पूर्ण क्षमतेने होते.</li>
+                        <li><span class="number-badge">4</span> <strong>अनावश्यक सँक्शन्ड लोड कमी करा:</strong> घरात गरज नसताना जास्त किलोवॅटचा लोड असल्यास महावितरणकडे अर्ज करून तो कमी करा, ज्यामुळे फिक्स्ड चार्जेस घटतील.</li>
+                        <li><span class="number-badge">5</span> <strong>वार्षिक क्रेडिट चेक:</strong> वर्षाच्या शेवटी (मार्च महिन्यात) शिलक राहिलेल्या अतिरिक्त युनिट्सचा परतावा महावितरणकडून खात्यात जमा होतो का याची खात्री करा.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">या ५ उपायांचा अमलबजावणी केल्यास वीज बिल केवळ नाममात्र (किमान स्थिर आकारापुरते) मर्यादित राहील का?</p>
+                </div>
+            </div>
+
+        </div> 
+
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-trophy"></i><h3>महत्त्वाचे निष्कर्ष</h3></div>
+            <div class="takeaway-simple-list">
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">सोलरमुळे तुमचे 'युनिट बिल' शून्य होऊ शकते, परंतु सरकारी कर आणि फिक्स्ड चार्जेसमुळे बिल १०० ते २०० रुपये येते.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">दिवसाच्या वेळी जास्त विजेची कामे केल्यास नेट-मीटरिंगचा कमाल फायदा मिळवून युनिट्सची बचत करता येते.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">सोलर ही शून्य बिलापेक्षा '९५% पर्यंत कायमस्वरूपी बचत' करणारी उत्तम दीर्घकालीन गुंतवणूक आहे.</p></div>
+            </div>
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-arrow-alt-circle-right"></i><h3>पुढचं पाऊल:</h3></div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">तुमच्या मागील ६ महिन्यांचे महावितरण वीज बिल तपासा आणि तुमच्या एकूण मासिक युनिट्सच्या आधारे योग्य क्षमतेचा सोलर प्लांट निवडण्यासाठी अधिकृत वेंडरकडून नेट-मीटरिंगची गणना करून घ्या.</p>
+            </div>
+        </div>
+
+        <!-- PEOPLE ALSO ASK SECTION -->
+        <div class="people-also-ask">
+            <div class="paa-header">
+                <i class="fas fa-users"></i>
+                <h3>People Also Ask</h3>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">मी तयार केलेली जास्तीची वीज महावितरण विकत घेते का?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">होय, वर्षाच्या शेवटी (Settlement Period) तुम्ही पाठवलेले युनिट्स वापरापेक्षा जास्त असतील, तर महावितरण ठरवलेल्या दराने (उदा. रु. २ ते ३ प्रति युनिट) उरलेल्या रकमेचा परतावा तुमच्या बँक खात्यात जमा करते किंवा पुढील बिलात क्रेडिट देते.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">ऑफ-ग्रिड (Off-Grid) सोलर बसवल्यास वीज बिल शून्य येते का?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">होय, जर तुम्ही महावितरणचे वीज कनेक्शन पूर्णपणे तोडले आणि बॅटरी असणारी ऑफ-ग्रिड सिस्टीम वापरली तर बिल ० रुपये येईल, परंतु बॅटरीचा सुरुवातीचा आणि बदलीचा खर्च अत्यंत जास्त असतो.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">लाईट गेल्यावर ऑन-ग्रिड सोलर चालू राहतो का?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">नाही, सुरक्षेच्या कारणास्तव (Anti-Islanding Protection) महावितरणची वीज घालवल्यास किंवा लोडशेडिंग दरम्यान ऑन-ग्रिड सोलर इन्व्हर्टर आपोआप बंद होतो, जेणेकरून वायरमनला शॉक बसणार नाही.</p></div>
+            </div>
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>महत्वाचे अस्वीकरण (Disclaimer):</h3>
+            </div>
+            <div class="disclaimer-text" style="font-size: 0.85rem; line-height: 1.5; text-align: justify;">
+                या लेखात दिलेली माहिती केवळ सामान्य जनजागृती आणि ग्राहकांच्या मार्गदर्शनासाठी आहे. महाराष्ट्र वीज नियामक आयोग (MERC) आणि महावितरणच्या धोरणांनुसार फिक्स्ड चार्जेस, नेट-मीटरिंग नियम आणि सबसिडीचे दर वेळोवेळी बदलू शकतात. अचूक आणि अद्ययावत माहितीसाठी महावितरणच्या अधिकृत संकेतस्थळास भेट द्या किंवा तज्ज्ञांचा सल्ला घ्या. <strong>UrjaPlus</strong> या माहितीच्या आधारे घेतलेल्या कोणत्याही निर्णयाच्या आर्थिक जबाबदारीस बांधील राहणार नाही.
+            </div>
+        </div>
+
+        <div class="content-spacer"></div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="../index.html" class="nav-item" data-nav="home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="../tools.html" class="nav-item" data-nav="Tools"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="../search.html" class="nav-item" data-nav="Search"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="../rti-plus.html" class="nav-item" data-nav="Favorites"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn" data-nav="Share"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Light / Dark Theme Sync
+        function applySynchronizedTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+        applySynchronizedTheme();
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                applySynchronizedTheme();
+            }
+        });
+        
+        // People Also Ask Accordion Logic
+        const paaItems = document.querySelectorAll('.paa-item');
+        paaItems.forEach(paa => {
+            const questionDiv = paa.querySelector('.paa-question');
+            if(questionDiv) {
+                questionDiv.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isActive = paa.classList.contains('active-paa');
+                    
+                    // Close other opened items
+                    paaItems.forEach(other => {
+                        if(other !== paa && other.classList.contains('active-paa')) {
+                            other.classList.remove('active-paa');
+                        }
+                    });
+                    
+                    // Toggle active item
+                    if(!isActive) {
+                        paa.classList.add('active-paa');
+                    } else {
+                        paa.classList.remove('active-paa');
+                    }
+                });
+            }
+        });
+        
+        const backBtn = document.getElementById('backToHomeBtn');
+        if(backBtn) {
+            backBtn.addEventListener('click', () => {
+                window.location.href = '../solar-rooftop.html'; 
+            });
+        }        
+        
+        // Smooth Click Effect for Boxes
+        document.addEventListener('click', function(e) {
+            const box = e.target.closest('.simple-outline-box, .faq-item');
+            if(box && !e.target.closest('button') && !e.target.closest('.people-also-ask') && !e.target.closest('.urja-premium-survey')) {
+                box.style.transform = 'scale(0.99)';
+                setTimeout(() => { box.style.transform = ''; }, 130);
+            }
+        });
+    })();
+
+    // Survey Response Interaction
+    function handleSurveySelection(selectedLabel) {
+        const allLabels = selectedLabel.parentElement.querySelectorAll('label');
+        allLabels.forEach(label => {
+            const checkOuter = label.querySelector('.survey-custom-check');
+            const checkInner = checkOuter.querySelector('span');
+            checkOuter.style.borderColor = 'var(--text-muted)';
+            checkInner.style.background = 'transparent';
+            label.style.borderColor = 'var(--border-color)';
+            label.style.background = 'var(--bg-app)';
+        });
+
+        const activeCheckOuter = selectedLabel.querySelector('.survey-custom-check');
+        const activeCheckInner = activeCheckOuter.querySelector('span');
+        activeCheckOuter.style.borderColor = 'var(--primary)';
+        activeCheckInner.style.background = 'var(--primary)';
+        selectedLabel.style.borderColor = 'var(--primary)';
+        selectedLabel.style.background = 'var(--bg-card)';
+
+        // Delay for smooth visual transition
+        setTimeout(function() {
+            const mainContent = document.getElementById('surveyPremiumMain');
+            const successContent = document.getElementById('surveyPremiumSuccess');
+            const thumbIcon = successContent.querySelector('.survey-thumb-icon');
+            
+            mainContent.style.opacity = '0';
+            mainContent.style.transform = 'scale(0.9)';
+            
+            setTimeout(function() {
+                mainContent.style.display = 'none';
+                successContent.style.display = 'block';
+                setTimeout(function() {
+                    successContent.style.opacity = '1';
+                    if(thumbIcon) thumbIcon.style.animation = 'thumbPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                }, 50);
+            }, 300);
+        }, 350);
+    }
+</script>
+</body>
+</html>

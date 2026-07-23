@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>रूफटॉप सोलरसाठी सरकारी अनुदान कसे मिळते? | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Theme System --- */
+        :root {
+            --bg-app: #f4f7fe;
+            --bg-card: #ffffff;
+            --primary: #111111; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); 
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --icon-bg: #f1f5f9; 
+            --accent-red: #111111;
+            --accent-red-hover: #000000;
+            --dashed-border: #cbd5e1;
+            --gradient-mastermind: linear-gradient(120deg, #f8fafc, #ffffff);
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827; 
+            --primary: #ffffff; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+            --icon-bg: rgba(255, 255, 255, 0.05);
+            --accent-red: #ffffff;
+            --accent-red-hover: #e2e8f0;
+            --dashed-border: #1f2937;
+            --gradient-mastermind: linear-gradient(120deg, #111827, #0b0f19);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Inter', Roboto, Helvetica, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .article-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: background 0.3s ease;
+        }
+
+        /* STICKY HEADER BAR */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .article-content {
+            padding: 24px 16px 0px 16px;
+            overflow-x: hidden;
+        }
+
+        .plain-article-title {
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+
+        .intro-image {
+            text-align: center;
+            margin: 10px 0 20px 0;
+        }
+
+        .about-intro-img {
+            width: 90%;
+            max-width: 90%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .simple-outline-box {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 18px 16px;
+            margin: 24px 0 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+
+        .simple-outline-box .box-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .simple-outline-box .box-header i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .simple-outline-box .box-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .intro-description-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            text-align: justify;
+        }
+
+        /* --- Section Styles --- */
+        .faq-section {
+            margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 20px 18px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease;
+        }
+        
+        .faq-question-static {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .faq-question-static i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .faq-question-static h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .answer-content-static {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .sub-heading-h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 14px 0 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .faq-key-box {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 16px;
+            background: var(--bg-app);
+            margin: 16px 0;
+            box-shadow: var(--shadow);
+        }
+        .faq-key-box h4 {
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+        }
+        .faq-key-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .faq-key-box li {
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .box-numbers-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+        .box-numbers-list li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.2rem;
+            text-align: justify;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .number-badge {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            background-color: #111111 !important;
+            color: white;
+            width: 1.8rem;
+            height: 1.8rem;
+            text-align: center;
+            line-height: 1.8rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+            border-radius: 50%;
+        }
+        [data-theme="dark"] .number-badge {
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+
+        /* Bullet List Styling */
+        .urja-bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+        }
+        .urja-bullet-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        .urja-bullet-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.3rem;
+            position: absolute;
+            left: 6px;
+            top: -2px;
+        }
+
+        /* --- Custom Table Styling --- */
+        .custom-table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 16px 0;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+        .custom-table th {
+            background: var(--primary);
+            color: #ffffff;
+            padding: 10px 12px;
+            font-weight: 700;
+        }
+        .custom-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+        .custom-table tr:last-child td {
+            border-bottom: none;
+        }
+        .custom-table tr:nth-child(even) {
+            background: var(--bg-app);
+        }
+
+        .takeaway-simple-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .takeaway-simple-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border-left: 3px solid var(--primary);
+            padding: 10px 12px;
+            background: var(--bg-app);
+            border-radius: 0 12px 12px 0;
+        }
+        .takeaway-simple-item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            width: 26px;
+            text-align: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .takeaway-simple-item p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            flex: 1;
+            color: var(--text-main);
+        }
+
+        /* --- People Also Ask Section --- */
+        .people-also-ask {
+            background: var(--bg-card);
+            border-radius: 24px;
+            margin: 24px 0 28px;
+            padding: 14px 6px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        .paa-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 14px 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 6px;
+        }
+        .paa-header i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .paa-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        .paa-item {
+            background: var(--bg-card);
+            border-radius: 18px;
+            margin: 10px 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .paa-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            cursor: pointer;
+            gap: 10px;
+        }
+        .paa-toggle-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            background: var(--icon-bg);
+            border-radius: 50%;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+        .paa-item.active-paa .paa-toggle-icon {
+            background: var(--primary);
+            color: #ffffff;
+            transform: rotate(135deg);
+        }
+        .paa-question-text {
+            flex: 1;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .paa-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+            background: var(--bg-card);
+        }
+        .paa-item.active-paa .paa-answer {
+            max-height: 400px;
+            border-top: 1px solid var(--border-color);
+            padding: 14px 18px;
+            border-bottom: none;
+        }
+        .paa-answer p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Survey Style */
+        .urja-premium-survey label:active {
+            transform: scale(0.98);
+        }
+        @keyframes thumbPop {
+            0% { transform: scale(0.4) rotate(-30deg); opacity: 0; }
+            70% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+        .content-spacer {
+            height: 80px;
+        }
+        
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .plain-article-title, .intro-image, .simple-outline-box, .faq-item, .people-also-ask {
+            animation: fadeUp 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+<div class="article-container">
+    <div class="sharp-header" id="stickyHeader">
+        <button class="back-arrow" id="backToHomeBtn" aria-label="Back">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">
+            <i class="fas fa-solar-panel"></i> 
+            <span>UrjaPlus</span>
+        </div>
+    </div>
+
+    <div class="article-content">
+        <div class="plain-article-title">
+            रूफटॉप सोलरसाठी सरकारी अनुदान (Subsidy) कसे मिळते?
+        </div>
+
+        <div class="intro-image">
+            <img src="../Image/how-to-get-government-subsidy-for-rooftop-solar.webp" alt="how-to-get-government-subsidy-for-rooftop-solar" class="about-intro-img">
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-hand-holding-dollar"></i>
+                <h3>परिचय</h3>
+            </div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">वाढत्या विजेच्या बिलांपासून मुक्ती मिळवण्यासाठी आणि हरित ऊर्जेला प्रोत्साहन देण्यासाठी केंद्र सरकारने **'पीएम सूर्यघर: मोफत वीज योजना'** सुरू केली आहे. या योजनेअंतर्गत घरावर रूफटॉप सोलर बसवण्यासाठी सरकारकडून थेट बँक खात्यात **₹७८,००० पर्यंत** सबसिडी दिली जाते. मात्र, ही सबसिडी मिळवण्यासाठी अर्ज कसा करावा, कोणती कागदपत्रे लागतात आणि रक्कम बँक खात्यात कशी जमा होते, याबद्दल सविस्तर माहिती या लेखात देण्यात आली आहे.</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            
+            <!-- SECTION 1 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-calculator"></i>
+                    <h2>१. सोलर सिस्टीमवर किती सबसिडी मिळते?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">केंद्र सरकारच्या नवीन नियमांनुसार ३ kW पर्यंतच्या सोलर सिस्टीमवर सर्वाधिक सबसिडी दिली जाते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">सोलर सिस्टीमच्या क्षमतेनुसार केंद्र सरकारकडून मिळणारे अनुदान खालीलप्रमाणे निश्चित केले आहे:</p>
+
+                    <div class="custom-table-container">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>सोलर क्षमता (Capacity)</th>
+                                    <th>अनुदान रक्कम (Subsidy)</th>
+                                    <th>उपयुक्तता (Ideal For)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>१ किलोवॅट (1 kW)</td>
+                                    <td>₹ ३०,०००/-</td>
+                                    <td>लहान घरे (१५० युनिट्स वापर)</td>
+                                </tr>
+                                <tr>
+                                    <td>२ किलोवॅट (2 kW)</td>
+                                    <td>₹ ६०,०००/-</td>
+                                    <td>मध्यम घरे (३०० युनिट्स वापर)</td>
+                                </tr>
+                                <tr>
+                                    <td>३ किलोवॅट किंवा अधिक (3 kW+)</td>
+                                    <td>₹ ७८,०००/- (कमाल)</td>
+                                    <td>मोठी घरे / एसी वापरणारे कुटुंब</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p style="text-align: justify; margin-top: 10px;">टीप: ३ kW पेक्षा मोठ्या सिस्टीमसाठी कमाल सबसिडी ₹७८,००० निश्चित करण्यात आली आहे. गृहनिर्माण संस्थांसाठी (RWA) कॉमन लाईट्ससाठी वेगळे नियम लागू होतात.</p>
+
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">३ kW ची सोलर सिस्टीम बसवल्यास कमाल ₹७८,००० ची सबसिडी मिळते का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-id-card"></i>
+                    <h2>२. सोलर सबसिडीसाठी कोणती कागदपत्रे आवश्यक आहेत?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">अर्जदार हा वीज जोडणीचा (Electricity Bill) मूळ मालक असणे आवश्यक आहे.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">ऑनलाईन अर्ज करताना खालील कागदपत्रे तयार ठेवावीत:</p>
+
+                    <ul class="urja-bullet-list">
+                        <li><strong>नवीनतम वीज बिल:</strong> ज्यावर तुमचा ग्राहक क्रमांक (Consumer Number) आणि नाव स्पष्ट असेल.</li>
+                        <li><strong>आधार कार्ड:</strong> वीज बिलावरील नावाशी मिळतेजुळते असावे.</li>
+                        <li><strong>बँक पासबुक / रद्द केलेला चेक:</strong> ज्या खात्यावर अनुदानाची रक्कम जमा करायची आहे.</li>
+                        <li><strong>छताचा (Roof) फोटो:</strong> जिथे सोलर पॅनेल बसवायचे आहेत त्या जागेचा स्वच्छ फोटो.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">वीज बिल आणि बँक खाते एकाच व्यक्तीच्या नावे असल्यास सबसिडी लगेच मंजूर होते का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-list-check"></i>
+                    <h2>३. ऑनलाईन अर्ज करण्याची पायरी-पायरी प्रक्रिया (Step-by-Step Process)</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">सर्व प्रक्रिया नॅशनल पोर्टलद्वारे ऑनलाईन आणि पारदर्शक पद्धतीने पार पडते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">सबसिडी मिळवण्यासाठी खालील टप्प्यांचा अवलंब करा:</p>
+
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>पोर्टलवर नोंदणी:</strong> official पोर्टल [pmsuryaghar.gov.in](https://pmsuryaghar.gov.in) वर जा, तुमचे राज्य (उदा. महाराष्ट्र), वीज कंपनी (MSEDCL) आणि ग्राहक क्रमांक टाकून रजिस्ट्रेशन करा.</li>
+                        <li><span class="number-badge">2</span> <strong>रूफटॉप सोलरसाठी अर्ज:</strong> लॉगिन करून Solar Rooftop साठी अर्ज भरा.</li>
+                        <li><span class="number-badge">3</span> <strong>तांत्रिक मान्यता (Feasibility Approval):</strong> महावितरणकडून छताची व ग्रीडची पाहणी करून तांत्रिक मान्यता दिली जाते.</li>
+                        <li><span class="number-badge">4</span> <strong>अधिकृत वेंडरकडून काम:</strong> मंजुरी मिळाल्यानंतर पोर्टलवर नोंदणीकृत (Empanelled Vendor) असलेल्या एजन्सीकडून सोलर सिस्टीम बसवून घ्या.</li>
+                        <li><span class="number-badge">5</span> <strong>नेट मीटरिंग आणि कमिशनिंग रिपोर्ट:</strong> महावितरण नेट मीटर बसवते व पोर्टलवर Commissioning Certificate अपलोड करते.</li>
+                    </ul>
+
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">केवळ नोंदणीकृत (Empanelled) वेंडरकडूनच सिस्टीम बसवणे बंधनकारक असते का?</p>
+                </div>
+            </div>
+
+            <!-- SURVEY SECTION -->
+            <div class="urja-premium-survey" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 22px 18px 18px 18px; margin: 5px 0 5px 0; box-shadow: var(--shadow); position: relative; overflow: hidden; font-family: inherit;">
+                <div style="position: absolute; top: 0; left: 18px; background: var(--primary-gradient); color: #ffffff; padding: 3px 12px; font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; border-radius: 0 0 8px 8px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <i class="fas fa-poll" style="margin-right: 4px;"></i> Urja Survey
+                </div>
+                
+                <div id="surveyPremiumMain" style="display: block; opacity: 1; transform: scale(1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);">
+                    <h4 style="margin: 14px 0 16px 0; color: var(--text-main); font-size: 1.05rem; font-weight: 800; line-height: 1.5; text-align: justify;">
+                        रूफटॉप सोलर सबसिडी घेताना तुम्हाला खालीलपैकी कोणती गोष्ट सर्वात कठीण वाटते?
+                    </h4>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%; display: block; margin: 3px auto;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">महावितरणकडून नेट मीटर मिळणे</span>
+                        </label>
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%; display: block; margin: 3px auto;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">बँकेत सबसिडी जमा होण्याचा कालावधी</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="surveyPremiumSuccess" style="display: none; opacity: 0; text-align: center; padding: 30px 10px 15px 10px; transition: all 0.4s ease;">
+                    <div class="survey-thumb-icon" style="width: 70px; height: 70px; background: var(--primary-gradient); color: #ffffff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.15);">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <h4 style="margin: 0 0 6px 0; color: var(--text-main); font-size: 1.2rem; font-weight: 800;">प्रतिसादाबद्दल धन्यवाद!</h4>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; font-weight: 500;">तुमचा अभिप्राय सोलर प्रक्रिया अधिक सुलभ करण्यास मदत करेल.</p>
+                </div>
+            </div>
+
+            <!-- SECTION 4 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-building-columns"></i>
+                    <h2>४. अनुदानाची रक्कम बँक खात्यात कशी व कधी जमा होते?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">कमिशनिंग रिपोर्ट अपलोड झाल्यानंतर थेट (DBT द्वारे) ग्राहकाच्या खात्यात रक्कम पाठवली जाते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">नेट मीटर बसवून सिस्टीम चालू झाल्यानंतर (Commissioning):</p>
+
+                    <h3 class="sub-heading-h3"><i class="fas fa-angle-right"></i> ४.१ बँक तपशील देणे (Claim Subsidy)</h3>
+                    <p style="text-align: justify;">पोर्टलवर लॉगिन करून 'Claim Subsidy' पर्यायावर क्लिक करा. तेथे तुमचा बँक खाते क्रमांक आणि कॅन्सल चेकचा फोटो अपलोड करा.</p>
+
+                    <h3 class="sub-heading-h3"><i class="fas fa-angle-right"></i> ४.२ पैसे जमा होण्याचा कालावधी</h3>
+                    <p style="text-align: justify;">माहितीची पडताळणी झाल्यानंतर **३० ते ४५ दिवसांच्या आत** अनुदानाची पूर्ण रक्कम तुमच्या बँक खात्यात थेट जमा (Direct Benefit Transfer - DBT) केली जाते.</p>
+
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">सबसिडी थेट ग्राहकाच्या खात्यात येत असल्यामुळे वेंडरला पूर्ण पैसे द्यावे लागतात का?</p>
+                </div>
+            </div>
+
+        </div> 
+
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-trophy"></i><h3>महत्त्वाचे निष्कर्ष</h3></div>
+            <div class="takeaway-simple-list">
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">पीएम सूर्यघर योजनेंतर्गत १ kW ते ३ kW पर्यंत ₹३०,००० ते ₹७८,००० पर्यंत सबसिडी मिळते.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">सबसिडीचा लाभ मिळण्यासाठी केवळ शासकीय नॅशनल पोर्टलवर नोंदणीकृत (Empanelled) वेंडरकडूनच सोलर बसवावे.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">नेट मीटरिंग पूर्ण झाल्यावर अनुदानाची रक्कम थेट बँक खात्यात (DBT) जमा होते.</p></div>
+            </div>
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-arrow-alt-circle-right"></i><h3>पुढचं पाऊल:</h3></div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">तुमच्या घरातील गेल्या ६ महिन्यांच्या वीज बिलाचा सरासरी वापर तपासा. त्यानुसार योग्य क्षमतेची सोलर सिस्टीम निवडून आजच [pmsuryaghar.gov.in](https://pmsuryaghar.gov.in) वर ऑनलाईन नोंदणी करा.</p>
+            </div>
+        </div>
+
+        <!-- PEOPLE ALSO ASK SECTION -->
+        <div class="people-also-ask">
+            <div class="paa-header">
+                <i class="fas fa-users"></i>
+                <h3>People Also Ask</h3>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">सोलर सबसिडी मिळण्यासाठी किती वेळ लागतो?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">नेट मीटर बसल्यानंतर आणि पोर्टलवर कमिशनिंग रिपोर्ट अपलोड झाल्यावर साधारण ३० ते ४५ दिवसांत सबसिडीची रक्कम बँक खात्यात क्रेडिट होते.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">जुन्या किंवा ऑफ-ग्रीड सोलर सिस्टीमवर सबसिडी मिळते का?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">नाही. सरकारी सबसिडी केवळ नॅशनल पोर्टलवरून अर्ज करून बसवलेल्या ऑन-ग्रीड (Grid-Connected) किंवा हायब्रिड रूफटॉप सोलर सिस्टीमसाठीच लागू असते.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">सोलर सिस्टीम बसवण्यासाठी बँक कर्ज (Solar Loan) मिळते का?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">होय, पीएम सूर्यघर योजनेअंतर्गत राष्ट्रीयकृत बँकांकडून केवळ ७% च्या सवलतीचा व्याजदरावर विना-तारण (Collateral Free) सोलर कर्ज उपलब्ध करून दिले जाते.</p></div>
+            </div>
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>महत्वाचे अस्वीकरण (Disclaimer):</h3>
+            </div>
+            <div class="disclaimer-text" style="font-size: 0.85rem; line-height: 1.5; text-align: justify;">
+                या लेखातील सबसिडीचे दर आणि नियम केंद्र सरकारच्या 'पीएम सूर्यघर: मोफत वीज योजना' च्या अधिकृत मार्गदर्शक तत्त्वांवर आधारित आहेत. सरकारी धोरणांनुसार सबसिडीचे नियम आणि प्रक्रिया वेळेनुसार बदलू शकतात. अधिकृत आणि अद्ययावत माहितीसाठी नेहमी [pmsuryaghar.gov.in](https://pmsuryaghar.gov.in) या शासकीय वेबसाईटला भेट द्या. <strong>UrjaPlus</strong> कोणतीही थेट सबसिडी देण्याचा किंवा मंजूर करण्याचा दावा करत नाही.
+            </div>
+        </div>
+
+        <div class="content-spacer"></div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="../index.html" class="nav-item" data-nav="home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="../tools.html" class="nav-item" data-nav="Tools"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="../search.html" class="nav-item" data-nav="Search"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="../rti-plus.html" class="nav-item" data-nav="Favorites"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn" data-nav="Share"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Light / Dark Theme Sync
+        function applySynchronizedTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+        applySynchronizedTheme();
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                applySynchronizedTheme();
+            }
+        });
+        
+        // People Also Ask Accordion Logic
+        const paaItems = document.querySelectorAll('.paa-item');
+        paaItems.forEach(paa => {
+            const questionDiv = paa.querySelector('.paa-question');
+            if(questionDiv) {
+                questionDiv.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isActive = paa.classList.contains('active-paa');
+                    
+                    // Close other opened items
+                    paaItems.forEach(other => {
+                        if(other !== paa && other.classList.contains('active-paa')) {
+                            other.classList.remove('active-paa');
+                        }
+                    });
+                    
+                    // Toggle active item
+                    if(!isActive) {
+                        paa.classList.add('active-paa');
+                    } else {
+                        paa.classList.remove('active-paa');
+                    }
+                });
+            }
+        });
+        
+        const backBtn = document.getElementById('backToHomeBtn');
+        if(backBtn) {
+            backBtn.addEventListener('click', () => {
+                window.location.href = '../solar-rooftop.html'; 
+            });
+        }        
+        
+        // Smooth Click Effect for Boxes
+        document.addEventListener('click', function(e) {
+            const box = e.target.closest('.simple-outline-box, .faq-item');
+            if(box && !e.target.closest('button') && !e.target.closest('.people-also-ask') && !e.target.closest('.urja-premium-survey')) {
+                box.style.transform = 'scale(0.99)';
+                setTimeout(() => { box.style.transform = ''; }, 130);
+            }
+        });
+    })();
+
+    // Survey Response Interaction
+    function handleSurveySelection(selectedLabel) {
+        const allLabels = selectedLabel.parentElement.querySelectorAll('label');
+        allLabels.forEach(label => {
+            const checkOuter = label.querySelector('.survey-custom-check');
+            const checkInner = checkOuter.querySelector('span');
+            checkOuter.style.borderColor = 'var(--text-muted)';
+            checkInner.style.background = 'transparent';
+            label.style.borderColor = 'var(--border-color)';
+            label.style.background = 'var(--bg-app)';
+        });
+
+        const activeCheckOuter = selectedLabel.querySelector('.survey-custom-check');
+        const activeCheckInner = activeCheckOuter.querySelector('span');
+        activeCheckOuter.style.borderColor = 'var(--primary)';
+        activeCheckInner.style.background = 'var(--primary)';
+        selectedLabel.style.borderColor = 'var(--primary)';
+        selectedLabel.style.background = 'var(--bg-card)';
+
+        // Delay for smooth visual transition
+        setTimeout(function() {
+            const mainContent = document.getElementById('surveyPremiumMain');
+            const successContent = document.getElementById('surveyPremiumSuccess');
+            const thumbIcon = successContent.querySelector('.survey-thumb-icon');
+            
+            mainContent.style.opacity = '0';
+            mainContent.style.transform = 'scale(0.9)';
+            
+            setTimeout(function() {
+                mainContent.style.display = 'none';
+                successContent.style.display = 'block';
+                setTimeout(function() {
+                    successContent.style.opacity = '1';
+                    if(thumbIcon) thumbIcon.style.animation = 'thumbPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                }, 50);
+            }, 300);
+        }, 350);
+    }
+</script>
+</body>
+</html>

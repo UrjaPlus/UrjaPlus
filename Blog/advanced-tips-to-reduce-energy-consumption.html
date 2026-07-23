@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>वीज वापर कमी करण्यासाठी प्रगत तांत्रिक पद्धती आणि उपयुक्त टिप्स. | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Theme System --- */
+        :root {
+            --bg-app: #f4f7fe;
+            --bg-card: #ffffff;
+            --primary: #111111; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); 
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --icon-bg: #f1f5f9; 
+            --accent-red: #111111;
+            --accent-red-hover: #000000;
+            --dashed-border: #cbd5e1;
+            --gradient-mastermind: linear-gradient(120deg, #f8fafc, #ffffff);
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827; 
+            --primary: #ffffff; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+            --icon-bg: rgba(255, 255, 255, 0.05);
+            --accent-red: #ffffff;
+            --accent-red-hover: #e2e8f0;
+            --dashed-border: #1f2937;
+            --gradient-mastermind: linear-gradient(120deg, #111827, #0b0f19);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Inter', Roboto, Helvetica, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .article-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: background 0.3s ease;
+        }
+
+        /* STICKY HEADER BAR */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .article-content {
+            padding: 24px 16px 0px 16px;
+            overflow-x: hidden;
+        }
+
+        .plain-article-title {
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+
+        .intro-image {
+            text-align: center;
+            margin: 10px 0 20px 0;
+        }
+
+        .about-intro-img {
+            width: 90%;
+            max-width: 90%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .simple-outline-box {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 18px 16px;
+            margin: 24px 0 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .simple-outline-box .box-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .simple-outline-box .box-header i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .simple-outline-box .box-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .intro-description-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            text-align: justify;
+        }
+
+        /* --- FAQ Section Styles --- */
+        .faq-section {
+            margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 20px 18px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        
+        .faq-question-static {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .faq-question-static i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .faq-question-static h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .answer-content-static {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .answer-content-static strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .faq-key-box {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 16px;
+            background: var(--bg-app);
+            margin: 16px 0;
+            box-shadow: var(--shadow);
+        }
+        .faq-key-box h4 {
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+        }
+        .faq-key-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .faq-key-box li {
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .box-numbers-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+        .box-numbers-list li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.2rem;
+            text-align: justify;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .number-badge {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            background-color: #111111 !important;
+            color: white;
+            width: 1.8rem;
+            height: 1.8rem;
+            text-align: center;
+            line-height: 1.8rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        [data-theme="dark"] .number-badge {
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+
+        /* Professional Compact Table Styling */
+        .urja-small-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.85rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .urja-small-table th {
+            background: var(--primary-gradient);
+            color: white;
+            font-weight: 700;
+            padding: 10px;
+            text-align: left;
+        }
+        .urja-small-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+        .urja-small-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Bullet List Styling */
+        .urja-bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+        }
+        .urja-bullet-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        .urja-bullet-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.3rem;
+            position: absolute;
+            left: 6px;
+            top: -2px;
+        }
+
+        .takeaway-simple-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .takeaway-simple-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border-left: 3px solid var(--primary);
+            padding: 10px 12px;
+            background: var(--bg-app);
+            border-radius: 0 12px 12px 0;
+        }
+        .takeaway-simple-item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            width: 26px;
+            text-align: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .takeaway-simple-item p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            flex: 1;
+            color: var(--text-main);
+        }
+
+        /* --- People Also Ask Section --- */
+        .people-also-ask {
+            background: var(--bg-card);
+            border-radius: 24px;
+            margin: 24px 0 28px;
+            padding: 14px 6px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        .paa-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 14px 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 6px;
+        }
+        .paa-header i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .paa-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        .paa-item {
+            background: var(--bg-card);
+            border-radius: 18px;
+            margin: 10px 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .paa-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            cursor: pointer;
+            gap: 10px;
+        }
+        .paa-toggle-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            background: var(--icon-bg);
+            border-radius: 50%;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+        .paa-item.active-paa .paa-toggle-icon {
+            background: var(--primary);
+            color: #ffffff;
+            transform: rotate(135deg);
+        }
+        .paa-question-text {
+            flex: 1;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .paa-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+            background: var(--bg-card);
+        }
+        .paa-item.active-paa .paa-answer {
+            max-height: 400px;
+            border-top: 1px solid var(--border-color);
+            padding: 14px 18px;
+        }
+        .paa-answer p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Survey Animation */
+        .urja-premium-survey label:active {
+            transform: scale(0.98);
+        }
+        @keyframes thumbPop {
+            0% { transform: scale(0.4) rotate(-30deg); opacity: 0; }
+            70% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+        .content-spacer {
+            height: 80px;
+        }
+        
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .plain-article-title, .intro-image, .simple-outline-box, .faq-item, .people-also-ask {
+            animation: fadeUp 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+<div class="article-container">
+    <div class="sharp-header" id="stickyHeader">
+        <button class="back-arrow" id="backToHomeBtn" aria-label="Back">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">
+            <i class="fas fa-bolt"></i> 
+            <span>UrjaPlus</span>
+        </div>
+    </div>
+
+    <div class="article-content">
+        <div class="plain-article-title">
+            वीज वापर कमी करण्यासाठी प्रगत तांत्रिक पद्धती आणि उपयुक्त टिप्स.
+        </div>
+
+        <div class="intro-image">
+            <img src="../Image/advanced-tips-to-reduce-energy-consumption.webp" alt="energy-saving-advanced-guide" class="about-intro-img">
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-info-circle"></i>
+                <h3>परिचय</h3>
+            </div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">वाढत्या उन्हाळ्यामुळे किंवा आधुनिक सुखसोयींच्या साधनांमुळे घरगुती वीज बिलात सातत्याने वाढ होत आहे. मात्र, केवळ उपकरणांचा वापर कमी करणे हाच वीज बचतीचा एकमेव मार्ग नाही, तर प्रगत तांत्रिक पद्धती आणि योग्य व्यवस्थापनाद्वारे आपण बिलामध्ये लक्षणीय कपात करू शकतो. घराचे वायरिंग, उपकरणांची गुणवत्ता आणि उपलब्ध नैसर्गिक स्रोतांचा योग्य मेळ घातल्यास ऊर्जा संवर्धन सहज शक्य होते. या लेखात आपण वीज वापर कमी करण्याचे तांत्रिक मार्ग आणि काही मोलाच्या टिप्स जाणून घेणार आहोत.</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-wallet"></i>
+                    <h2>१. ऊर्जा व्यवस्थापन बजेट नियंत्रित ठेवण्यासाठी एक प्रभावी माध्यम.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">घरामध्ये ऊर्जेचे योग्य ऑडिट (Energy Audit) आणि दैनंदिन वापरावर नियंत्रण ठेवल्यास महिन्याचे बजेट संतुलित राखता येते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">वीज बिलाचा थेट परिणाम आपल्या कौटुंबिक बजेटवर होत असतो. स्मार्ट ऊर्जा व्यवस्थापनाच्या माध्यमातून खर्चावर नियंत्रण मिळवता येते:</p>
+                    
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>वापराचे वेळापत्रक (Usage Tracking):</strong> पीक अवर्स (Peak Hours - जेव्हा वीज कंपन्यांचा दर अधिक असू शकतो किंवा भार जास्त असतो) दरम्यान महत्त्वाच्या उपकरणांचा वापर नियंत्रित करणे.</li>
+                        <li><span class="number-badge">2</span> <strong>स्मार्ट मॉनिटरिंग:</strong> आधुनिक स्मार्ट प्लग किंवा एनर्जी मॉनिटरचा वापर करून कोणत्या उपकरणाला सर्वाधिक वीज लागते, याचे विश्लेषण करणे आणि त्यानुसार बजेट आखणे.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुम्ही दरमहा तुमच्या वीज बिलाचे बजेट निश्चित करून त्यानुसार वापर नियंत्रित करता का?</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-sun"></i>
+                    <h2>२. नैसर्गिक संसाधनांच्या वापरातून वीज बचतीचे उद्दिष्ट.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">सूर्यप्रकाश आणि नैसर्गिक हवेचा जास्तीत जास्त वापर केल्यास कृत्रिम प्रकाश आणि पंखे/एसी वरील खर्च जवळपास ४०% कमी होऊ शकतो.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">पर्यावरणपूरक आणि शाश्वत जीवनशैलीचा अंगीकार करून वीज बचतीचे उद्दिष्ट सहज साध्य करता येते:</p>
+                    
+                    <ul class="urja-bullet-list">
+                        <li><strong>वास्तू रचना आणि वेंटिलेशन:</strong> दिवसा घरातील खिडक्या खुल्या ठेवून जास्तीत जास्त नैसर्गिक उजेड आणि खेळती हवा घरात येईल याची काळजी घेणे.</li>
+                        <li><strong>सोलर पॅनेलचा वापर:</strong> छतावर रूफटॉप सोलर सिस्टीम बसवून स्वतःची वीज स्वतः निर्माण करणे, ज्यामुळे ग्रीडवरील अवलंबित्व पूर्णपणे संपुष्टात येते.</li>
+                        <li><strong>सोलर वॉटर हीटर:</strong> गिझर ऐवजी अंघोळीच्या पाण्यासाठी सौर ऊर्जेचा वापर करणे, जे वीज बचतीसाठी अत्यंत फायदेशीर मानले जाते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुमच्या घरामध्ये सौर ऊर्जेचा किंवा नैसर्गिक संसाधनाचा वापर केला जातो का?</p>
+                </div>
+            </div>
+
+            <div class="urja-premium-survey" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 22px 18px 18px 18px; margin: 5px 0 5px 0; box-shadow: var(--shadow); position: relative; overflow: hidden; font-family: inherit;">
+                <div style="position: absolute; top: 0; left: 18px; background: var(--primary-gradient); color: #ffffff; padding: 3px 12px; font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; border-radius: 0 0 8px 8px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <i class="fas fa-poll" style="margin-right: 4px;"></i> Urja Survey
+                </div>
+                
+                <div id="surveyPremiumMain" style="display: block; opacity: 1; transform: scale(1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);">
+                    <h4 style="margin: 14px 0 16px 0; color: var(--text-main); font-size: 1.05rem; font-weight: 800; line-height: 1.5; text-align: justify;">
+                        नवीन उपकरणे खरेदी करताना तुम्ही ब्युरो ऑफ एनर्जी एफिशियन्सी (BEE) चे स्टार रेटिंग तपासून घेता का?
+                    </h4>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">होय, मी नेहमी ५ स्टार उपकरणांनाच प्राधान्य देतो.</span>
+                        </label>
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">नाही, मी फक्त किंमत आणि ब्रँड पाहतो.</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="surveyPremiumSuccess" style="display: none; opacity: 0; text-align: center; padding: 30px 10px 15px 10px; transition: all 0.4s ease;">
+                    <div class="survey-thumb-icon" style="width: 70px; height: 70px; background: var(--primary-gradient); color: #ffffff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.15);">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <h4 style="margin: 0 0 6px 0; color: var(--text-main); font-size: 1.2rem; font-weight: 800;">तुमच्या प्रतिसादाबद्दल धन्यवाद!</h4>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; font-weight: 500;">ऊर्जा बचतीचा तुमचा प्रत्येक निर्णय महत्त्वाचा आहे.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-bolt"></i>
+                    <h2>३. जुन्या वायरिंगमुळे होणाऱ्या वीज गळतीची तांत्रिक कारणे आणि प्रतिबंधात्मक उपाय.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">खराब इन्सुलेशन किंवा जुन्या पद्धतीचे वायरिंग घरात सुप्त वीज गळती (Current Leakage) निर्माण करू शकते, ज्यामुळे उपकरणे बंद असतानाही बिल वाढते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">अनेकदा ग्राहक घरात नवीन उपकरणे आणतात, मात्र अंतर्गत वायरिंगकडे दुर्लक्ष करतात. वीज गळतीची मुख्य तांत्रिक कारणे आणि उपाय खालीलप्रमाणे आहेत:</p>
+                    
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>तार आणि इन्सुलेशन झिजणे:</strong> १०-१५ वर्षांपेक्षा जुन्या झालेल्या कॉपर किंवा ॲल्युमिनियम तारांचे इन्सुलेशन खराब होऊन भिंतीला किंवा अर्थिंगला सूक्ष्म प्रवाह मिळतो.</li>
+                        <li><span class="number-badge">2</span> <strong>प्रतिबंधात्मक उपाय (ELCB/RCCB चा वापर):</strong> घराच्या मुख्य पॅनेलमध्ये अर्थ लीकेज सर्किट ब्रेकर (ELCB) किंवा रेसिड्यूअल करंट सर्किट ब्रेकर (RCCB) बसवणे अनिवार्य आहे. यामुळे वीज गळती झाल्यास वीजपुरवठा त्वरित खंडित होतो आणि सुरक्षेसोबत वीजही वाचते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुम्ही तुमच्या घरातील वायरिंगची तांत्रिक तपासणी तज्ज्ञ वायरमनकडून कधी करून घेतली आहे का?</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-star"></i>
+                    <h2>४. वीज बचतीसाठी फाइव्ह स्टार उपकरणांची निवड.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">BEE ५-स्टार मानांकन लाभलेली उपकरणे सुरुवातीला महाग वाटली तरी दीर्घकालीन वापरामध्ये बिलाची मोठी रक्कम वाचवून पैशांची वसुली करतात.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">BEE (Bureau of Energy Efficiency) चे स्टार रेटिंग हे उपकरण किती कार्यक्षम आहे हे दर्शवते. १-स्टार ते ५-स्टार उपकरणांमधील फरक समजून घेणे महत्त्वाचे आहे:</p>
+                    
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>इनव्हर्टर टेक्नॉलॉजी:</strong> ५-स्टार रेटिंग असणारे एसी किंवा रेफ्रिजरेटर हे कंप्रेसरची गती गरजेनुसार नियंत्रित करतात, ज्यामुळे पारंपारिक उपकरणांच्या तुलनेत ३० ते ५०% वीज कमी लागते.</li>
+                        <li><span class="number-badge">2</span> <strong>एलईडी क्रांती (LED Lighting):</strong> साधे ट्यूबलाईट किंवा बल्ब बदलून ५-स्टार मानांकित एलईडी वापरल्यास प्रकाशाची गुणवत्ता वाढून ऊर्जेचा वापर नगण्य होतो.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुमच्या घरातील रेफ्रिजरेटर किंवा एसी आधुनिक ५-स्टार इनव्हर्टर तंत्रज्ञानाचा आहे का?</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-tools"></i>
+                    <h2>५. उच्च क्षमतेच्या उपकरणांचा सुरक्षित आणि प्रभावी वापर.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">एसी, गिझर, वॉटर पंप आणि वॉशिंग मशीन यांसारख्या हेवी उपकरणांचा सुयोग्य वापर वीज बिल निम्म्यावर आणू शकतो.</li>
+                        </ul>
+                    </div>
+                    
+                    <p style="text-align: justify;">उच्च क्षमतेच्या (High Wattage) उपकरणांच्या वापराबद्दल खालील तांत्रिक तुलनात्मक कोष्टक अत्यंत मार्गदर्शक ठरेल:</p>
+
+                    <table class="urja-small-table">
+                        <thead>
+                            <tr>
+                                <th>उपकरण</th>
+                                <th>अयोग्य वापर (जास्त बिल)</th>
+                                <th>स्मार्ट/प्रगत पद्धत (वीज बचत)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>एअर कंडिशनर्स (AC)</td>
+                                <td>१६°C ते १८°C वर चालवणे आणि फिल्टर स्वच्छ न ठेवणे.</td>
+                                <td>२४°C ते २६°C वर सेट करणे. (प्रत्येक डिग्री वाढवल्यास ६% वीज वाचते).</td>
+                            </tr>
+                            <tr>
+                                <td>रेफ्रिजरेटर (Fridge)</td>
+                                <td>भिंतीला खेटून ठेवणे, गरम अन्न आत ठेवणे आणि वारंवार दार उघडणे.</td>
+                                <td>मागील बाजूस खेळती हवा ठेवणे, अन्न थंड करून ठेवणे आणि मध्यम कूलिंग सेट करणे.</td>
+                            </tr>
+                            <tr>
+                                <td>पाण्याचा गिझर</td>
+                                <td>तासनतास चालू ठेवणे आणि थर्मोस्टॅट ६५°C पेक्षा जास्त ठेवणे.</td>
+                                <td>वापराच्या १५ मिनिटे आधी सुरू करणे आणि ५०°C च्या मर्यादेवर सेट करणे.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुम्ही तुमच्या घरातील एसीचे तापमान नेहमी २४°C किंवा त्यापेक्षा जास्त ठेवता का?</p>
+                </div>
+            </div>
+
+        </div> 
+
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-trophy"></i><h3>महत्त्वाचे निष्कर्ष</h3></div>
+            <div class="takeaway-simple-list">
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">अंधाधुंद वीज वापर करण्याऐवजी स्मार्ट मीटरिंग आणि घरगुती वापराचे वेळापत्रक निश्चित केल्यास मासिक बजेट आटोक्यात राहते.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">घराचे जुने वायरिंग आणि ईएलसीबी (ELCB) सर्किट ब्रेकरची कमतरता हे छुपे वीज चोर आहेत; त्यांची वेळेत दुरुस्ती करणे अत्यंत आवश्यक आहे.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">उच्च क्षमतेच्या उपकरणांचे तापमान आणि वापरण्याची पद्धत यात किरकोळ बदल करून देखील दरमहा शेकडो युनिट्सची बचत करता येते.</p></div>
+            </div>
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-arrow-alt-circle-right"></i><h3>पुढचं पाऊल:</h3></div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">आजच तुमच्या घरातील मुख्य उपकरणांचे स्टार रेटिंग तपासा आणि एसी चालवताना तापमान २४ अंश सेल्सिअसवर सेट करण्याची सवय लावा. शक्य असल्यास, तुमच्या घराचे अर्थिंग आणि वायरिंग सुरक्षित आहे की नाही याची चाचणी मान्यताप्राप्त इलेक्ट्रिशियन कडून करून घ्या.</p>
+            </div>
+        </div>
+
+        <div class="people-also-ask">
+            <div class="paa-header">
+                <i class="fas fa-users"></i>
+                <h3>People Also Ask</h3>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">उपकरणे रिमोटने बंद केल्यावर (Standby Mode) वीज खर्च होते का?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">होय, टीव्ही, सेटअप बॉक्स, किंवा मायक्रोवेव्ह केवळ रिमोटने बंद केल्यास ते स्टँडबाय मोडवर राहतात आणि सतत काही प्रमाणात वीज ओढत असतात. त्यामुळे मुख्य स्विच बोर्डवरूनच वीज पूर्णपणे बंद करावी.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">३-स्टार आणि ५-स्टार उपकरणांच्या बिलामध्ये किती फरक पडतो?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">साधारणपणे, ५-स्टार उपकरण हे ३-स्टार उपकरणाच्या तुलनेत १५% ते २०% अधिक कार्यक्षम असते. प्रदीर्घ आणि सतत वापरामध्ये (उदा. एसी किंवा फ्रीज) ५-स्टार उपकरणांमुळे दरमहा बिलात लक्षणीय घट होते.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">आरसीसीबी (RCCB) किंवा ईएलसीबी (ELCB) वीज कशी वाचवते?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">हे उपकरण भिंतीतील ओल किंवा खराब वायरिंगमुळे होणारी सूक्ष्म वीज गळती (Current Leakage) अचूकपणे शोधते. गळती आढळताच ते ट्रिप होते, ज्यामुळे न वापरता वाया जाणारी वीज वाचते आणि जीवितहानीचा धोकाही टळतो.</p></div>
+            </div>
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>महत्वाचे अस्वीकरण (Disclaimer):</h3>
+            </div>
+            <div class="disclaimer-text" style="font-size: 0.85rem; line-height: 1.5; text-align: justify;">
+                या लेखात दिलेली माहिती, टिप्स आणि तांत्रिक सल्ले हे केवळ सामान्य मार्गदर्शन आणि ऊर्जा साक्षरता वाढवण्याच्या उद्देशाने संकलित केले आहेत. प्रत्येक घराची वास्तू रचना, उपकरणांचे वय आणि वापराचे स्वरूप वेगवेगळे असू शकते; त्यामुळे वीज बचतीचे परिणाम भिन्न असू शकतात. घरातील वायरिंग बदलणे किंवा अंतर्गत तांत्रिक बदल करताना नेहमी परवानाधारक इलेक्ट्रिकल इंजिनिअर अथवा तज्ज्ञ वायरमनचाच सल्ला घ्यावा. <strong>UrjaPlus</strong> कोणत्याही तांत्रिक अपघातास अथवा दाव्यास जबाबदार असणार नाही.
+            </div>
+        </div>
+
+        <div class="content-spacer"></div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="../index.html" class="nav-item" data-nav="home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="../tools.html" class="nav-item" data-nav="Tools"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="../search.html" class="nav-item" data-nav="Search"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="../rti-plus.html" class="nav-item" data-nav="Favorites"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn" data-nav="Share"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Light / Dark Theme Sync
+        function applySynchronizedTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+        applySynchronizedTheme();
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                applySynchronizedTheme();
+            }
+        });
+        
+        // People Also Ask Accordion Logic
+        const paaItems = document.querySelectorAll('.paa-item');
+        paaItems.forEach(paa => {
+            const questionDiv = paa.querySelector('.paa-question');
+            if(questionDiv) {
+                questionDiv.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isActive = paa.classList.contains('active-paa');
+                    paaItems.forEach(other => {
+                        if(other !== paa && other.classList.contains('active-paa')) {
+                            other.classList.remove('active-paa');
+                        }
+                    });
+                    if(!isActive) {
+                        paa.classList.add('active-paa');
+                    } else {
+                        paa.classList.remove('active-paa');
+                    }
+                });
+            }
+        });
+        
+const backBtn = document.getElementById('backToHomeBtn');
+if(backBtn) {
+    backBtn.addEventListener('click', () => {
+        window.location.href = '../billing-and-payment.html'; // तुमच्या फोल्डर स्ट्रक्चरनुसार योग्य पाथ (Path) सेट करा
+    });
+}
+        
+        // Smooth Click Effect for Boxes
+        document.addEventListener('click', function(e) {
+            const box = e.target.closest('.simple-outline-box, .faq-item');
+            if(box && !e.target.closest('button') && !e.target.closest('.people-also-ask')) {
+                box.style.transform = 'scale(0.99)';
+                setTimeout(() => { box.style.transform = ''; }, 130);
+            }
+        });
+    })();
+
+    // Survey Response Interaction
+    function handleSurveySelection(selectedLabel) {
+        const allLabels = selectedLabel.parentElement.querySelectorAll('label');
+        allLabels.forEach(label => {
+            const checkOuter = label.querySelector('.survey-custom-check');
+            const checkInner = checkOuter.querySelector('span');
+            checkOuter.style.borderColor = 'var(--text-muted)';
+            checkInner.style.background = 'transparent';
+            label.style.borderColor = 'var(--border-color)';
+            label.style.background = 'var(--bg-app)';
+        });
+
+        const activeCheckOuter = selectedLabel.querySelector('.survey-custom-check');
+        const activeCheckInner = activeCheckOuter.querySelector('span');
+        activeCheckOuter.style.borderColor = 'var(--primary)';
+        activeCheckInner.style.background = 'var(--primary)';
+        selectedLabel.style.borderColor = 'var(--primary)';
+        selectedLabel.style.background = 'var(--bg-card)';
+
+        setTimeout(function() {
+            const mainContent = document.getElementById('surveyPremiumMain');
+            const successContent = document.getElementById('surveyPremiumSuccess');
+            const thumbIcon = successContent.querySelector('.survey-thumb-icon');
+            
+            mainContent.style.opacity = '0';
+            mainContent.style.transform = 'scale(0.9)';
+            
+            setTimeout(function() {
+                mainContent.style.display = 'none';
+                successContent.style.display = 'block';
+                setTimeout(function() {
+                    successContent.style.opacity = '1';
+                    if(thumbIcon) thumbIcon.style.animation = 'thumbPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                }, 50);
+            }, 300);
+        }, 350);
+    }
+</script>
+</body>
+</html>
