@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>UrjaPlus | Energy Literacy & Grievance Redressal Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Root Variables for Theme Switcher (Enhanced Dark Mode) --- */
+        :root {
+            --bg-app: #f4f7fe;
+            --bg-card: #ffffff;
+            --primary: #111111; /* Changed to Dark Black */
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); /* Premium Dark Gradient */
+            --stripe-gradient: linear-gradient(45deg, #111111 25%, #444444 25%, #444444 50%, #111111 50%, #111111 75%, #444444 75%, #444444 100%);
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111; /* Changed to Dark Black */
+            --pill-active-text: #ffffff;
+            --nav-bg: #ffffff;
+            --hotline-bg: rgba(255, 255, 255, 0.15);
+            --search-glow: rgba(17, 17, 17, 0.15);
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; /* Deep Futuristic Midnight Blue */
+            --bg-card: #111827; /* Sleek Dark Card Background */
+            --primary: #ffffff; /* Luminous Contrast White for Dark Mode */
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); /* Dark Mode Deep Gradient */
+            --text-main: #f8fafc; /* Crisp Soft White for Readability */
+            --text-muted: #94a3b8; /* Balanced Slate Muted Text */
+            --border-color: #1f2937; /* Subtle Border */
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Deep Shadow for Depth */
+            --pill-active-bg: #f8fafc;
+            --pill-active-text: #111111;
+            --nav-bg: #111827;
+            --hotline-bg: rgba(0, 0, 0, 0.4);
+            --search-glow: rgba(255, 255, 255, 0.15);
+        }
+
+        /* --- Reset & Core Typography --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .app-container {
+            max-width: 480px; /* Forces sleek mobile frame on desktops */
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 90px;
+            box-shadow: var(--shadow);
+            transition: background 0.3s ease;
+        }
+
+        /* --- New Sticky Container for Header & Search Bar --- */
+        .sticky-header-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-app);
+            padding-bottom: 8px;
+            transition: background 0.3s ease;
+        }
+
+        /* --- Header Section (Sticky Stripe Design Concept) --- */
+        .header-wrapper {
+            background: var(--primary-gradient);
+            padding: 24px 20px 30px 20px;
+            border-radius: 0 0 32px 32px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: background 0.3s ease;
+        }
+
+        /* Diagonal Stripe Background Effect */
+        .header-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.03) 75%, transparent 75%, transparent);
+            background-size: 40px 40px;
+            animation: stripeMove 20s linear infinite;
+            pointer-events: none;
+        }
+
+        [data-theme="dark"] .header-wrapper::before {
+            background: linear-gradient(45deg, rgba(255,255,255,0.015) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.015) 50%, rgba(255,255,255,0.015) 75%, transparent 75%, transparent);
+        }
+
+        @keyframes stripeMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(40px, 40px); }
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .logo-area h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-area p {
+            font-size: 0.75rem;
+            opacity: 0.85;
+            margin-top: 2px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-icon {
+            background: rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1.1rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .action-icon:active {
+            transform: scale(0.92);
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        /* --- Premium Quick Help Gateway Card --- */
+        .gateway-card {
+            background: var(--hotline-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 14px 18px;
+            margin-top: 10px;
+        }
+
+        .gateway-card .tagline {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #cbd5e1;
+            margin-bottom: 4px;
+        }
+
+        [data-theme="dark"] .gateway-card .tagline {
+            color: #94a3b8;
+        }
+
+        .gateway-card .title-text {
+            font-size: 1.2rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- Sticky Search Bar Integration --- */
+        .search-container {
+            margin: -18px 18px 0 18px;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 12px 16px 12px 46px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--primary);
+            box-shadow: 0 4px 18px var(--search-glow);
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        /* --- Main Content Adjustments --- */
+        .main-content {
+            padding: 20px 16px 20px 16px;
+        }
+
+        /* --- Custom Strip Concept Prime Row --- */
+        .prime-stripe-banner {
+            background: linear-gradient(90deg, #111111, #333333);
+            color: white;
+            padding: 14px 18px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        [data-theme="dark"] .prime-stripe-banner {
+            background: linear-gradient(90deg, #000000, #1f2937);
+        }
+
+        .prime-stripe-banner h2 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 2;
+        }
+
+        .view-all-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 2;
+            transition: 0.2s;
+        }
+
+        .prime-stripe-banner:active .view-all-badge {
+            background: white;
+            color: #111111;
+        }
+
+        /* --- Horizontal Category Pills --- */
+        .category-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            scrollbar-width: none;
+        }
+
+        .category-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .pill-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            white-space: nowrap;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pill-item.active {
+            background: var(--pill-active-bg);
+            color: var(--pill-active-text);
+            border-color: var(--pill-active-bg);
+        }
+
+        /* --- Responsive Content Cards Grid --- */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .blog-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .blog-card:active {
+            transform: scale(0.96);
+        }
+
+        .card-thumbnail {
+            height: 100px;
+            background: #cbd5e1;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+
+        [data-theme="dark"] .card-thumbnail {
+            background: #1f2937;
+        }
+
+        .card-tag {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+
+        .card-body {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .card-body h3 {
+            font-size: 0.78rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--text-main);
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-footer {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 500;
+        }
+
+        /* --- नाजूक आणि प्रिमियम फुल-विड्थ 'See All' बटन डिझाईन --- */
+        .see-all-btn-container {
+            width: 100%;
+            margin-bottom: 26px;
+            padding: 0 2px;
+        }
+
+        .sleek-see-all-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            background: var(--bg-card);
+            color: var(--primary);
+            border: 1px solid var(--border-color);
+            padding: 10px 16px; /* नाजूक पॅडिंग */
+            border-radius: 12px;
+            font-size: 0.8rem; /* बारीक आणि नीटनेटका फॉन्ट */
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02); /* अतिशय हलका शॅडो */
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            letter-spacing: 0.2px;
+        }
+
+        .sleek-see-all-btn:active {
+            transform: scale(0.985); /* नाजूक क्लिक इफेक्ट */
+            background: rgba(17, 17, 17, 0.04);
+            border-color: var(--primary);
+        }
+
+        [data-theme="dark"] .sleek-see-all-btn:active {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .sleek-see-all-btn i {
+            font-size: 0.75rem;
+            transition: transform 0.2s ease;
+        }
+
+        .sleek-see-all-btn:active i {
+            transform: translateX(2px);
+        }
+
+        /* 360px Mobile Optimization */
+        @media (max-width: 370px) {
+            .logo-area h1 { font-size: 1.35rem; }
+            .content-grid { gap: 8px; }
+            .card-body h3 { font-size: 0.72rem; }
+            .pill-item { padding: 6px 12px; font-size: 0.72rem; }
+            .sleek-see-all-btn { padding: 9px 14px; font-size: 0.75rem; }
+        }
+
+        /* --- Standard of Performance Section --- */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0 14px 0;
+        }
+
+        .section-header h3 {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .section-header .see-all {
+            font-size: 0.75rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .strip-grid-services {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .service-mini-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .service-mini-card:active {
+            transform: scale(0.92);
+            background: var(--border-color);
+        }
+
+        .service-mini-card i {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .service-mini-card span {
+            display: block;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* --- Application Forms Menu List --- */
+        .form-rect-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .rect-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .rect-card:active {
+            background: var(--border-color);
+        }
+
+        .rect-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(17, 17, 17, 0.05);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .rect-details {
+            flex: 1;
+        }
+
+        .rect-details h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .rect-details p {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+        }
+
+        /* --- Information Tagline Banner --- */
+        .info-banner {
+            background: rgba(17, 17, 17, 0.02);
+            border: 1px solid var(--primary);
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            color: var(--primary);
+            text-align: center;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        [data-theme="dark"] .info-banner {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* --- Animated Side Menu Framework --- */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(3px);
+            z-index: 999;
+            display: none;
+        }
+
+        .side-drawer {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background: var(--bg-card);
+            z-index: 1000;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.15);
+            transition: left 0.3s cubic-bezier(0.1, 0.8, 0.3, 1);
+            padding: 24px 20px;
+        }
+
+        .side-drawer.open { left: 0; }
+        .menu-overlay.show { display: block; }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 14px;
+        }
+
+        .drawer-header h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .drawer-header .close-btn {
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .drawer-menu-list {
+            list-style: none;
+        }
+
+        .drawer-menu-list li {
+            padding: 14px 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+
+        .drawer-menu-list li:active {
+            background: var(--border-color);
+        }
+
+        .drawer-menu-list li i {
+            color: var(--primary);
+            width: 20px;
+        }
+
+        /* --- Native Look Bottom Navigation --- */
+        .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 10px 22px 10px;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.04);
+            z-index: 90;
+            transition: background 0.3s ease;
+        }
+		
+		.bottom-navbar .nav-link {
+		text-decoration: none;
+		color: inherit;
+		}
+
+        .nav-link {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.65rem;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .nav-link i {
+            font-size: 1.2rem;
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        /* --- Share Sheet Component --- */
+        .share-sheet {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
+            z-index: 1100;
+            transition: bottom 0.3s cubic-bezier(0.1, 0.8, 0.3, 1);
+            padding: 20px;
+        }
+
+        .share-sheet.active { bottom: 0; }
+
+        .share-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .share-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            text-align: center;
+        }
+
+        .share-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .share-icon-circle {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+
+    <div class="sticky-header-container">
+        <div class="header-wrapper">
+            <div class="header-top">
+                <div class="logo-area">
+                    <h1><i class="fas fa-lightbulb"></i> UrjaPlus</h1>
+                    <p>Advanced Platform for Energy Literacy and Consumer Grievance Management</p>
+                </div>
+                <div class="header-actions">
+                    <div class="action-icon" id="themeToggleBtn" title="Toggle Mode">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <div class="action-icon" id="menuToggleBtn">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="gateway-card">
+                <div class="tagline"><i class="fas fa-shield-alt"></i> Standard Protection Gateway</div>
+                <div class="title-text"><i class="fas fa-headset"></i> Quick Help Resolution</div>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="appSearchInput" class="search-box" placeholder="Search billing, smart meters, complaints...">
+        </div>
+    </div>
+
+    <div class="main-content">
+        
+        <div class="prime-stripe-banner" id="primeBanner">
+            <h2><i class="fas fa-users-gear"></i> ग्राहक सेवा प्रणाली</h2>
+            <a href="consumer-service-system.html" class="view-all-badge" style="text-decoration: none; color: inherit;">View All <i class="fas fa-chevron-right"></i></a>
+        </div>
+
+        <div class="category-scroll" id="categoryScroller">
+            <button class="pill-item active" data-cat="billing"><i class="fas fa-file-invoice-dollar"></i> बिलिंग आणि देयक</button>
+            <button class="pill-item" data-cat="smart"><i class="fas fa-microchip"></i> स्मार्ट मीटर</button>
+            <button class="pill-item" data-cat="complaint"><i class="fas fa-comment-dots"></i> वीज तक्रार निवारण प्रक्रिया</button>
+            <button class="pill-item" data-cat="solar"><i class="fas fa-solar-panel"></i> सोलर रुफटॉप</button>
+            <button class="pill-item" data-cat="recovery"><i class="fas fa-hand-holding-dollar"></i> देयक वसुली धोरणे</button>
+            <button class="pill-item" data-cat="theft"><i class="fas fa-headset"></i> वीज चोरी प्रतिबंध</button>
+            <button class="pill-item" data-cat="saving"><i class="fas fa-leaf"></i> ऊर्जा बचत</button>
+            <button class="pill-item" data-cat="security"><i class="fas fa-shield-halved"></i> सुरक्षा व उपाय</button>
+        </div>
+
+        <div class="content-grid" id="blogGridContainer"></div>
+
+        <div class="see-all-btn-container">
+            <a href="billing-all.html" class="sleek-see-all-btn" id="tabSeeAllBtn">
+                <span>Explore More Insights</span> <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="section-header">
+            <h3>Standard of Performance</h3>
+            <a href="#" class="see-all" id="perfSeeAll">See All</a>
+        </div>
+        
+        <div class="strip-grid-services">
+            <div class="service-mini-card" data-type="Consumer Rights">
+                <i class="fas fa-gavel"></i>
+                <span>ग्राहक हक्क</span>
+            </div>
+            <div class="service-mini-card" data-type="Service Timelines">
+                <i class="fas fa-clock"></i>
+                <span>सेवा कालमर्यादा</span>
+            </div>
+            <div class="service-mini-card" data-type="Citizen's Charter">
+                <i class="fas fa-scroll"></i>
+                <span>ग्राहक सनद</span>
+            </div>
+            <div class="service-mini-card" data-type="Service Guarantee">
+                <i class="fas fa-check-double"></i>
+                <span>वीज सेवा गॅरंटी</span>
+            </div>
+        </div>
+
+        <div class="info-banner">
+            <i class="fas fa-graduation-cap"></i> Dynamic Fusion of Consumer Rights & Energy Literacy
+        </div>
+
+        <div class="section-header" style="margin-top: 20px;">
+            <h3>Simplified Application Forms</h3>
+        </div>
+
+        <div class="form-rect-list">
+            <div class="rect-card" data-form="service">
+                <div class="rect-icon"><i class="fas fa-folder-plus"></i></div>
+                <div class="rect-details">
+                    <h4>वीज सेवा अर्ज संग्रहिका</h4>
+                    <p>नावामध्ये किंवा पत्ता बदल करणे, जोडभार बदल करणे</p>
+                </div>
+                <i class="fas fa-chevron-right" style="font-size:0.8rem; color:var(--text-muted)"></i>
+            </div>
+            <div class="rect-card" data-form="billing">
+                <div class="rect-icon"><i class="fas fa-file-circle-exclamation"></i></div>
+                <div class="rect-details">
+                    <h4>बिलिंग तक्रारी अर्ज प्रारूप</h4>
+                    <p>बिल दुरुस्ती अर्ज, मीटर बदल करणे, मीटर टेस्टिंग</p>
+                </div>
+                <i class="fas fa-chevron-right" style="font-size:0.8rem; color:var(--text-muted)"></i>
+            </div>
+            <div class="rect-card" data-form="high">
+                <div class="rect-icon"><i class="fas fa-gavel"></i></div>
+                <div class="rect-details">
+                    <h4>उच्चस्तरीय तक्रार अर्ज संग्रह</h4>
+                    <p>माहिती अधिकार अर्ज, CGRF तक्रार, उच्चस्तरीय तक्रार</p>
+                </div>
+                <i class="fas fa-chevron-right" style="font-size:0.8rem; color:var(--text-muted)"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <nav class="bottom-navbar">
+    <a href="index.html" class="nav-link active">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+
+    <a href="tools.html" class="nav-link">
+        <i class="fas fa-screwdriver-wrench"></i>
+        <span>Tools</span>
+    </a>
+
+    <a href="search.html" class="nav-link">
+        <i class="fas fa-magnifying-glass"></i>
+        <span>Search</span>
+    </a>
+
+    <a href="rti-plus.html" class="nav-link">
+        <i class="fas fa-scale-unbalanced"></i>
+        <span>RTI Plus</span>
+    </a>
+
+    <a href="https://urjaplus.com/share" class="nav-link">
+        <i class="fas fa-share-nodes"></i>
+        <span>Share</span>
+    </a>    </nav>
+
+</div>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="side-drawer" id="sideDrawer">
+    <div class="drawer-header">
+        <h3>UrjaPlus</h3>
+        <i class="fas fa-times close-btn" id="closeDrawerBtn"></i>
+    </div>
+    <ul class="drawer-menu-list">
+        <li data-link="index.html"><i class="fas fa-home"></i> Home</li>
+        <li data-link="about-us.html"><i class="fas fa-circle-info"></i> About Us</li>
+        <li data-link="quick-learn.html"><i class="fas fa-user-graduate"></i> Quick Learn</li>
+        <li data-link="disclaimer.html"><i class="fas fa-triangle-exclamation"></i> Disclaimer</li>
+        <li data-link="privacy-policy.html"><i class="fas fa-vault"></i> Privacy Policy</li>
+        <li data-link="terms-of-service.html"><i class="fas fa-file-signature"></i> Terms of Service</li>
+        <li data-link="contact-us.html"><i class="fas fa-envelope-open-text"></i> Contact Us</li>
+    </ul>
+</div>
+
+<div class="share-sheet" id="shareSheet">
+    <div class="share-header">
+        <h4 style="font-weight: 700;">Share App Content</h4>
+        <i class="fas fa-times" id="closeShareSheet" style="cursor:pointer; color:var(--text-muted)"></i>
+    </div>
+    <div class="share-grid">
+        <div class="share-item" onclick="triggerShare('wa')">
+            <div class="share-icon-circle" style="background:#25D366"><i class="fab fa-whatsapp"></i></div>
+            <span style="font-size:0.7rem; font-weight:600">WhatsApp</span>
+        </div>
+        <div class="share-item" onclick="triggerShare('fb')">
+            <div class="share-icon-circle" style="background:#1877F2"><i class="fab fa-facebook-f"></i></div>
+            <span style="font-size:0.7rem; font-weight:600">Facebook</span>
+        </div>
+        <div class="share-item" onclick="triggerShare('x')">
+            <div class="share-icon-circle" style="background:#000000"><i class="fab fa-x-twitter"></i></div>
+            <span style="font-size:0.7rem; font-weight:600">Twitter</span>
+        </div>
+        <div class="share-item" onclick="triggerShare('copy')">
+            <div class="share-icon-circle" style="background:#64748b"><i class="fas fa-link"></i></div>
+            <span style="font-size:0.7rem; font-weight:600">Copy Link</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* --- Central Comprehensive Database Object (English UI Model) --- */
+    const appDatabase = {
+        billing: [
+            { id: 1, title: "वीज बिलामधील प्रत्येक आकार आणि शुल्क समजून घेणे आवश्यकच.", img: "Image/reasons-for-high-energy-bill-explained.webp", link: "Blog/reasons-for-high-energy-bill-explained.html" },
+            { id: 2, title: "महावितरणची एनर्जी बिलिंग सिस्टीम ! पूर्ण प्रक्रिया सोप्या भाषेत.", img: "Image/mahavitaran-energy-billing-system-guide.webp", link: "Blog/mahavitaran-energy-billing-system-guide.html" },
+            { id: 3, title: "वीज बिलाचे ऑनलाइन पेमेंट अयशस्वी झाल्यास पुढे काय करावे?", img: "Image/what-to-do-if-online-bill-payment-fails.webp", link: "Blog/what-to-do-if-online-bill-payment-fails.html" },
+            { id: 4, title: "वीज बिलातील त्रुटी कशा ओळखाव्या? तफावत ओळखण्याचे निकष.", img: "Image/how-to-identify-energy-bill-errors.webp", link: "Blog/how-to-identify-energy-bill-errors.html" }
+        ],
+        smart: [
+            { id: 5, title: "स्मार्ट मीटर बंधनकारक आहे का? अधिकृत नियम काय सांगतात?", img: "Image/smart-meter-mandatory-rules-india.webp", link: "Blog/smart-meter-mandatory-rules-india.html" },
+            { id: 6, title: "स्मार्ट मीटर म्हणजे तंत्रज्ञानाची खरी ताकद.", img: "Image/power-of-smart-meter-technology.webp", link: "Blog/power-of-smart-meter-technology.html" },
+            { id: 7, title: "स्मार्ट मीटर आणि प्रीपेड वीज । भविष्यात ग्राहकांसाठी काय बदलणार?", img: "Image/smart-meter-prepaid-electricity-future-changes.webp", link: "Blog/smart-meter-prepaid-electricity-future-changes.html" },
+            { id: 8, title: "स्मार्ट मीटरबाबत पसरलेल्या अफवाह आणि त्यामागचं वास्तव", img: "Image/smart-meter-myths-vs-facts.webp", link: "Blog/smart-meter-myths-vs-facts.html" }
+        ],
+        complaint: [
+            { id: 9, title: "चुकीचं वीज बिल, लाईट कट किंवा मीटर बिघाड? तक्रार कशी करावी.", img: "Image/how-to-complain-wrong-electricity-bill-meter-fault.webp", link: "Blog/how-to-complain-wrong-electricity-bill-meter-fault.html" },
+            { id: 10, title: "वीज बिलावरील तक्रारीकडे दुर्लक्ष होत असल्यास काय कराल?", img: "Image/what-to-do-if-electricity-complaint-is-ignored.webp", link: "Blog/what-to-do-if-electricity-complaint-is-ignored.html" },
+            { id: 11, title: "ऑनलाइन पद्धतीने वीज तक्रार कशी नोंदवायची? सोपीステップ・バイ・ステップ माहिती.", img: "Image/step-by-step-guide-online-electricity-complaint.webp", link: "Blog/step-by-step-guide-online-electricity-complaint.html" },
+            { id: 12, title: "वीज पुरवठा सेवेतील तक्रारीसंदर्भात ग्राहकांचे हक्क आणि जबाबदाऱ्या.", img: "Image/electricity-consumer-rights-and-responsibilities.webp", link: "Blog/electricity-consumer-rights-and-responsibilities.html" }
+        ],
+        solar: [
+            { id: 13, title: "रूफटॉप सोलर म्हणजे नेमकं काय आणि ते कसं काम करतं?", img: "Image/what-is-rooftop-solar-and-how-it-works.webp", link: "Blog/what-is-rooftop-solar-and-how-it-works.html" },
+            { id: 14, title: "घरावर सोलर बसवल्यानंतर वीज बिल पूर्णतः शून्य होऊ शकते का?", img: "Image/can-rooftop-solar-make-your-electricity-bill-zero.webp", link: "Blog/can-rooftop-solar-make-your-electricity-bill-zero.html" },
+            { id: 15, title: "नेट मीटरिंग म्हणजे काय आणि ते ग्राहकांसाठी कसे फायदेशीर आहे?", img: "Image/understanding-net-metering-benefits-for-consumers.webp", link: "Blog/understanding-net-metering-benefits-for-consumers.html" },
+            { id: 16, title: "सोलर पॅनल पावसाळ्यात आणि ढगाळ हवेत किती वीज देतात?", img: "Image/solar-power-generation-in-rainy-and-cloudy-weather.webp", link: "Blog/solar-power-generation-in-rainy-and-cloudy-weather.html" }
+        ],
+        recovery: [
+            { id: 17, title: "वीज बिल थकबाकीच्या वसुलीपूर्वी मिळणाऱ्या नोटीस चा स्पष्ट अर्थ.", img: "Image/electricity-bill-recovery-notice-meaning.webp", link: "Blog/electricity-bill-recovery-notice-meaning.html" },
+            { id: 18, title: "वीजबिल थकबाकीच्या व्याज आणि दंडात्मक आकाराचे संपूर्ण गणित.", img: "Image/electricity-bill-interest-penalty-calculation.webp", link: "Blog/electricity-bill-interest-penalty-calculation.html" },
+            { id: 19, title: "वीजपुरवठा खंडित करण्यापूर्वी महावितरणचे अधिकृत繞 protocols.", img: "Image/mahadiscom-power-disconnection-rules.webp", link: "Blog/mahadiscom-power-disconnection-rules.html" },
+            { id: 20, title: "वीजबिल थकलंय पण आर्थिक अडचण आहे, अशावेळी काय पर्याय आहेत?", img: "Image/options-for-unpaid-electricity-bills-financial-crisis.webp", link: "Blog/options-for-unpaid-electricity-bills-financial-crisis.html" }
+        ],
+        security: [
+            { id: 21, title: "वीज बिलावरील नाव बदलण्यासाठी ऑनलाईन अर्ज कसा करावा?", img: "Image/how-to-change-name-on-electricity-bill-onlinel.webp", link: "Blog/how-to-change-name-on-electricity-bill-online.html" },
+            { id: 22, title: "घराचा पत्ता बदलल्यास वीज बिलावर कसं अपडेट करायचं?", img: "Image/change-address-in-electricity-connection.webp", link: "Blog/change-address-in-electricity-connection.html" },
+            { id: 23, title: "वीज कनेक्शनची वर्गवारी म्हणजे काय आणि ती कधी बदलावी?", img: "Image/electricity-tariff-category-change-guide.webp", link: "Blog/electricity-tariff-category-change-guide.html" },
+            { id: 24, title: "Go Green सेवेसाठी ऑनलाइन नोंदणी व अर्ज कसा करावा?", img: "Image/how-to-apply-online-for-go-green-service.webp", link: "Blog/how-to-apply-online-for-go-green-service.html" }
+        ],
+        saving: [
+            { id: 25, title: "पीएम सूर्यघर योजना.", img: "Image/pm-surya-ghar-yojana-details.webp", link: "Blog/pm-surya-ghar-yojana-details.html" },
+            { id: 26, title: "मागेल त्याला सौर कृषिपंप योजना.", img: "Image/magel-tyala-solar-krushi-pump-yojana.webp", link: "Blog/magel-tyala-solar-krushi-pump-yojana.html" },
+            { id: 27, title: "न्यू सर्व्हिस कनेक्शन (NSC)", img: "Image/msedcl-new-service-connection-guide.webp", link: "Blog/msedcl-new-service-connection-guide.html" },
+            { id: 28, title: "एस.सी.पी. (Scheduled Caste Plan)", img: "Image/what-is-scp-scheduled-caste-plan.webp", link: "Blog/what-is-scp-scheduled-caste-plan.html" }
+        ],
+        theft: [
+            { id: 29, title: "वीज चोरी म्हणजे नेमकं काय? कोणते प्रकार कायद्यानुसार गुन्हा ठरतात?", img: "Image/electricity-theft-definition-and-legal-offenses-india.webp", link: "Blog/electricity-theft-definition-and-legal-offenses-india.html" },
+            { id: 30, title: "नकळत किंवा चुकून वीज चोरी झाली असेल तर काय करावे?", img: "Image/unintentional-electricity-theft-what-to-do-next.webp", link: "Blog/unintentional-electricity-theft-what-to-do-next.html" },
+            { id: 31, title: "वीज चोरी कशी ओळखली जाते? तपासणी प्रक्रिया काय असते?", img: "Image/how-electricity-theft-is-detected-inspection-process.webp", link: "Blog/how-electricity-theft-is-detected-inspection-process.html" },
+            { id: 32, title: "वीज चोरीसाठी दंड किती असतो आणि तो कसा मोजला जातो?", img: "Image/electricity-theft-penalty-calculation-and-fines.webp", link: "Blog/electricity-theft-penalty-calculation-and-fines.html" }
+        ]
+    };
+
+    /* --- Dynamic See All Redirection Mapping Object --- */
+    const seeAllMapping = {
+        billing: "billing-and-payment.html",
+        smart: "smart-meter.html",
+        complaint: "electricity-complaint-process.html",
+        solar: "solar-rooftop.html",
+        recovery: "payment-recovery-policies.html",
+        saving: "energy-saving.html",
+        security: "energy-saving.html",
+        theft: "electricity-theft-prevention.html"
+    };
+
+    /* --- Theme Architecture Switch Logic --- */
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+    });
+
+    /* --- Core Render Grid System Controller --- */
+    function renderAppCards(categoryToken, searchFilter = "") {
+        const gridBox = document.getElementById('blogGridContainer');
+        gridBox.innerHTML = "";
+        
+        let targetDataset = appDatabase[categoryToken] || [];
+        
+        if(searchFilter.trim() !== "") {
+            targetDataset = targetDataset.filter(item => 
+                item.title.toLowerCase().includes(searchFilter.toLowerCase())
+            );
+        }
+
+        if(targetDataset.length === 0) {
+            gridBox.innerHTML = `<p style="grid-column: span 2; text-align:center; padding:20px; font-size:0.8rem; color:var(--text-muted)">No matching content found.</p>`;
+            return;
+        }
+
+        targetDataset.forEach(post => {
+            const cardEl = document.createElement('div');
+            cardEl.className = 'blog-card';
+            cardEl.onclick = () => window.location.href = post.link;
+            cardEl.innerHTML = `
+                <div class="card-thumbnail" style="background-image: url('${post.img}')">
+                    <span class="card-tag">UrjaPlus</span>
+                </div>
+                <div class="card-body">
+                    <h3>${post.title}</h3>
+                    <div class="card-footer"><i class="fas fa-feather-pointed"></i> By Admin</div>
+                </div>
+            `;
+            gridBox.appendChild(cardEl);
+        });
+    }
+
+    /* --- Interactive Category Pill Engine with Dynamic Button Link --- */
+    const pillNodes = document.querySelectorAll('.pill-item');
+    let currentActiveCat = "billing";
+
+    function updateActivePill(categoryToken) {
+        pillNodes.forEach(p => {
+            if(p.getAttribute('data-cat') === categoryToken) {
+                p.classList.add('active');
+                p.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            } else {
+                p.classList.remove('active');
+            }
+        });
+
+        // बटन अपडेट करणे
+        const seeAllBtn = document.getElementById('tabSeeAllBtn');
+        if (seeAllMapping[categoryToken]) {
+            seeAllBtn.href = seeAllMapping[categoryToken];
+            seeAllBtn.style.display = "inline-flex";
+        } else {
+            seeAllBtn.style.display = "none";
+        }
+    }
+
+    pillNodes.forEach(pill => {
+        pill.addEventListener('click', () => {
+            currentActiveCat = pill.getAttribute('data-cat');
+            updateActivePill(currentActiveCat);
+            renderAppCards(currentActiveCat, document.getElementById('appSearchInput').value);
+        });
+    });
+
+    /* --- Live On-the-fly Search Engine Optimization & Auto Tab Switch --- */
+    document.getElementById('appSearchInput').addEventListener('input', (e) => {
+        const inputValue = e.target.value.toLowerCase().trim();
+        
+        let matchedCat = null;
+        if (inputValue === "billing") matchedCat = "billing";
+        else if (inputValue === "smart") matchedCat = "smart";
+        else if (inputValue === "complaint") matchedCat = "complaint";
+        else if (inputValue === "solar") matchedCat = "solar";
+        else if (inputValue === "recovery") matchedCat = "recovery";
+        else if (inputValue === "theft" || inputValue === "safety") matchedCat = "theft";
+        else if (inputValue === "saving") matchedCat = "saving";
+
+        if(matchedCat) {
+            currentActiveCat = matchedCat;
+            updateActivePill(currentActiveCat);
+            renderAppCards(currentActiveCat, ""); 
+        } else {
+            renderAppCards(currentActiveCat, e.target.value);
+        }
+    });
+
+    /* --- Navigation Side-Drawer System Framework --- */
+    const overlayNode = document.getElementById('menuOverlay');
+    const drawerNode = document.getElementById('sideDrawer');
+    
+    document.getElementById('menuToggleBtn').addEventListener('click', () => {
+        drawerNode.classList.add('open');
+        overlayNode.classList.add('show');
+    });
+
+    function closeDrawer() {
+        drawerNode.classList.remove('open');
+        overlayNode.classList.remove('show');
+    }
+
+    document.getElementById('closeDrawerBtn').addEventListener('click', closeDrawer);
+    overlayNode.addEventListener('click', closeDrawer);
+
+    document.querySelectorAll('.drawer-menu-list li').forEach(item => {
+        item.addEventListener('click', () => {
+            window.location.href = item.getAttribute('data-link');
+        });
+    });
+
+/* --- Modern Share Sheet Action Controllers --- */
+    const shareSheet = document.getElementById('shareSheet');
+    
+    // एरर टाळण्यासाठी आधी 'navShareBtn' अस्तित्वात आहे का ते तपासले जाईल
+    const shareBtn = document.getElementById('navShareBtn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            shareSheet.classList.add('active');
+        });
+    }
+    
+    // बॉटम नेव्हिगेशन बारमधील शेअर बटनला देखील मॅप केले
+    const bottomShareBtn = document.querySelector('a[href*="share"]');
+    if (bottomShareBtn) {
+        bottomShareBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // बाहेरील लिंकवर जाण्यापासून रोखण्यासाठी
+            shareSheet.classList.add('active');
+        });
+    }
+
+    document.getElementById('closeShareSheet').addEventListener('click', () => shareSheet.classList.remove('active'));
+
+    function triggerShare(type) {
+        shareSheet.classList.remove('active');
+        const shareUrl = window.location.href;
+        const textStr = "Explore premium energy updates on UrjaPlus App Platform!";
+        if(type === 'wa') window.open(`https://wa.me/?text=${encodeURIComponent(textStr + " " + shareUrl)}`);
+        else if(type === 'fb') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`);
+        else if(type === 'x') window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(textStr)}&url=${encodeURIComponent(shareUrl)}`);
+        else alert("Link copied seamlessly to clipboard!");
+    }
+
+    /* --- Inline Redirect Click Handlers for Additional Blocks --- */
+    document.getElementById('primeBanner').onclick = () => window.location.href = 'consumer-service-system.html';
+    document.getElementById('perfSeeAll').onclick = (e) => { e.preventDefault(); window.location.href = 'standard-of-performance.html'; };
+    
+    document.querySelectorAll('.service-mini-card').forEach(card => {
+        card.onclick = () => window.location.href = `performance-detail.html?type=${encodeURIComponent(card.getAttribute('data-type'))}`;
+    });
+
+    document.querySelectorAll('.rect-card').forEach(card => {
+        card.onclick = () => window.location.href = 'application-forms.html';
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.onclick = () => {
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            const target = link.getAttribute('data-target');
+            if(target !== 'home') alert(`${target.toUpperCase()} engine modules will load instantly.`);
+        }
+    });
+
+    /* --- Initial Execution Sequence on Load --- */
+    updateActivePill("billing");
+    renderAppCards("billing");
+</script>
+</body>
+</html>
