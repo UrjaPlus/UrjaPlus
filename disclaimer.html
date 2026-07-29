@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Disclaimer | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- index.html मधून घेतलेली आधुनिक रंगसंगती (Theme System) --- */
+        :root {
+            --bg-app: #f4f7fe;
+            --bg-card: #ffffff;
+            --primary: #111111; /* Changed to Dark Black */
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); /* Premium Dark Gradient */
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --icon-bg: #f1f5f9; /* Soft grey background replacing light red */
+            --accent-red: #111111;
+            --accent-red-hover: #000000;
+            --dashed-border: #cbd5e1;
+            --gradient-mastermind: linear-gradient(120deg, #f8fafc, #ffffff);
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827; 
+            --primary: #ffffff; /* Luminous Contrast White for Dark Mode */
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+            --icon-bg: rgba(255, 255, 255, 0.05);
+            --accent-red: #ffffff;
+            --accent-red-hover: #e2e8f0;
+            --dashed-border: #1f2937;
+            --gradient-mastermind: linear-gradient(120deg, #111827, #0b0f19);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Inter', Roboto, Helvetica, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Mobile-first container */
+        .about-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: background 0.3s ease;
+        }
+
+        /* STICKY HEADER BAR */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+        
+        @media (max-width: 360px) {
+            .sharp-header { padding: 12px 16px; }
+        }
+
+        /* Back arrow button */
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            transition: opacity 0.2s ease, transform 0.1s ease;
+            line-height: 1;
+        }
+        
+        @media (max-width: 360px) {
+            .back-arrow { left: 12px; font-size: 1.3rem; }
+        }
+
+        .back-arrow:active {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        /* Header title */
+        .header-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+            text-align: center;
+        }
+        
+        @media (max-width: 360px) {
+            .header-title { font-size: 1.1rem; }
+        }
+
+        /* Main content with cards */
+        .about-content {
+            padding: 24px 16px 0px 16px;
+        }
+        
+        @media (max-width: 360px) {
+            .about-content { padding: 16px 12px 0px 12px; }
+        }
+
+        /* Grid System for Cards */
+        .mv-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        
+        @media (max-width: 360px) {
+            .mv-grid { gap: 12px; margin-bottom: 20px; }
+        }
+
+        .mv-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 18px 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s, border-color 0.3s;
+        }
+        
+        @media (max-width: 360px) {
+            .mv-card { padding: 14px 12px; border-radius: 20px; }
+        }
+        
+        .intro-image {
+            text-align: center;
+            margin: 16px 0 24px 0;
+        }
+        
+        @media (max-width: 360px) {
+            .intro-image { margin: 10px 0 18px 0; }
+        }
+
+        .about-intro-img {
+            width: 80%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 24px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        @media (max-width: 360px) {
+            .about-intro-img { width: 90%; border-radius: 18px; }
+        }
+
+        .about-intro-img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Heading with icon inline */
+        .card-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            flex-wrap: nowrap;
+        }
+        
+        @media (max-width: 360px) {
+            .card-heading { gap: 10px; margin-bottom: 10px; }
+        }
+
+        .card-heading .mv-icon {
+            background: var(--icon-bg);
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0;
+            transition: background 0.3s;
+        }
+        
+        @media (max-width: 360px) {
+            .card-heading .mv-icon { width: 38px; height: 38px; min-width: 38px; }
+            .card-heading .mv-icon i { font-size: 1.2rem; }
+        }
+
+        .card-heading .mv-icon i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .card-heading h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.3;
+            word-break: break-word;
+        }
+        
+        @media (max-width: 360px) {
+            .card-heading h3 { font-size: 1.1rem; }
+        }
+
+        .mv-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-left: 0;
+            word-break: break-word;
+        }
+        
+        /* Box numbers styling */
+        .box-numbers {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            counter-reset: box-counter;
+        }
+
+        .box-numbers li {
+            text-align: justify;
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            word-break: break-word;
+            color: var(--text-muted);
+            counter-increment: box-counter;
+        }
+        
+        @media (max-width: 360px) {
+            .box-numbers li { padding-left: 2.8rem; font-size: 0.95rem; margin-bottom: 0.7rem; }
+            .box-numbers li span {
+                width: 2rem !important;
+                height: 2rem !important;
+                line-height: 2rem !important;
+                font-size: 0.95rem !important;
+            }
+        }
+
+        .box-numbers li span {
+            display: inline-block; 
+            position: absolute; 
+            left: 0; 
+            top: 0; 
+            background-color: #111111 !important; 
+            color: white; 
+            width: 2rem; 
+            height: 2rem; 
+            text-align: center; 
+            line-height: 2rem; 
+            font-weight: bold; 
+            border-radius: 0;
+        }
+
+        [data-theme="dark"] .box-numbers li span {
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+
+        /* Bullet points styling */
+        .bullet-points {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .bullet-points li {
+            text-align: justify;
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            word-break: break-word;
+        }
+        
+        @media (max-width: 360px) {
+            .bullet-points li {
+                padding-left: 2rem;
+                gap: 0.6rem;
+                margin-bottom: 1rem;
+            }
+            .bullet-points li span:first-child {
+                width: 1.8rem !important;
+                height: 1.8rem !important;
+                font-size: 0.95rem !important;
+                min-width: 1.8rem !important;
+            }
+        }
+
+        .bullet-points li span:first-child {
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-shrink: 0; 
+            background: var(--primary-gradient); 
+            color: white; 
+            width: 1.8rem; 
+            height: 1.8rem; 
+            font-size: 1rem; 
+            font-weight: bold; 
+            border-radius: 50%; 
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .bullet-points li span:last-child {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Energy Tip / Banner */
+        .energy-tip {
+            background: rgba(17, 17, 17, 0.02);
+            border: 1px solid var(--primary);
+            padding: 14px 16px;
+            border-radius: 18px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            text-align: center;
+            margin: 24px 0 8px;
+            font-weight: 600;
+            line-height: 1.5;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            word-break: break-word;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        [data-theme="dark"] .energy-tip {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        @media (max-width: 360px) {
+            .energy-tip { padding: 10px 12px; font-size: 0.75rem; }
+        }
+
+        /* --- `about-us.html` मधून घेतलेली फुटर नेव्हिगेशन डिझाईन (तंतोतंत मॅच) --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        
+        @media (max-width: 420px) {
+            .bottom-nav { padding: 8px 10px 20px; }
+        }
+        
+        @media (max-width: 360px) {
+            .bottom-nav { padding: 8px 10px 22px 10px; }
+            .nav-item i { font-size: 1.2rem !important; }
+            .nav-item span { font-size: 0.65rem !important; }
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .content-spacer {
+            height: 80px;
+        }
+        
+        @media (max-width: 360px) {
+            .content-spacer { height: 70px; }
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mv-card, .energy-tip {
+            animation: fadeUp 0.4s ease-out forwards;
+        }
+
+        /* --- Dynamic Share Modal CSS --- */
+        .urja-share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .urja-share-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .urja-modal-container {
+            background: var(--bg-card);
+            width: 90%;
+            max-width: 380px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: slideUp 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .urja-modal-header {
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+        .urja-modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-icon-circle {
+            background-color: var(--pill-active-bg);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-card);
+            font-size: 0.9rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .urja-close-modal {
+            background: var(--border-color);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        .urja-modal-body {
+            padding: 20px 18px 24px;
+        }
+        .urja-share-platforms {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .urja-share-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--bg-app);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .urja-share-icon:active {
+            transform: scale(0.96);
+            background: var(--border-color);
+        }
+        .urja-icon-circle {
+            width: 34px;
+            height: 34px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+        .urja-share-icon span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+        }
+        .urja-copy-link-btn {
+            background: var(--bg-app);
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+        .urja-copy-link-btn:active {
+            background: var(--border-color);
+        }
+        .urja-toast-message {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .urja-toast-message.show { opacity: 1; }
+    </style>
+</head>
+<body>
+<div class="about-container">
+    <div class="sharp-header" id="stickyHeader">
+        <button class="back-arrow" id="backToHomeBtn" aria-label="Back">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">Disclaimer</div>
+    </div>
+
+    <div class="about-content">
+        <p style="text-align: justify; font-size: 0.95rem; word-break: break-word; color: var(--text-main); line-height: 1.6;">माहितीची अचूकता आणि मर्यादा प्रत्येक टप्प्यावर स्पष्ट होणे आवश्यकच असते. माहिती सुलभ आणि स्पष्ट करण्याचा आमचा निरंतर प्रयत्न असला, तरी अंतिम निर्णयाची जबाबदारी वापरकर्त्यावरच असते, म्हणूनच आमचे अस्वीकरण (Disclaimer) महत्वाचे आहे.</p><br>
+        
+        <div class="intro-image">
+            <img src="Image/disclaimer.webp" alt="disclaimer" class="about-intro-img">
+        </div>
+        
+        <div class="mv-grid">
+            <div class="mv-card">
+                <div class="card-heading">
+                    <div class="mv-icon"><i class="fas fa-info-circle"></i></div>
+                    <h3>सविस्तर परिचय</h3>
+                </div>
+                <p style="text-align: justify">UrjaPlus हा महाराष्ट्रातील वीज ग्राहकांसाठी विकसित केलेला डिजिटल प्लॅटफॉर्म आहे, जो ऊर्जा क्षेत्रातील तांत्रिक गुंतागुंत आणि क्लिष्ट वाटणारी नियमावली वीज ग्राहकांना सोप्या भाषेमध्ये उपलब्ध करून देतो.</p><br>
+                <p style="text-align: justify">स्मार्ट मीटर, सोलर रुफटॉप, बिलिंग प्रणाली आणि वीज चोरी प्रतिबंध यासारख्या महत्वाच्या विषयांवर या प्लॅटफॉर्म द्वारे सखोल मार्गदर्शन करण्यात येते. आम्ही स्टँडर्ड ऑफ परफॉर्मन्स अंतर्गत असलेल्या कायदेशीर बाबींची वीज ग्राहकांना सविस्तर माहिती देऊन त्यांना ऊर्जा साक्षर बनविण्यासाठी प्रयत्नशील आहोत.</p><br>
+                <p style="text-align: justify; color: var(--primary); font-weight: bold;">आमची भूमिका: आम्ही काय करतो?</p><br>
+
+                <ol class="box-numbers">
+                    <li><span>1</span> <strong>माहितीचे स्पष्टीकरण:</strong> ऊर्जा क्षेत्रातील गुंतागुंतीचे तांत्रिक नियम आणि शासन निर्णय सामान्य ग्राहकांना समजेल अशा सोप्या भाषेत उपलब्ध करून देतो.</li>
+                    <li><span>2</span> <strong>ग्राहक सबलीकरण:</strong> वीज ग्राहकांना कायदेशीर अधिकार आणि सेवा मानके (SOP) यांची स्पष्ट व प्रभावी माहिती देतो.</li>
+                    <li><span>3</span> <strong>तांत्रिक मार्गदर्शन:</strong> स्मार्ट मीटर, सौर ऊर्जा, वीज बचत, बिलिंग प्रणाली आणि चोरी प्रतिबंध याबाबत योग्य व सुस्पष्ट माहिती प्रदान करतो.</li>
+                    <li><span>4</span> <strong>प्रशासकीय सोयीसुविधा:</strong> नाव बदल, पत्ता बदल, जोडभार बदल व कनेक्शन शिफ्टिंग अशा कामांसाठी आवश्यक अर्ज नमुने RTI व CGRF फॉर्म्स आम्ही तयार स्वरूपात उपलब्ध करून देतो.</li>
+                    <li><span>5</span> <strong>तक्रार निवारण:</strong> वीज बिल दुरुस्ती, चुकीचे मीटर रिडींग, मीटर टेस्टिंग किंवा बिलिंग व तांत्रिक स्वरूपाच्या तक्रारी नक्की कुठे आणि कशी करावी, याचे टप्प्याटप्प्याने मार्गदर्शन करतो.</li>
+                </ol>
+
+                <p style="text-align: justify; color: var(--primary); font-weight: bold;">आमची भूमिका: आम्ही काय करत नाही.</p><br>
+
+                <ol class="box-numbers">
+                    <li><span>1</span> <strong>वीज बिल स्वीकृती:</strong> आम्ही महावितरण किंवा अन्य कोणत्याही वीज वितरण कंपनीचे अधिकृत प्रतिनिधी नाही, किंवा आम्ही सध्या कोणत्याही वीज कंपनीमार्फत अधिकृत वीज बिल स्वीकृती संबंधीचे काम करत नाही. सबब आम्ही वीज बिल स्वीकारत नाही किंवा रक्कम संकलन करत नाही.</li>
+                    <li><span>2</span> <strong>थेट तांत्रिक सेवा:</strong> आम्ही कोणत्याही वीज ग्राहकाच्या प्रत्यक्ष कनेक्शन स्थळी जाऊन कोणतीही तांत्रिक सेवा, जसे मीटर दुरुस्ती किंवा कनेक्शन जोडणी किंवा अन्य कोणत्याही तांत्रिक स्वरूपाची कामे करत नाही.</li>
+                    <li><span>3</span> <strong>कायदेशीर हस्तक्षेप:</strong> आम्ही केवळ माहिती व मार्गदर्शन देतो, याव्यतिरिक्त कोणत्याही कायदेशीर वादात निर्णय देणे किंवा कोणताही वीज ग्राहक किंवा व्यवस्थापन यांचे प्रतिनिधित्व करणे आमच्या कार्यक्षेत्रात नाही.</li>
+                    <li><span>4</span> <strong>विजेची हमी:</strong> वीज पुरवठा खंडित होणे किंवा तांत्रिक बिघाड दुरुस्त करणे हे संबंधित वीज वितरण कंपनीचे काम असून UrjaPlus त्या प्रक्रियेत प्रत्यक्ष सहभागी नसते.</li>
+                </ol>
+
+                <p style="text-align: justify">UrjaPlus हा केवळ वीज ग्राहकांना मार्गदर्शक माहिती देण्याचे काम करतो. आमचा उद्देश प्रत्येक वीज ग्राहकाला ऊर्जा साक्षर करणे हा आहे, जेणेकरून ते त्यांच्या ऊर्जा विषयक समस्यांचा सामना आत्मविश्वासाने करू शकतील. एकूणच आम्ही शासन आणि ग्राहक यांच्यातील माहितीचा दुवा म्हणून काम करतो.</p>
+            </div>
+            
+            <div class="mv-card">
+                <div class="card-heading">
+                    <div class="mv-icon"><i class="fas fa-flag"></i></div>
+                    <h3>माहितीचा उद्देश आणि वापर</h3>
+                </div>
+                <p style="text-align: justify">या प्लॅटफॉर्मवर उपलब्ध करून देण्यात आलेल्या माहितीचा वापर करण्यापूर्वी वापरकर्त्यांनी खालील मुद्दे वाचणे आणि समजून घेणे अनिवार्य आहे.</p><br>
+                <p style="text-align: justify; color: var(--primary); font-weight: bold;">माहितीचा मुख्य उद्देश</p><br>
+
+                <ul class="bullet-points">
+                    <li><span>✓</span><span><strong>केवळ शैक्षणिक आणि तांत्रिक मार्गदर्शन:</strong> UrjaPlus या डिजिटल प्लॅटफॉर्मवरील सर्व माहिती (उदा. वीज बिल, स्मार्ट मीटर, सोलर रूफटॉप इ.) केवळ सामान्य जनतेमध्ये जागरूकता निर्माण करण्यासाठी आणि तांत्रिक विषयांचे सरलीकरण करण्यासाठी आहे.</span></li>
+                    <li><span>✓</span><span><strong>ग्राहक सबलीकरण:</strong> वीज ग्राहकांना त्यांचे अधिकार, कर्तव्ये आणि उपलब्ध सेवांची माहिती देऊन त्यांना ऊर्जा साक्षर करणे हा या माहितीचा प्राथमिक उद्देश आहे.</span></li>
+                </ul>
+
+                <p style="text-align: justify; color: var(--primary); font-weight: bold;">माहितीचे स्वरूप आणि व्याप्ती</p><br>
+                <ul class="bullet-points">
+                    <li><span>✓</span><span><strong>अनधिकृत स्वरूप:</strong> हे ॲप किंवा पोर्टल कोणत्याही वीज वितरण कंपनी (उदा. MSEDCL, BEST, Adani Electricity, Tata Power) यांचे अधिकृत प्रतिनिधी नाही. येथे दिलेली माहिती ही केवळ संदर्भासाठी आहे.</span></li>
+                    <li><span>✓</span><span><strong>कायदेशीर सल्ला नाही:</strong> या ॲप किंवा पोर्टल मधील माहितीला कायदेशीर सल्ला समजू नये. कोणत्याही कायदेशीर प्रक्रियेसाठी किंवा वादासाठी तज्ज्ञ वकिलाचा किंवा अधिकृत ग्राहक तक्रार निवारण मंचाचा सल्ला घेणे आवश्यक आहे.</span></li>
+                </ul>
+
+                <p style="text-align: justify">या ॲप वरील माहितीचा वापर केल्यामुळे उद्भवणाऱ्या कोणत्याही तांत्रिक, आर्थिक किंवा कायदेशीर परिणामांसाठी UrjaPlus आणि त्याचे व्यवस्थापन जबाबदार राहणार नाही. माहितीचा वापर हा वापरकर्त्याने स्वतःच्या विवेकबुद्धीने करावा.</p>
+            </div>
+            
+            <div class="mv-card">
+                <div class="card-heading">
+                    <div class="mv-icon"><i class="fas fa-skull-crossbones"></i></div>
+                    <h3>माहितीच्या वापराचे धोके आणि त्यावरील नियंत्रणाचे उपाय</h3>
+                </div>
+                <p style="text-align: justify; color: var(--primary); font-weight: bold;">माहितीच्या वापराशी संबंधित संभाव्य धोके</p><br>
+                <p style="text-align: justify"><strong>नियम आणि दरांमधील बदल:</strong> ऊर्जा क्षेत्रातील नियम, वीज दर आणि सरकारी धोरणे निरंतर बदलत असतात. ॲपमधील माहिती जुनी असू शकते, ज्यामुळे चुकीचा आर्थिक अंदाज येणार नाही या दृष्टीने काळजी घ्यावी.</p><br>
+                <p style="text-align: justify"><strong>तांत्रिक चुकीचा अर्थ:</strong> तांत्रिक माहिती (उदा. लोड कॅल्क्युलेशन किंवा मीटर रीडिंग) समजून घेण्यात चूक झाल्यास तांत्रिक बिघाड किंवा आर्थिक दंड सोसावा लागू शकतो.</p><br>
+                <p style="text-align: justify"><strong>अर्जांची अस्वीकृती:</strong> ॲपवर उपलब्ध असलेले अर्जांचे नमुने सर्वच वीज वितरण कार्यालयांमध्ये जसेच्या तसे स्वीकारले जातीलच असे नाही. स्थानिक कार्यालयाचे नियम वेगळे असू शकतात.</p><br>
+                <p style="text-align: justify"><strong>तृतीय पक्ष लिंक्स:</strong> माहितीच्या ओघात दिलेल्या बाह्य वेबसाईटवर व्यवहार करताना तांत्रिक त्रुटी किंवा फसवणुकीचा धोका असू शकतो.</p>
+            </div>
+        </div>
+        
+        <div class="energy-tip">
+            <i class="fas fa-lightbulb" style="margin-right: 6px; color: var(--primary);"></i> 
+            प्रत्येक समस्येवर नियमात एक अचूक उपाय असतोच.
+        </div>
+        <div class="content-spacer"></div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item" data-nav="home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="tools.html" class="nav-item" data-nav="Tools"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="search.html" class="nav-item" data-nav="Search"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="rti-plus.html" class="nav-item" data-nav="Favorites"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<script>
+    // Theme Sync Logic
+    function applySynchronizedTheme() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+    applySynchronizedTheme();
+
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'theme') {
+            applySynchronizedTheme();
+        }
+    });
+
+    // Back button
+    const backBtn = document.getElementById('backToHomeBtn');
+    if (backBtn) {
+        backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'index.html';
+        });
+    }
+
+    // --- Share Modal Logic (`about-us.html` पॅटर्न) ---
+    function updateMetaTagsForShare(ogTitle, ogDescription, ogImage, ogUrl) {
+        let meta = document.querySelector('meta[property="og:title"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:title'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogTitle);
+        meta = document.querySelector('meta[property="og:description"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:description'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogDescription);
+        meta = document.querySelector('meta[property="og:image"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:image'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogImage);
+        meta = document.querySelector('meta[property="og:url"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:url'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogUrl);
+    }
+
+    function addUTMParameters(url, source) {
+        try { const u = new URL(url); u.searchParams.set('utm_source', source); u.searchParams.set('utm_medium', 'social_share'); u.searchParams.set('utm_campaign', 'urjaplus_disclaimer'); return u.toString(); } catch(e) { return url; }
+    }
+
+    function showShareToastMessage(msg) { const toast = document.getElementById('shareToastMsg'); if(toast) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2000); } else alert(msg); }
+    function closeShareModal() { const modal = document.getElementById('dynamicShareModal'); if(modal) modal.classList.remove('active'); }
+
+    function openCustomShareModal(title, desc, imgUrl, articleLink) {
+        updateMetaTagsForShare(title, desc, imgUrl, articleLink);
+        const modal = document.getElementById('dynamicShareModal');
+        if(modal) modal.classList.add('active');
+        window.currentShareUrl = addUTMParameters(articleLink, 'share_modal');
+        window.currentShareTitle = title;
+        window.currentShareDesc = desc;
+    }
+
+    function shareCurrentPage() {
+        const defaultTitle = "Disclaimer | UrjaPlus";
+        const defaultDesc = "UrjaPlus प्लॅटफॉर्मवरील माहितीच्या वापराशी संबंधित अटी, मर्यादा आणि कायदेशीर स्पष्टीकरणे.";
+        const defaultImg = "Image/disclaimer.webp";
+        openCustomShareModal(defaultTitle, defaultDesc, defaultImg, window.location.href);
+    }
+
+    function shareOnWhatsApp() { window.open(`https://wa.me/?text=${encodeURIComponent(window.currentShareTitle + "\n" + window.currentShareDesc + "\n" + window.currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(window.currentShareTitle)}&url=${encodeURIComponent(window.currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnInstagram() { navigator.clipboard.writeText(window.currentShareUrl).then(() => showShareToastMessage("📸 Instagram साठीリンク copy झाली! पेस्ट करा.")); closeShareModal(); }
+    function copyLink() { navigator.clipboard.writeText(window.currentShareUrl).then(() => showShareToastMessage("✅ लिंक कॉपी झाली!")); closeShareModal(); }
+
+    function injectShareModal() {
+        if(document.getElementById('dynamicShareModal')) return;
+        const modalHTML = `<div id="dynamicShareModal" class="urja-share-modal"><div class="urja-modal-container"><div class="urja-modal-header"><h3><span class="header-icon-circle"><i class="fas fa-share-alt"></i></span>Share Now</h3><button class="urja-close-modal" id="closeShareModalBtn"><i class="fas fa-times"></i></button></div><div class="urja-modal-body"><div class="urja-share-platforms"><button class="urja-share-icon" id="whatsappShareBtn"><div class="urja-icon-circle"><i class="fab fa-whatsapp" style="color:#25D366;"></i></div><span>WhatsApp</span></button><button class="urja-share-icon" id="facebookShareBtn"><div class="urja-icon-circle"><i class="fab fa-facebook-f" style="color:#1877F2;"></i></div><span>Facebook</span></button><button class="urja-share-icon" id="instagramShareBtn"><div class="urja-icon-circle"><i class="fab fa-instagram" style="color:#E4405F;"></i></div><span>Instagram</span></button><button class="urja-share-icon" id="twitterShareBtn"><div class="urja-icon-circle"><i class="fab fa-x-twitter"></i></div><span>X (Twitter)</span></button></div><button class="urja-copy-link-btn" id="copyLinkBtn"><span><i class="fas fa-link"></i> लिंक कॉपी करा</span> <i class="fas fa-copy"></i></button><div id="shareToastMsg" class="urja-toast-message">✅ लिंक कॉपी झाली!</div></div></div></div>`;
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        document.getElementById('closeShareModalBtn')?.addEventListener('click', closeShareModal);
+        document.getElementById('whatsappShareBtn')?.addEventListener('click', shareOnWhatsApp);
+        document.getElementById('facebookShareBtn')?.addEventListener('click', shareOnFacebook);
+        document.getElementById('instagramShareBtn')?.addEventListener('click', shareOnInstagram);
+        document.getElementById('twitterShareBtn')?.addEventListener('click', shareOnTwitter);
+        document.getElementById('copyLinkBtn')?.addEventListener('click', copyLink);
+        document.getElementById('dynamicShareModal')?.addEventListener('click', (e) => { if(e.target === document.getElementById('dynamicShareModal')) closeShareModal(); });
+    }
+    
+    // Bottom Navigation Handlers
+    const navButtons = document.querySelectorAll('.nav-item');
+    function setActiveNav(clickedBtn) { navButtons.forEach(btn => btn.classList.remove('active')); clickedBtn.classList.add('active'); }
+    
+    navButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const navValue = btn.getAttribute('data-nav');
+            setActiveNav(btn);
+            switch(navValue) {
+                case 'home': window.location.href = 'index.html'; break;
+                case 'Tools': window.location.href = 'tools.html'; break;
+                case 'Search': window.location.href = 'search.html'; break;
+                case 'Favorites': window.location.href = 'favorites.html'; break;
+                case 'Share': shareCurrentPage(); setTimeout(() => { navButtons.forEach(b => b.classList.remove('active')); }, 100); break;
+            }
+        });
+    });
+
+    const defaultActive = document.querySelector('.nav-item.active');
+    if (defaultActive) defaultActive.classList.remove('active');
+
+    // UI Click effect
+    const allCards = document.querySelectorAll('.mv-card');
+    allCards.forEach(card => { card.addEventListener('click', () => { card.style.transform = 'scale(0.99)'; setTimeout(() => { card.style.transform = ''; }, 130); }); });
+    
+    injectShareModal();
+</script>
+</body>
+</html>
