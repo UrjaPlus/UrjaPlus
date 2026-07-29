@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>तक्रार करूनही निराकरण नाही? कायदेशीर पर्याय कोणते? | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Theme System --- */
+        :root {
+            --bg-app: #f4f7fe;
+            --bg-card: #ffffff;
+            --primary: #111111; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); 
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --icon-bg: #f1f5f9; 
+            --accent-red: #111111;
+            --accent-red-hover: #000000;
+            --dashed-border: #cbd5e1;
+            --gradient-mastermind: linear-gradient(120deg, #f8fafc, #ffffff);
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827; 
+            --primary: #ffffff; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+            --icon-bg: rgba(255, 255, 255, 0.05);
+            --accent-red: #ffffff;
+            --accent-red-hover: #e2e8f0;
+            --dashed-border: #1f2937;
+            --gradient-mastermind: linear-gradient(120deg, #111827, #0b0f19);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Inter', Roboto, Helvetica, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .article-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: background 0.3s ease;
+        }
+
+        /* STICKY HEADER BAR */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .article-content {
+            padding: 24px 16px 0px 16px;
+            overflow-x: hidden;
+        }
+
+        .plain-article-title {
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+
+        .intro-image {
+            text-align: center;
+            margin: 10px 0 20px 0;
+        }
+
+        .about-intro-img {
+            width: 90%;
+            max-width: 90%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .simple-outline-box {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 18px 16px;
+            margin: 24px 0 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+
+        .simple-outline-box .box-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .simple-outline-box .box-header i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .simple-outline-box .box-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .intro-description-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            text-align: justify;
+        }
+
+        /* --- FAQ Section Styles --- */
+        .faq-section {
+            margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 20px 18px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease;
+        }
+        
+        .faq-question-static {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .faq-question-static i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .faq-question-static h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .answer-content-static {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .faq-key-box {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 16px;
+            background: var(--bg-app);
+            margin: 16px 0;
+            box-shadow: var(--shadow);
+        }
+        .faq-key-box h4 {
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+        }
+        .faq-key-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .faq-key-box li {
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .box-numbers-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+        .box-numbers-list li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.2rem;
+            text-align: justify;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .number-badge {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            background-color: #111111 !important;
+            color: white;
+            width: 1.8rem;
+            height: 1.8rem;
+            text-align: center;
+            line-height: 1.8rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        [data-theme="dark"] .number-badge {
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+
+        /* Bullet List Styling */
+        .urja-bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+        }
+        .urja-bullet-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        .urja-bullet-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.3rem;
+            position: absolute;
+            left: 6px;
+            top: -2px;
+        }
+
+        .takeaway-simple-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .takeaway-simple-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border-left: 3px solid var(--primary);
+            padding: 10px 12px;
+            background: var(--bg-app);
+            border-radius: 0 12px 12px 0;
+        }
+        .takeaway-simple-item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            width: 26px;
+            text-align: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .takeaway-simple-item p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            flex: 1;
+            color: var(--text-main);
+        }
+
+        /* --- People Also Ask Section --- */
+        .people-also-ask {
+            background: var(--bg-card);
+            border-radius: 24px;
+            margin: 24px 0 28px;
+            padding: 14px 6px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        .paa-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 14px 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 6px;
+        }
+        .paa-header i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .paa-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        .paa-item {
+            background: var(--bg-card);
+            border-radius: 18px;
+            margin: 10px 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .paa-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            cursor: pointer;
+            gap: 10px;
+        }
+        .paa-toggle-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            background: var(--icon-bg);
+            border-radius: 50%;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+        .paa-item.active-paa .paa-toggle-icon {
+            background: var(--primary);
+            color: #ffffff;
+            transform: rotate(135deg);
+        }
+        .paa-question-text {
+            flex: 1;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .paa-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+            background: var(--bg-card);
+        }
+        .paa-item.active-paa .paa-answer {
+            max-height: 400px;
+            border-top: 1px solid var(--border-color);
+            padding: 14px 18px;
+            border-bottom: none;
+        }
+        .paa-answer p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Survey Style */
+        .urja-premium-survey label:active {
+            transform: scale(0.98);
+        }
+        @keyframes thumbPop {
+            0% { transform: scale(0.4) rotate(-30deg); opacity: 0; }
+            70% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+        .content-spacer {
+            height: 80px;
+        }
+        
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .plain-article-title, .intro-image, .simple-outline-box, .faq-item, .people-also-ask {
+            animation: fadeUp 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+<div class="article-container">
+    <div class="sharp-header" id="stickyHeader">
+        <button class="back-arrow" id="backToHomeBtn" aria-label="Back">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">
+            <i class="fas fa-bolt"></i> 
+            <span>UrjaPlus</span>
+        </div>
+    </div>
+
+    <div class="article-content">
+        <div class="plain-article-title">
+            तक्रार करूनही निराकरण नाही? कायदेशीर पर्याय कोणते?
+        </div>
+
+        <div class="intro-image">
+            <img src="../Image/legal-options-for-unresolved-electricity-complaints.webp" alt="legal-options-for-unresolved-electricity-complaints" class="about-intro-img">
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-gavel"></i>
+                <h3>परिचय</h3>
+            </div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">वीज ग्राहकांनी स्थानिक कार्यालयात किंवा हेल्पलाईनवर तक्रार करूनही अनेकदा त्यांच्या समस्यांचे वेळीच निवारण होत नाही. अशा वेळी ग्राहकांमध्ये हतबलता पसरते. मात्र, वीज कायदा २००३ च्या तरतुदीनुसार, ग्राहकांना त्यांच्या समस्यांवर न्याय मिळवण्यासाठी भक्कम कायदेशीर संरक्षण दिले गेले आहे. सामान्य ग्राहकांना या अधिकृत व कायदेशीर मंचांची पुरेशी माहिती नसल्याने ते न्यायापासून वंचित राहतात. जर तुमच्या तक्रारीकडे वीज वितरण कंपनी दुर्लक्ष करत असेल, तर कोणते कायदेशीर पर्याय उपलब्ध आहेत आणि कशा प्रकारे दाद मागावी, याची सविस्तर माहिती या लेखात दिली आहे.</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-building-columns"></i>
+                    <h2>१. तक्रार निवारण मंच (CGRF): वीज ग्राहकांसाठी न्याय मिळवण्याचे व्यासपीठ.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">CGRF हे प्रत्येक परिमंडळ स्तरावर कार्यरत असणारे स्वतंत्र निम-न्यायालयीन प्राधिकरण असून येथे ६० दिवसांच्या आत तक्रारीचा निकाल देणे बंधनकारक असते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">जर स्थानिक अधिकाऱ्यांनी तक्रार सोडवली नाही, तर 'ग्राहक तक्रार निवारण मंच' (CGRF) कडे दाद मागता येते:</p>
+                    
+                    <ul class="urja-bullet-list">
+                        <li><strong>स्वतंत्र रचना:</strong> या मंचावर वीज वितरण कंपनीच्या प्रतिनिधींसोबतच ग्राहकांच्या बाजूने काम करणारे स्वतंत्र कायदेतज्ज्ञ व सदस्य असतात.</li>
+                        <li><strong>विनाखर्च सुनावणी:</strong> CGRF मधील तक्रारीसाठी कोणत्याही न्यायालयाप्रमाणे फी मोजावी लागत नाही, तसेच वकिलान्वये न जाता ग्राहक स्वतःची बाजू मांडू शकतात.</li>
+                        <li><strong>कागदोपत्री अर्ज:</strong> स्थानिक कार्यालयाने तक्रार नाकारल्याचे किंवा मुदतीत न सोडवल्याचे पुरावे जोडून 'नमुना अ' मध्ये इथे अर्ज करावा लागतो.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">CGRF च्या स्वतंत्र न्यायव्यवस्थेमुळे ग्राहकांना निष्पक्ष आणि जलद न्याय मिळणे शक्य होते का?</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-user-tie"></i>
+                    <h2>२. वीज लोकपालाकडे तक्रार दाखल करण्याची योग्य पद्धत.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">CGRF च्या निर्णयाने समाधान न झाल्यास ग्राहक थेट 'वीज लोकपाल' (Electricity Ombudsman) यांच्याकडे विहित मुदतीत अपील करू शकतात.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">वीज लोकपाल ही राज्य स्तरावरील सर्वोच्च अपिलीय संस्था आहे. तिथे तक्रार नोंदवण्याची योग्य पद्धत खालीलप्रमाणे आहे:</p>
+
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>६० दिवसांची कालमर्यादा:</strong> CGRF का अंतिम आदेश मिळाल्यापासून ६० दिवसांच्या आत लोकपालांकडे अपील दाखल करणे आवश्यक आहे.</li>
+                        <li><span class="number-badge">2</span> <strong>लिखित अपील (Format B):</strong> 'नमुना ब' (Format B) अर्जामध्ये CGRF च्या निर्णयातील त्रुटी आणि तुमचे आक्षेप सविस्तर नमूद करावेत.</li>
+                        <li><span class="number-badge">3</span> <strong>शर्त पूर्तता (बिलाचा वाद असल्यास):</strong> जर वाद बिलाच्या रकमेचा असेल, तर मंचाने किंवा नियमाने ठरवून दिलेल्या ठराविक टक्के रक्कम (उदा. १/३ किंवा ५०%) भरूनच अपील ग्राह्य धरले जाते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">वीज लोकपालाकडे दाद मागितल्यास अंतिम स्तरावर ग्राहकांच्या हक्कांचे योग्य रक्षण होते का?</p>
+                </div>
+            </div>
+
+            <!-- SURVEY SECTION -->
+            <div class="urja-premium-survey" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 22px 18px 18px 18px; margin: 5px 0 5px 0; box-shadow: var(--shadow); position: relative; overflow: hidden; font-family: inherit;">
+                <div style="position: absolute; top: 0; left: 18px; background: var(--primary-gradient); color: #ffffff; padding: 3px 12px; font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; border-radius: 0 0 8px 8px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <i class="fas fa-poll" style="margin-right: 4px;"></i> Urja Survey
+                </div>
+                
+                <div id="surveyPremiumMain" style="display: block; opacity: 1; transform: scale(1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);">
+                    <h4 style="margin: 14px 0 16px 0; color: var(--text-main); font-size: 1.05rem; font-weight: 800; line-height: 1.5; text-align: justify;">
+                        वीज सेवेच्या अन्यायाविरुद्ध लढताना तुम्हाला सर्वात मोठी अडचण कोणती वाटते?
+                    </h4>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%; display: block; margin: 3px auto;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">कायदेशीर कायदे व मंचांच्या क्लिष्ट प्रक्रियेची माहिती नसणे</span>
+                        </label>
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%; display: block; margin: 3px auto;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">तक्रार करण्यासाठी सरकारी कार्यालयांचे फेरे मारण्याची भीती</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="surveyPremiumSuccess" style="display: none; opacity: 0; text-align: center; padding: 30px 10px 15px 10px; transition: all 0.4s ease;">
+                    <div class="survey-thumb-icon" style="width: 70px; height: 70px; background: var(--primary-gradient); color: #ffffff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.15);">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <h4 style="margin: 0 0 6px 0; color: var(--text-main); font-size: 1.2rem; font-weight: 800;">नोंदणी केल्याबद्दल धन्यवाद!</h4>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; font-weight: 500;">तुमचा अभिप्राय आमच्यासाठी अत्यंत महत्त्वाचा आहे.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-scale-balanced"></i>
+                    <h2>३. वीज कंपनीच्या अनुचित कारवाईला न्यायालयीन आव्हान.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">ग्राहकांना केवळ वीज लोकपालच नव्हे, तर 'ग्राहक संरक्षण कायदा २०१९' अंतर्गत जिल्हा व राज्य ग्राहक न्यायालयातही दाद मागण्याचा अधिकार आहे.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">वीज वितरण कंपनीने मनमानी पद्धतीने वीज तोडल्यास किंवा चुकीची कारवाई केल्यास पुढील कायदेशीर पावले उचलता येतात:</p>
+
+                    <ul class="urja-bullet-list">
+                        <li><strong>ग्राहक न्यायालय (Consumer Court):</strong> वीज पुरवठा ही एक 'सेवा' असल्याने, सेवेतील त्रुटींबद्दल (Deficiency of Service) ग्राहक मंचात नुकसान भरपाईसाठी खटला दाखल करता येतो.</li>
+                        <li><strong>उच्च न्यायालयाचा पर्याय:</strong> वीज लोकपाल किंवा अपिलीय प्राधिकरणाचा आदेश घटनाबाह्य किंवा अन्यायकारक वाटल्यास भारतीय संविधानाच्या कलम २२६ नुसार उच्च न्यायालयात रिट याचिका (Writ Petition) दाखल करता येते.</li>
+                        <li><strong>तात्पुरता स्थगिती आदेश:</strong> बिलाच्या वादात अनधिकृतपणे वीज कनेक्शन कापण्यापासून तात्पुरती स्थगिती (Stay Order) मिळवून कायदेशीर रक्षण मिळवता येते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">योग्य पुराव्यांसह न्यायालयात आव्हान दिल्यास वीज कंपन्यांची मनमानी रोखता येते का?</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-handshake-angle"></i>
+                    <h2>४. वीज ग्राहकांसाठी मोफत कायदेशीर सल्ल्याचे मार्ग.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">सर्वसामान्य ग्राहकांना विनाखर्च कायदेशीर मदत देण्यासाठी शासकीय संस्था, ग्राहक संघटना आणि जिल्हा विधी सेवा प्राधिकरण नेहमी उपलब्ध असतात.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">आर्थिक परिस्थिती बेताची असल्यास किंवा प्रक्रियेची माहिती नसल्यास खालील मार्ग वापरावेत:</p>
+
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>नोंदणीकृत ग्राहक संघटना:</strong> ग्राहकांच्या हक्कांसाठी काम करणाऱ्या स्वयंसेवी संस्था मोफत किंवा नाममात्र शुल्कात कायदेशीर मार्गदर्शन व पत्रव्यवहारात मदत करतात.</li>
+                        <li><span class="number-badge">2</span> <strong>जिल्हा विधी सेवा प्राधिकरण (DLSA):</strong> प्रत्येक जिल्हा न्यायालयात मोफत कायदेशीर सल्ला व पात्र लाभार्थ्यांना मोफत वकिली सेवा पुरवणारे शासकीय केंद्र असते.</li>
+                        <li><span class="number-badge">3</span> <strong>MERC मधील ग्राहक प्रतिनिधी:</strong> राज्य वीज नियामक आयोगाने ग्राहकांची बाजू मांडण्यासाठी अधिकृत ग्राहक प्रतिनिधींची नियुक्ती केलेली असते, ज्यांची मदत घेता येते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">या मोफत सेवांच्या माहितीमुळे ग्रामीण भागातील सामान्य ग्राहकांचे मनोबल वाढेल का?</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-heart-circle-minus"></i>
+                    <h2>५. अधिकाऱ्यांना विनाकारण त्रास देण्याची मानसिकता नकोच.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">कायद्याचा वापर केवळ स्वतःवरील अन्याय दूर करण्यासाठी आणि खऱ्या तक्रारी सोडवण्यासाठीच व्हावा, कोणाचा छळ करण्यासाठी नाही.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">एक सुजाण नागरिक म्हणून ग्राहकांनी खालील गोष्टी पाळल्या पाहिजेत:</p>
+
+                    <ul class="urja-bullet-list">
+                        <li><strong>द्वेषापोटी खोटी तक्रार नको:</strong> वैयक्तिक वादातून किंवा पूर्वग्रहातून वीज कर्मचाऱ्यांवर किंवा अधिकाऱ्यांवर खोट्या तक्रारी दाखल करणे टाळावे.</li>
+                        <li><strong>कामात अडथळा नको:</strong> कर्तव्यावर असलेल्या वीज कर्मचाऱ्यांना कायदेशीर कामात अडथळा आणल्यास किंवा धक्काबुक्की केल्यास शासकीय कामात अडथळा आणल्याचा गुन्हा (कलम ३५३) दाखल होऊ शकतो.</li>
+                        <li><strong>सहकार्याची भूमिका:</strong> तांत्रिक बिघाड किंवा नैसर्गिक आपत्तीच्या वेळी यंत्रणेला काम करण्यासाठीुरेसा वेळ देणे आवश्यक असते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">नकारात्मक किंवा सूडबुद्धीची मानसिकता सोडून संयमाने हक्क मागितल्यास कायदेशीर लढाई अधिक मजबूत होते का?</p>
+                </div>
+            </div>
+
+        </div> 
+
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-trophy"></i><h3>महत्त्वाचे निष्कर्ष</h3></div>
+            <div class="takeaway-simple-list">
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">स्थानिक पातळीवर तक्रार प्रलंबित राहिल्यास CGRF (ग्राहक तक्रार निवारण मंच) हा सर्वोत्तम व विनामूल्य पहिला कायदेशीर पर्याय आहे.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">CGRF च्या निर्णयाने समाधान न झाल्यास वीज लोकपाल किंवा ग्राहक न्यायालयाचा भक्कम कायदेशीर आधार ग्राहकांना मिळतो.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">कायद्याचा सदुपयोग करून स्वतःचे रक्षण करावे, मात्र कोणत्याही सरकारी कर्मचाऱ्याला चुकीच्या पद्धतीने त्रास देण्याचा प्रयत्न करू नये.</p></div>
+            </div>
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-arrow-alt-circle-right"></i><h3>पुढचं पाऊल:</h3></div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">जर तुमची वीज तक्रार नोंदवून ३० दिवसांपेक्षा जास्त वेळ झाला असेल आणि स्थानिक अधिकारी टाळाटाळ करत असतील, तर विहित मुदतीत तुमच्या परिमंडळ कार्यालयाच्या CGRF पत्त्यावर लेखी तक्रार अर्ज (Format A) तातडीने सादर करा.</p>
+            </div>
+        </div>
+
+        <!-- PEOPLE ALSO ASK SECTION -->
+        <div class="people-also-ask">
+            <div class="paa-header">
+                <i class="fas fa-users"></i>
+                <h3>People Also Ask</h3>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">CGRF मंचाकडे तक्रार दाखल करण्यासाठी काही कालमर्यादा असते का?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">होय, तक्रार निर्माण झाल्याच्या किंवा स्थानिक अधिकाऱ्यांकडे केलेल्या तक्रारीला २ वर्षे पूर्ण होण्याच्या आत मंचाकडे अर्ज सादर करणे आवश्यक असते.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">मंचाचा आदेश वीज वितरण कंपनीवर बंधनकारक असतो का?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">होय, CGRF चा आदेश वीज वितरण कंपनीवर पूर्णपणे बंधनकारक असतो. त्यांनी विहित मुदतीत अंमलबजावणी न केल्यास ग्राहक लोकपालाकडे किंवा MERC कडे कलम १४२ अंतर्गत कारवाईची मागणी करू शकतात.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">वीज चोरीच्या (कलम १३५) प्रकरणांमध्ये CGRF कडे दाद मागता येते का?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">नाही, वीज चोरी (कलम १३५) किंवा विजेचा अनधिकृत वापर (कलम १२६) यांसारख्या फौजदारी व विशेष प्रकरणांच्या तक्रारींवर सुनावणी घेण्याचे अधिकार CGRF मंचाला नसतात. त्यासाठी विशेष न्यायालये कार्यरत असतात.</p></div>
+            </div>
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>महत्वाचे अस्वीकरण (Disclaimer):</h3>
+            </div>
+            <div class="disclaimer-text" style="font-size: 0.85rem; line-height: 1.5; text-align: justify;">
+                या लेखात दिलेली माहिती केवळ सामान्य जनजागृती आणि ग्राहक हक्कांच्या कायदेशीर पर्यायांच्या मार्गदर्शनासाठी आहे. विविध राज्यांतील कायदे, CGRF च्या प्रक्रिया आणि अपीलाचे नियम बदलू शकतात. कायदेशीर वाद किंवा अधिकृत कारवाई सुरू करण्यापूर्वी वीज नियामक आयोग (MERC) च्या मार्गदर्शक तत्त्वांची पडताळणी करावी आणि तज्ज्ञ वकिलांचा सल्ला घ्यावा. या माहितीच्या आधारे केलेल्या कारवाईस <strong>UrjaPlus</strong> जबाबदार राहणार नाही.
+            </div>
+        </div>
+
+        <div class="content-spacer"></div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="../index.html" class="nav-item" data-nav="home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="../tools.html" class="nav-item" data-nav="Tools"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="../search.html" class="nav-item" data-nav="Search"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="../rti-plus.html" class="nav-item" data-nav="Favorites"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn" data-nav="Share"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Light / Dark Theme Sync
+        function applySynchronizedTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+        applySynchronizedTheme();
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                applySynchronizedTheme();
+            }
+        });
+        
+        // People Also Ask Accordion Logic
+        const paaItems = document.querySelectorAll('.paa-item');
+        paaItems.forEach(paa => {
+            const questionDiv = paa.querySelector('.paa-question');
+            if(questionDiv) {
+                questionDiv.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isActive = paa.classList.contains('active-paa');
+                    paaItems.forEach(other => {
+                        if(other !== paa && other.classList.contains('active-paa')) {
+                            other.classList.remove('active-paa');
+                        }
+                    });
+                    if(!isActive) {
+                        paa.classList.add('active-paa');
+                    } else {
+                        paa.classList.remove('active-paa');
+                    }
+                });
+            }
+        });
+        
+        const backBtn = document.getElementById('backToHomeBtn');
+        if(backBtn) {
+            backBtn.addEventListener('click', () => {
+                window.location.href = '../electricity-complaint-process.html'; 
+            });
+        }        
+        
+        // Smooth Click Effect for Boxes
+        document.addEventListener('click', function(e) {
+            const box = e.target.closest('.simple-outline-box, .faq-item');
+            if(box && !e.target.closest('button') && !e.target.closest('.people-also-ask') && !e.target.closest('.urja-premium-survey')) {
+                box.style.transform = 'scale(0.99)';
+                setTimeout(() => { box.style.transform = ''; }, 130);
+            }
+        });
+    })();
+
+    // Survey Response Interaction
+    function handleSurveySelection(selectedLabel) {
+        const allLabels = selectedLabel.parentElement.querySelectorAll('label');
+        allLabels.forEach(label => {
+            const checkOuter = label.querySelector('.survey-custom-check');
+            const checkInner = checkOuter.querySelector('span');
+            checkOuter.style.borderColor = 'var(--text-muted)';
+            checkInner.style.background = 'transparent';
+            label.style.borderColor = 'var(--border-color)';
+            label.style.background = 'var(--bg-app)';
+        });
+
+        const activeCheckOuter = selectedLabel.querySelector('.survey-custom-check');
+        const activeCheckInner = activeCheckOuter.querySelector('span');
+        activeCheckOuter.style.borderColor = 'var(--primary)';
+        activeCheckInner.style.background = 'var(--primary)';
+        selectedLabel.style.borderColor = 'var(--primary)';
+        selectedLabel.style.background = 'var(--bg-card)';
+
+        setTimeout(function() {
+            const mainContent = document.getElementById('surveyPremiumMain');
+            const successContent = document.getElementById('surveyPremiumSuccess');
+            const thumbIcon = successContent.querySelector('.survey-thumb-icon');
+            
+            mainContent.style.opacity = '0';
+            mainContent.style.transform = 'scale(0.9)';
+            
+            setTimeout(function() {
+                mainContent.style.display = 'none';
+                successContent.style.display = 'block';
+                setTimeout(function() {
+                    successContent.style.opacity = '1';
+                    if(thumbIcon) thumbIcon.style.animation = 'thumbPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                }, 50);
+            }, 300);
+        }, 350);
+    }
+</script>
+</body>
+</html>

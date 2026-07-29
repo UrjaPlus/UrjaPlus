@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>वीज बिलिंग प्रक्रियेतील ग्राहकांचे अधिकार आणि कर्तव्ये. | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Theme System --- */
+        :root {
+            --bg-app: #f4f7fe;
+            --bg-card: #ffffff;
+            --primary: #111111; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); 
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --icon-bg: #f1f5f9; 
+            --accent-red: #111111;
+            --accent-red-hover: #000000;
+            --dashed-border: #cbd5e1;
+            --gradient-mastermind: linear-gradient(120deg, #f8fafc, #ffffff);
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827; 
+            --primary: #ffffff; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+            --icon-bg: rgba(255, 255, 255, 0.05);
+            --accent-red: #ffffff;
+            --accent-red-hover: #e2e8f0;
+            --dashed-border: #1f2937;
+            --gradient-mastermind: linear-gradient(120deg, #111827, #0b0f19);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Inter', Roboto, Helvetica, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .article-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: background 0.3s ease;
+        }
+
+        /* STICKY HEADER BAR */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .article-content {
+            padding: 24px 16px 0px 16px;
+            overflow-x: hidden;
+        }
+
+        .plain-article-title {
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+
+        .intro-image {
+            text-align: center;
+            margin: 10px 0 20px 0;
+        }
+
+        .about-intro-img {
+            width: 90%;
+            max-width: 90%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .simple-outline-box {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 18px 16px;
+            margin: 24px 0 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .simple-outline-box .box-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .simple-outline-box .box-header i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .simple-outline-box .box-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .intro-description-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            text-align: justify;
+        }
+
+        /* --- FAQ Section Styles --- */
+        .faq-section {
+            margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 20px 18px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        
+        .faq-question-static {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .faq-question-static i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .faq-question-static h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .answer-content-static {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .answer-content-static strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .faq-key-box {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 16px;
+            background: var(--bg-app);
+            margin: 16px 0;
+            box-shadow: var(--shadow);
+        }
+        .faq-key-box h4 {
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+        }
+        .faq-key-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .faq-key-box li {
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .box-numbers-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+        .box-numbers-list li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.2rem;
+            text-align: justify;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .number-badge {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            background-color: #111111 !important;
+            color: white;
+            width: 1.8rem;
+            height: 1.8rem;
+            text-align: center;
+            line-height: 1.8rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        [data-theme="dark"] .number-badge {
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+
+        /* Professional Compact Table Styling */
+        .urja-small-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.85rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .urja-small-table th {
+            background: var(--primary-gradient);
+            color: white;
+            font-weight: 700;
+            padding: 10px;
+            text-align: left;
+        }
+        .urja-small-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+        .urja-small-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Bullet List Styling */
+        .urja-bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+        }
+        .urja-bullet-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        .urja-bullet-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.3rem;
+            position: absolute;
+            left: 6px;
+            top: -2px;
+        }
+
+        .takeaway-simple-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .takeaway-simple-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border-left: 3px solid var(--primary);
+            padding: 10px 12px;
+            background: var(--bg-app);
+            border-radius: 0 12px 12px 0;
+        }
+        .takeaway-simple-item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            width: 26px;
+            text-align: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .takeaway-simple-item p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            flex: 1;
+            color: var(--text-main);
+        }
+
+        /* --- People Also Ask Section --- */
+        .people-also-ask {
+            background: var(--bg-card);
+            border-radius: 24px;
+            margin: 24px 0 28px;
+            padding: 14px 6px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        .paa-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 14px 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 6px;
+        }
+        .paa-header i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .paa-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        .paa-item {
+            background: var(--bg-card);
+            border-radius: 18px;
+            margin: 10px 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .paa-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            cursor: pointer;
+            gap: 10px;
+        }
+        .paa-toggle-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            background: var(--icon-bg);
+            border-radius: 50%;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+        .paa-item.active-paa .paa-toggle-icon {
+            background: var(--primary);
+            color: #ffffff;
+            transform: rotate(135deg);
+        }
+        .paa-question-text {
+            flex: 1;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .paa-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+            background: var(--bg-card);
+        }
+        .paa-item.active-paa .paa-answer {
+            max-height: 400px;
+            border-top: 1px solid var(--border-color);
+            padding: 14px 18px;
+        }
+        .paa-answer p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Survey Animation */
+        .urja-premium-survey label:active {
+            transform: scale(0.98);
+        }
+        @keyframes thumbPop {
+            0% { transform: scale(0.4) rotate(-30deg); opacity: 0; }
+            70% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+        .content-spacer {
+            height: 80px;
+        }
+        
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .plain-article-title, .intro-image, .simple-outline-box, .faq-item, .people-also-ask {
+            animation: fadeUp 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+<div class="article-container">
+    <div class="sharp-header" id="stickyHeader">
+        <button class="back-arrow" id="backToHomeBtn" aria-label="Back">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">
+            <i class="fas fa-bolt"></i> 
+            <span>UrjaPlus</span>
+        </div>
+    </div>
+
+    <div class="article-content">
+        <div class="plain-article-title">
+            वीज बिलिंग प्रक्रियेतील ग्राहकांचे अधिकार आणि कर्तव्ये.
+        </div>
+
+        <div class="intro-image">
+            <img src="../Image/consumer-rights-and-duties-in-energy-billing.webp" alt="consumer-rights-duties" class="about-intro-img">
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-info-circle"></i>
+                <h3>परिचय</h3>
+            </div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">वीज ही आपल्या दैनंदिन जीवनातील मूलभूत गरज बनली आहे. वीज पुरवठा आणि त्याची बिलिंग प्रक्रिया सुरळीत चालण्यासाठी ग्राहक व वीज कंपनी या दोघांमध्ये पारदर्शकता असणे आवश्यक आहे. बऱ्याचदा वीज ग्राहकांना त्यांच्या हक्कांबद्दल आणि कर्तव्यांबद्दल पुरेशी माहिती नसते, ज्यामुळे तांत्रिक किंवा आर्थिक वादांना सामोरे जावे लागते. विद्युत कायदा आणि ग्राहक संरक्षण नियमांनुसार प्रत्येक वीज ग्राहकाला कोणते विशेष कायदेशीर अधिकार मिळाले आहेत आणि त्यांनी कोणती कर्तव्ये पाळली पाहिजेत, याची सविस्तर माहिती या लेखात देण्यात आली आहे.</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            
+            <!-- SECTION 1 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-shield-alt"></i>
+                    <h2>१. ग्राहक संरक्षण कायद्यानुसार वीज ग्राहकांचे अधिकार.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">ग्राहक संरक्षण कायदा आणि वीज ग्राहक हक्क नियम २०२० नुसार वीज ग्राहकांना दर्जेदार सेवा मिळण्याचा आणि गाऱ्हाणे मांडण्याचा पूर्ण अधिकार आहे.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">वीज कंपन्या या व्यावसायिक सेवा पुरवठादार असल्याने ते थेट ग्राहक संरक्षण कायद्याच्या कक्षेत येतात. या अंतर्गत खालील मुख्य अधिकार मिळतात:</p>
+                    
+                    <ul class="urja-bullet-list">
+                        <li><strong>सुरक्षित व अखंडित सेवा:</strong> ग्राहकाला २४ तास सुरक्षित आणि ठरवून दिलेल्या मानकांनुसार (Standards) वीज पुरवठा मिळण्याचा हक्क आहे.</li>
+                        <li><strong>तक्रार निवारण मंच (CGRF):</strong> बिलात किंवा सेवेत त्रुटी आढळल्यास ग्राहक निवारण मंचाकडे दाद मागण्याचा आणि ग्राहक न्यायालयात जाण्याचा अधिकार कायद्याने दिला आहे.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुम्हाला माहिती आहे का की चुकीच्या बिलाविरुद्ध तुम्ही ग्राहक मंचाकडे दाद मागू शकता?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-file-invoice"></i>
+                    <h2>२. वेळेत आणि अचूक वीज बिल मिळण्याचा ग्राहकाचा कायदेशीर हक्क.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">प्रत्येक बिलिंग सायकलमध्ये ग्राहकाला वेळेवर आणि अचूक मीटर वाचनावर आधारित बिल मिळणे हा त्याचा कायदेशीर हक्क आहे.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">बिलिंग प्रक्रियेत पारदर्शकता राखण्यासाठी वीज वितरण कंपन्यांवर खालील नियम बंधनकारक आहेत:</p>
+                    
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>नियमित बिलिंग:</strong> घरगुती ग्राहकांना दरमहा किंवा ठराविक कालावधीत बिल देणे आवश्यक आहे. सलग अनेक महिने एकत्रित किंवा सरासरी (Average) बिल देणे नियमाबाह्य आहे.</li>
+                        <li><span class="number-badge">2</span> <strong>देय अवधी (Payment Window):</strong> बिलाची रक्कम भरण्यासाठी ग्राहकाला बिल मिळाल्यापासून कमीत कमी १५ दिवसांचा कालावधी मिळणे बंधनकारक आहे.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुम्हाला दरमहा निश्चित तारखेला अचूक वीजबिल मिळते का?</p>
+                </div>
+            </div>
+
+            <!-- SURVEY POLL FEATURE -->
+            <div class="urja-premium-survey" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 22px 18px 18px 18px; margin: 5px 0 5px 0; box-shadow: var(--shadow); position: relative; overflow: hidden; font-family: inherit;">
+                <div style="position: absolute; top: 0; left: 18px; background: var(--primary-gradient); color: #ffffff; padding: 3px 12px; font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; border-radius: 0 0 8px 8px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <i class="fas fa-poll" style="margin-right: 4px;"></i> Urja Survey
+                </div>
+                
+                <div id="surveyPremiumMain" style="display: block; opacity: 1; transform: scale(1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);">
+                    <h4 style="margin: 14px 0 16px 0; color: var(--text-main); font-size: 1.05rem; font-weight: 800; line-height: 1.5; text-align: justify;">
+                        महावितरणच्या 'Self Meter Reading' (स्वतः मीटर वाचन नोंदवणे) या सुविधेचा तुम्ही कधी वापर केला आहे का?
+                    </h4>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">होय, सरासरी (Average) बिलिंग टाळण्यासाठी मी स्वतः मीटर वाचन अपलोड करतो/करते.</span>
+                        </label>
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">नाही, मला या सुविधेबद्दल माहिती नाही किंवा मी वापरलेला नाही.</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="surveyPremiumSuccess" style="display: none; opacity: 0; text-align: center; padding: 30px 10px 15px 10px; transition: all 0.4s ease;">
+                    <div class="survey-thumb-icon" style="width: 70px; height: 70px; background: var(--primary-gradient); color: #ffffff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.15);">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <h4 style="margin: 0 0 6px 0; color: var(--text-main); font-size: 1.2rem; font-weight: 800;">तुमच्या प्रतिसादाबद्दल धन्यवाद!</h4>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; font-weight: 500;">स्वतः मीटर वाचन नोंदवल्याने बिलामधील मानवी चुका पूर्णपणे टाळता येतात.</p>
+                </div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <h2>३. मीटर वाचन स्वतः नोंदवण्याची सुविधा आणि अधिकार.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">घर बंद असल्यास किंवा मीटर वाचक न आल्यास ग्राहक स्वतःच्या मोबाईलवरून अधिकृत ॲपद्वारे मीटरचे फोटोसह वाचन पाठवू शकतात.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">महावितरणने ग्राहकांच्या सुविधेसाठी 'Self Meter Reading' चा अधिकार दिला आहे, ज्याचे फायदे पुढीलप्रमाणे आहेत:</p>
+                    
+                    <ul class="urja-bullet-list">
+                        <li><strong>अवाजवी बिलांपासून सुटका:</strong> अनेकदा मीटर रीडिंग एजन्सी उपलब्ध नसल्यास 'अंदाजे' किंवा चुकीचे युनिट्स लावले जातात. स्वतः वाचन नोंदवल्यास प्रत्यक्ष वापरानुसारच बिल येते.</li>
+                        <li><strong>वेळेची लवचिकता:</strong> महावितरणकडून दरमहा ठराविक १-२ दिवसांची मुदत दिली जाते, त्या काळात मोबाईल ॲपद्वारे मीटरवरील अचूक आकडा (KWH) आणि फोटो सबमिट करता येतो.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुम्ही दरमहा तुमच्या मीटरवरील आकडा आणि बिलावरील आकडा तपासून पाहता का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 4 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-id-card"></i>
+                    <h2>४. महावितरणच्या कर्मचाऱ्यांकडून ओळखपत्राची मागणी करण्याचा हक्क.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">सुरक्षा आणि फसवणूक टाळण्यासाठी, मीटर तपासणी किंवा वीज कापण्यास आलेल्या कोणत्याही व्यक्तीकडे अधिकृत ओळखपत्राची (ID Card) मागणी करण्याचा ग्राहकाला पूर्ण हक्क आहे.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">अनेकदा अनधिकृत व्यक्ती वीज अधिकारी असल्याचे भासवून ग्राहकांची फसवणूक करण्याचा प्रयत्न करतात, यापासून बचावासाठी खालील गोष्टी लक्षात ठेवाव्या:</p>
+                    
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>ओळखपत्र तपासणे:</strong> घरात किंवा आवारात तपासणीसाठी प्रवेश देण्यापूर्वी संबंधित कर्मचाऱ्याचे महावितरणचे ओळखपत्र आणि 'तपासणी आदेश' (Inspection Order) मागण्याचा ग्राहकाला कायदेशीर अधिकार आहे.</li>
+                        <li><span class="number-badge">2</span> <strong>कारवाईस नकार:</strong> जर समोरची व्यक्ती वैध ओळखपत्र दाखवू शकली नाही, तर ग्राहक तिला मीटरला हात लावण्यास मज्जाव करू शकतात आणि पोलिसात किंवा हेल्पलाईनवर तक्रार करू शकतात.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुमच्याकडे आलेल्या वीज कर्मचाऱ्याकडे तुम्ही कधी आयडी कार्ड मागितले आहे का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 5 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-search-dollar"></i>
+                    <h2>५. वीज बिलातील तपशील समजून घेण्याचा ग्राहकाचा अधिकार.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">बिलामध्ये आकारले जाणारे स्थिर आकार, इंधन समायोजन आकार आणि वीज शुल्क यांसारख्या प्रत्येक घटकाचे स्पष्टीकरण मिळण्याचा ग्राहकाला पूर्ण अधिकार आहे.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">वीज बिल केवळ एकूण रक्कम भरण्यासाठी नसते, तर त्यामधील प्रत्येक पैशाचा हिशोब समजून घेणे हा ग्राहकाचा अधिकार आहे:</p>
+                    
+                    <table class="urja-small-table">
+                        <thead>
+                            <tr>
+                                <th>बिलातील महत्त्वाचे घटक</th>
+                                <th>याचा अर्थ काय होतो?</th>
+                                <th>ग्राहकाचा हक्क</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>स्थिर आकार (Fixed Charges)</td>
+                                <td>कनेक्शनच्या मंजूर भारानुसार (Load) लागणारे किमान शुल्क.</td>
+                                <td>लोड चुकीचा असल्यास दुरुस्त करून घेणे.</td>
+                            </tr>
+                            <tr>
+                                <td>इंधन समायोजन आकार (FAC)</td>
+                                <td>वीज निर्मितीच्या खर्चातील चढ-उतारानुसार लागणारा आकार.</td>
+                                <td>दरपत्रकाची पडताळणी करणे.</td>
+                            </tr>
+                            <tr>
+                                <td>सुरक्षा ठेव (Security Deposit)</td>
+                                <td>वार्षिक वीज वापराच्या आधारे ठेवली जाणारी अनामत रक्कम.</td>
+                                <td>या ठेवीवर दरवर्षी व्याज मिळवण्याचा अधिकार.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुम्हाला तुमच्या वीज बिलावर दरवर्षी मिळणारे सुरक्षा ठेवीचे व्याज व्यवस्थित दिसते का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 6 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <h2>६. स्टँडर्ड ऑफ परफॉर्मन्स नुसार सेवा विलंबासाठी दंड मागणीचा अधिकार.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">राज्य वीज नियामक आयोगाच्या 'Standard of Performance' (SOP) नियमांनुसार ठरलेल्या वेळेत सेवा न मिळाल्यास वीज कंपनीकडून भरपाई (Compensation) मिळवण्याचा अधिकार आहे.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">जर वीज वितरण कंपनीने विहित कालमर्यादेत काम पूर्ण केले नाही, तर ग्राहकाला खालीलप्रमाणे दंडात्मक भरपाई मागता येते:</p>
+                    
+                    <ul class="urja-bullet-list">
+                        <li><strong>नवीन कनेक्शन मिळण्यास विलंब:</strong> अर्ज आणि पूर्ण फी भरूनही ठराविक दिवसांत मीटर न मिळाल्यास प्रति आठवडा किंवा प्रति दिन निश्चित दराने भरपाई मिळते.</li>
+                        <li><strong>दोषी मीटर बदलणे:</strong> मीटर निकामी झाल्याची तक्रार केल्यानंतर नियमांनुसार ठराविक अवधीत मीटर न बदलल्यास कंपनीला ग्राहकाला नुकसानभरपाई द्यावी लागते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुम्हाला माहिती आहे का की निष्काळजीपणामुळे होणाऱ्या विलंबासाठी वीज कंपनीला दंड होऊ शकतो?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 7 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-user-check"></i>
+                    <h2>७. वीज वापर प्रामाणिकपणे करण्याचे ग्राहकांचे कर्तव्य.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">अधिकार मिळवण्यासोबतच मीटरशी छेडछाड न करता आणि वीज चोरी न करता प्रामाणिकपणे वीज वापरणे हे प्रत्येक नागरिकाचे आद्य कर्तव्य आहे.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">विद्युत कायद्याच्या चौकटीत राहून ग्राहकांनी खालील कर्तव्यांचे तंतोतंत पालन केले पाहिजे:</p>
+                    
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>कायदेशीर जोडणी:</strong> वीज चोरी (Power Theft) करणे किंवा मीटर बायपास करून थेट आकडा टाकणे हा विद्युत कायदा २००३ च्या कलम १३५ नुसार गंभीर आणि अजामीनपात्र गुन्हा आहे.</li>
+                        <li><span class="number-badge">2</span> <strong>मंजूर लोडचे पालन:</strong> घरासाठी जेवढा किलोवॅट (kW) लोड मंजूर केला आहे, त्यापेक्षा जास्त क्षमतेची उपकरणे वापरून सिस्टीमवर ओव्हरलोड देणे टाळावे, अन्यथा दंड होऊ शकतो.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">आपल्या परिसरातील वीज चोरी रोखणे हे देखील एक सुजाण नागरिक म्हणून आपले कर्तव्य आहे, असे तुम्हाला वाटते का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 8 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-calendar-check"></i>
+                    <h2>८. वीज बिल वेळेत भरण्याची ग्राहकांची जबाबदारी.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">बिलाची रक्कम वेळेत भरणे ही केवळ नैतिक जबाबदारी नसून, अखंडित वीज सेवेसाठी आवश्यक असलेली कायदेशीर अट आहे.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">वेळेवर बिलाचा भरणा केल्याने ग्राहकाचा स्वतःचा आर्थिक फायदा होतो आणि सिस्टीम सुरळीत चालते:</p>
+                    
+                    <ul class="urja-bullet-list">
+                        <li><strong>त्वरित भरणा सवलत (Prompt Payment Discount):</strong> अंतिम मुदतीपूर्वी बिल भरल्यास महावितरणकडून बिलाच्या रक्कमेवर सवलत (Discount) दिली जाते.</li>
+                        <li><strong>कारवाईपासून संरक्षण:</strong> वेळेत बिल भरल्यामुळे विलंब शुल्क (DPC), व्याज आणि वीज पुरवठा खंडित होण्याची कटू कारवाई टाळता येते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुम्ही दरमहा 'Prompt Payment' सवलतीचा लाभ घेण्यासाठी मुदती आधीच बिल भरता का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 9 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h2>९. ग्राहकांनी लक्षात ठेवावयाच्या महत्त्वाच्या सूचना.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">डिजिटल सतर्कता आणि मीटर सुरक्षित ठेवणे या गोष्टी भविष्यातील सर्व प्रकारच्या वादांपासून ग्राहकाचे रक्षण करतात.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">कोणतीही तांत्रिक किंवा कायदेशीर अडचण टाळण्यासाठी वीज ग्राहकांसाठी या अत्यंत महत्त्वाच्या सूचना आहेत:</p>
+                    
+                    <ul class="urja-bullet-list">
+                        <li><strong>मोबाईल क्रमांक लिंक करणे:</strong> तुमच्या ग्राहक क्रमांकाशी (Consumer No.) स्वतःचा मोबाईल नंबर आणि ईमेल आयडी नोंदवून घ्या, जेणेकरून बिलिंग आणि वीज खंडित होण्याचे मेसेज त्वरित मिळतील.</li>
+                        <li><strong>मीटरची सुरक्षा:</strong> मीटर बॉक्स सुरक्षित ठेवणे, तो पावसात ओला होणार नाही किंवा त्याला कोणतीही इजा होणार नाही याची काळजी घेणे ही ग्राहकाची वैयक्तिक जबाबदारी आहे.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुमचा चालू मोबाईल नंबर महावितरणच्या ग्राहक क्रमांकाशी लिंक केलेला आहे का?</p>
+                </div>
+            </div>
+
+        </div> 
+
+        <!-- SUMMARY REVIEWS -->
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-trophy"></i><h3>महत्त्वाचे निष्कर्ष</h3></div>
+            <div class="takeaway-simple-list">
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">वीज ग्राहकांना केवळ वीज वापरण्याचा अधिकार नाही, तर ठरलेल्या मानकांनुसार दर्जेदार सेवा न मिळाल्यास कंपनीकडून भरपाई मागण्याचाही कायदेशीर अधिकार आहे.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">स्वतः मीटर वाचन नोंदवणे आणि ओळखपत्राची मागणी करणे यांसारख्या अधिकारांचा वापर करून ग्राहक स्वतःची फसवणूक रोखू शकतात.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">हक्क आणि कर्तव्ये या एकाच नाण्याच्या दोन बाजू आहेत; प्रामाणिकपणे वीज वापरणे आणि वेळेत बिल भरणे ही ग्राहकांची सर्वात मोठी जबाबदारी आहे.</p></div>
+            </div>
+        </div>
+
+        <!-- NEXT STEPS SECTION -->
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-arrow-alt-circle-right"></i><h3>पुढचं पाऊल:</h3></div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">आजच महावितरणचे अधिकृत मोबाईल ॲप डाऊनलोड करा किंवा त्यांच्या 'WSS' पोर्टलला भेट देऊन तुमचा मोबाईल नंबर अपडेट करा. तुमच्या वीज बिलाची रचना सविस्तर समजून घ्या आणि कोणत्याही अन्यायाविरुद्ध किंवा चुकीच्या बिलाविरुद्ध अधिकृत ग्राहक गाऱ्हाणे निवारण मंचाकडे (CGRF) लेखी तक्रार नोंदवण्यास कचहरू नका.</p>
+            </div>
+        </div>
+
+        <!-- PEOPLE ALSO ASK (PAA) -->
+        <div class="people-also-ask">
+            <div class="paa-header">
+                <i class="fas fa-users"></i>
+                <h3>People Also Ask</h3>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">वीज बिल खूप जास्त किंवा चुकीचे आले असल्यास ग्राहक म्हणून मला काय अधिकार आहे?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">अशा वेळी तुम्हाला बिलाला आव्हान देण्याचा पूर्ण अधिकार आहे. तुम्ही संबंधित उपविभागीय कार्यालयात 'Bill Dispute' अर्ज देऊ शकता. जोपर्यंत तक्रारीचे निवारण होत नाही, तोपर्यंत अंदाजे विवादित रक्कम न भरता मागील ६ महिन्यांच्या सरासरीनुसार बिल भरून तुम्ही कनेक्शन चालू ठेवू शकता.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">मीटर वेगाने पळत आहे किंवा सदोष (Faulty) आहे असे वाटल्यास काय करावे?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">तुम्हाला ठरवून दिलेले शुल्क भरून 'Meter Testing' ची मागणी करण्याचा अधिकार आहे. वीज कंपनी तुमच्या मीटरची लॅबमध्ये चाचणी करेल. मीटर सदोष आढळल्यास मागील काळातील अतिरिक्त घेतलेली रक्कम बिलात समायोजित केली जाते.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">कोणतीही पूर्वसूचना न देता वीज तोडल्यास कुठे तक्रार करावी?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">कायद्यानुसार १५ दिवसांची लिखित नोटीस न देता वीज तोडणे बेकायदेशीर आहे. अशी कारवाई झाल्यास तुम्ही थेट अंतर्गत गाऱ्हाणे निवारण कक्ष (ICR) किंवा वीज ग्राहक गाऱ्हाणे निवारण मंचाकडे (CGRF) तात्काळ वीजपुरवठा सुरू करण्यासाठी आणि भरपाई मिळवण्यासाठी अर्ज करू शकता.</p></div>
+            </div>
+        </div>
+
+        <!-- DISCLAIMER -->
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>महत्वाचे अस्वीकरण (Disclaimer):</h3>
+            </div>
+            <div class="disclaimer-text" style="font-size: 0.85rem; line-height: 1.5; text-align: justify;">
+                या लेखात समाविष्ट केलेली माहिती, कायदेशीर तरतुदी आणि ग्राहकांचे हक्क हे भारतीय विद्युत कायदा २००३ आणि महाराष्ट्र वीज नियामक आयोगाच्या (MERC) मार्गदर्शक तत्त्वांवर आधारित आहेत. वेगवेगळ्या राज्यांच्या वीज कंपन्यांचे अंतर्गत नियम, शुल्क आणि SOP मानके भिन्न असू शकतात. वीज चोरी किंवा मीटर छेडछाड यांसारख्या कृत्यांवर कठोर कायदेशीर दंडाची तरतूद आहे. कोणताही कायदेशीर वाद किंवा बिलासंबंधी अंतिम निर्णय घेण्यापूर्वी ग्राहकांनी महावितरणच्या अधिकृत अटी, शर्ती आणि कायदेशीर सल्लागारांचे मार्गदर्शन घ्यावे. **UrjaPlus** कोणत्याही प्रशासकीय कारवाईस किंवा आर्थिक बाबीस जबाबदार असणार नाही.
+            </div>
+        </div>
+
+        <div class="content-spacer"></div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="bottom-nav">
+        <a href="../index.html" class="nav-item" data-nav="home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="../tools.html" class="nav-item" data-nav="Tools"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="../search.html" class="nav-item" data-nav="Search"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="../rti-plus.html" class="nav-item" data-nav="Favorites"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn" data-nav="Share"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Light / Dark Theme Sync
+        function applySynchronizedTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+        applySynchronizedTheme();
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                applySynchronizedTheme();
+            }
+        });
+        
+        // People Also Ask Accordion Logic
+        const paaItems = document.querySelectorAll('.paa-item');
+        paaItems.forEach(paa => {
+            const questionDiv = paa.querySelector('.paa-question');
+            if(questionDiv) {
+                questionDiv.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isActive = paa.classList.contains('active-paa');
+                    paaItems.forEach(other => {
+                        if(other !== paa && other.classList.contains('active-paa')) {
+                            other.classList.remove('active-paa');
+                        }
+                    });
+                    if(!isActive) {
+                        paa.classList.add('active-paa');
+                    } else {
+                        paa.classList.remove('active-paa');
+                    }
+                });
+            }
+        });
+        
+        // हेडर बॅक-ॲरो क्लिक फँक्शनलिटी (Direct Redirect to Index Page)
+        const backBtn = document.getElementById('backToHomeBtn');
+        if(backBtn) {
+            backBtn.addEventListener('click', () => {
+                window.location.href = '../billing-and-payment.html'; 
+            });
+        }
+        
+        // Smooth Click Effect for Boxes
+        document.addEventListener('click', function(e) {
+            const box = e.target.closest('.simple-outline-box, .faq-item');
+            if(box && !e.target.closest('button') && !e.target.closest('.people-also-ask')) {
+                box.style.transform = 'scale(0.99)';
+                setTimeout(() => { box.style.transform = ''; }, 130);
+            }
+        });
+    })();
+
+    // Survey Response Interaction
+    function handleSurveySelection(selectedLabel) {
+        const allLabels = selectedLabel.parentElement.querySelectorAll('label');
+        allLabels.forEach(label => {
+            const checkOuter = label.querySelector('.survey-custom-check');
+            const checkInner = checkOuter.querySelector('span');
+            checkOuter.style.borderColor = 'var(--text-muted)';
+            checkInner.style.background = 'transparent';
+            label.style.borderColor = 'var(--border-color)';
+            label.style.background = 'var(--bg-app)';
+        });
+
+        const activeCheckOuter = selectedLabel.querySelector('.survey-custom-check');
+        const activeCheckInner = activeCheckOuter.querySelector('span');
+        activeCheckOuter.style.borderColor = 'var(--primary)';
+        activeCheckInner.style.background = 'var(--primary)';
+        selectedLabel.style.borderColor = 'var(--primary)';
+        selectedLabel.style.background = 'var(--bg-card)';
+
+        setTimeout(function() {
+            const mainContent = document.getElementById('surveyPremiumMain');
+            const successContent = document.getElementById('surveyPremiumSuccess');
+            const thumbIcon = successContent.querySelector('.survey-thumb-icon');
+            
+            mainContent.style.opacity = '0';
+            mainContent.style.transform = 'scale(0.9)';
+            
+            setTimeout(function() {
+                mainContent.style.display = 'none';
+                successContent.style.display = 'block';
+                setTimeout(function() {
+                    successContent.style.opacity = '1';
+                    if(thumbIcon) thumbIcon.style.animation = 'thumbPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                }, 50);
+            }, 300);
+        }, 350);
+    }
+</script>
+</body>
+</html>

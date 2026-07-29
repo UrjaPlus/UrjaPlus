@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>वीजबिलातील थकबाकीची रचना आणि संपूर्ण विवरण. | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Theme System --- */
+        :root {
+            --bg-app: #f4f7fe;
+            --bg-card: #ffffff;
+            --primary: #111111; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); 
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --icon-bg: #f1f5f9; 
+            --accent-red: #111111;
+            --accent-red-hover: #000000;
+            --dashed-border: #cbd5e1;
+            --gradient-mastermind: linear-gradient(120deg, #f8fafc, #ffffff);
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827; 
+            --primary: #ffffff; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+            --icon-bg: rgba(255, 255, 255, 0.05);
+            --accent-red: #ffffff;
+            --accent-red-hover: #e2e8f0;
+            --dashed-border: #1f2937;
+            --gradient-mastermind: linear-gradient(120deg, #111827, #0b0f19);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Inter', Roboto, Helvetica, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .article-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: background 0.3s ease;
+        }
+
+        /* STICKY HEADER BAR */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .article-content {
+            padding: 24px 16px 0px 16px;
+            overflow-x: hidden;
+        }
+
+        .plain-article-title {
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+
+        .intro-image {
+            text-align: center;
+            margin: 10px 0 20px 0;
+        }
+
+        .about-intro-img {
+            width: 90%;
+            max-width: 90%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .simple-outline-box {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 18px 16px;
+            margin: 24px 0 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .simple-outline-box .box-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .simple-outline-box .box-header i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .simple-outline-box .box-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .intro-description-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            text-align: justify;
+        }
+
+        /* --- FAQ Section Styles --- */
+        .faq-section {
+            margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 20px 18px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        
+        .faq-question-static {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .faq-question-static i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .faq-question-static h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .answer-content-static {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .answer-content-static strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .faq-key-box {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 16px;
+            background: var(--bg-app);
+            margin: 16px 0;
+            box-shadow: var(--shadow);
+        }
+        .faq-key-box h4 {
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+        }
+        .faq-key-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .faq-key-box li {
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .box-numbers-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+        .box-numbers-list li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.2rem;
+            text-align: justify;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .number-badge {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            background-color: #111111 !important;
+            color: white;
+            width: 1.8rem;
+            height: 1.8rem;
+            text-align: center;
+            line-height: 1.8rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        [data-theme="dark"] .number-badge {
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+
+        /* Professional Compact Table Styling */
+        .urja-small-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.85rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .urja-small-table th {
+            background: var(--primary-gradient);
+            color: white;
+            font-weight: 700;
+            padding: 10px;
+            text-align: left;
+        }
+        .urja-small-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+        .urja-small-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Bullet List Styling */
+        .urja-bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+        }
+        .urja-bullet-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        .urja-bullet-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.3rem;
+            position: absolute;
+            left: 6px;
+            top: -2px;
+        }
+
+        .takeaway-simple-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .takeaway-simple-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border-left: 3px solid var(--primary);
+            padding: 10px 12px;
+            background: var(--bg-app);
+            border-radius: 0 12px 12px 0;
+        }
+        .takeaway-simple-item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            width: 26px;
+            text-align: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .takeaway-simple-item p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            flex: 1;
+            color: var(--text-main);
+        }
+
+        /* --- People Also Ask Section --- */
+        .people-also-ask {
+            background: var(--bg-card);
+            border-radius: 24px;
+            margin: 24px 0 28px;
+            padding: 14px 6px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        .paa-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 14px 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 6px;
+        }
+        .paa-header i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .paa-header h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        .paa-item {
+            background: var(--bg-card);
+            border-radius: 18px;
+            margin: 10px 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .paa-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            cursor: pointer;
+            gap: 10px;
+        }
+        .paa-toggle-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            background: var(--icon-bg);
+            border-radius: 50%;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+        .paa-item.active-paa .paa-toggle-icon {
+            background: var(--primary);
+            color: #ffffff;
+            transform: rotate(135deg);
+        }
+        .paa-question-text {
+            flex: 1;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .paa-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+            background: var(--bg-card);
+        }
+        .paa-item.active-paa .paa-answer {
+            max-height: 400px;
+            border-top: 1px solid var(--border-color);
+            padding: 14px 18px;
+        }
+        .paa-answer p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Survey Animation */
+        .urja-premium-survey label:active {
+            transform: scale(0.98);
+        }
+        @keyframes thumbPop {
+            0% { transform: scale(0.4) rotate(-30deg); opacity: 0; }
+            70% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+        .content-spacer {
+            height: 80px;
+        }
+        
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .plain-article-title, .intro-image, .simple-outline-box, .faq-item, .people-also-ask {
+            animation: fadeUp 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+<div class="article-container">
+    <div class="sharp-header" id="stickyHeader">
+        <button class="back-arrow" id="backToHomeBtn" aria-label="Back">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">
+            <i class="fas fa-bolt"></i> 
+            <span>UrjaPlus</span>
+        </div>
+    </div>
+
+    <div class="article-content">
+        <div class="plain-article-title">
+            वीजबिलातील थकबाकीची रचना आणि संपूर्ण विवरण.
+        </div>
+
+        <div class="intro-image">
+            <img src="../Image/energy-bill-arrears-structure-details.webp" alt="electricity-arrears-guide" class="about-intro-img">
+        </div>
+
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-info-circle"></i>
+                <h3>परिचय</h3>
+            </div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">नियमित वीजबिल भरणे हे प्रत्येक सजग नागरिकाचे कर्तव्य आहे, परंतु अनेकदा वेगवेगळ्या कारणांमुळे बिल वेळेवर भरले जात नाही. यामुळे पुढील महिन्याच्या बिलात 'थकबाकी' (Arrears) जोडून येते. थकबाकी केवळ बिलाची रक्कम वाढवत नाही, तर त्यावर विलंब शुल्क आणि व्याज देखील आकारले जाते. वीजबिलातील थकबाकी नक्की काय असते, त्याची रचना कशी केली जाते आणि कायदेशीर कारवाई टाळण्यासाठी कोणती खबरदारी घ्यावी, याविषयीची परिपूर्ण तांत्रिक माहिती या लेखात मांडण्यात आली आहे.</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            
+            <!-- SECTION 1 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <h2>१. थकबाकी म्हणजे काय आणि ती वीज बिलात का दर्शविली जाते?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">मागील महिन्याचे राहिलेले पेमेंट किंवा आधीचे प्रलंबित शुल्क जेव्हा चालू महिन्याच्या बिलात जोडले जाते, त्याला थकबाकी म्हणतात.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">वीज बिलाची रचना समजून घेताना थकबाकी नेमकी का दिसते, याचे विश्लेषण खालीलप्रमाणे आहे:</p>
+                    
+                    <ul class="urja-bullet-list">
+                        <li><strong>पेमेंट प्रलंबित असणे:</strong> मागील महिन्याचे बिल अंतिम मुदतीपर्यंत (Due Date) न भरल्यास ती रक्कम थकबाकीच्या रकान्यात वर्ग होते.</li>
+                        <li><strong>लेट पेमेंट सिस्टीम अपडेट:</strong> जर तुम्ही बिलाच्या मुदतीनंतर किंवा नवीन बिल जनरेट होण्याच्या दोन दिवस आधी पेमेंट केले असेल, तर सिस्टीममध्ये ते वेळेत अपडेट न झाल्याने तात्पुरती थकबाकी दिसू शकते.</li>
+                        <li><strong>अतिरिक्त आकारणी (Adjustment Charges):</strong> काही वेळा जुनी सुरक्षा ठेव (Security Deposit) किंवा मागील काळातील युनिट्सचा फरक (Adjustment) थकबाकी म्हणून जोडला जातो.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुमच्या वीज बिलात कधी अनावधानाने चुकीची थकबाकी दाखवली गेली आहे का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-percent"></i>
+                    <h2>२. थकीत वीजबिलावर आकारले जाणारे व्याज व विलंब शुल्क.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">मुदतीनंतर बिल भरल्यास वीज वितरण कंपन्यांद्वारे दरमहा ठराविक टक्के व्याज (Interest) आणि विलंब आकार (DPC) वसूल केला जातो.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">थकबाकी वाढल्यास त्यावर लागणारे अतिरिक्त आर्थिक शुल्क खालील तांत्रिक रचनेनुसार आकारले जाते:</p>
+                    
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>विलंब आकार (Delayed Payment Charges - DPC):</strong> सामान्यतः बिलाच्या मुदतीनंतर पेमेंट केल्यास एकूण रकमेवर १.२५% ते १.५% पर्यंत विलंब शुल्क (DPC) लावले जाते.</li>
+                        <li><span class="number-badge">2</span> <strong>थकीत रक्कमेवरील व्याज:</strong> जर थकबाकी अनेक महिने तशीच राहिली, तर वीज नियामक आयोगाच्या निर्देशानुसार प्रतिवर्ष १२% ते १५% दराने चक्रवाढ किंवा सरळ व्याज आकारले जाऊ शकते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुम्ही अतिरिक्त विलंब शुल्क टाळण्यासाठी नेहमी 'प्रॉम्प्ट पेमेंट' सवलतीचा फायदा घेता का?</p>
+                </div>
+            </div>
+
+            <!-- SURVEY POLL FEATURE -->
+            <div class="urja-premium-survey" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 22px 18px 18px 18px; margin: 5px 0 5px 0; box-shadow: var(--shadow); position: relative; overflow: hidden; font-family: inherit;">
+                <div style="position: absolute; top: 0; left: 18px; background: var(--primary-gradient); color: #ffffff; padding: 3px 12px; font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; border-radius: 0 0 8px 8px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <i class="fas fa-poll" style="margin-right: 4px;"></i> Urja Survey
+                </div>
+                
+                <div id="surveyPremiumMain" style="display: block; opacity: 1; transform: scale(1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);">
+                    <h4 style="margin: 14px 0 16px 0; color: var(--text-main); font-size: 1.05rem; font-weight: 800; line-height: 1.5; text-align: justify;">
+                        नवे घर किंवा गाळा भाड्याने/खरेदी करताना तुम्ही जुन्या वीज बिलाची थकबाकी तपासता का?
+                    </h4>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">होय, मी 'नो-ड्यूज' आणि थकबाकी पूर्णपणे तपासूनच व्यवहार करतो.</span>
+                        </label>
+                        <label onclick="handleSurveySelection(this)" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-app); border: 1px solid var(--border-color); border-radius: 14px; cursor: pointer; transition: all 0.25s ease;">
+                            <span class="survey-custom-check" style="width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="width: 10px; height: 10px; background: transparent; border-radius: 50%;"></span>
+                            </span>
+                            <span style="color: var(--text-main); font-size: 0.95rem; font-weight: 600;">नाही, मी फक्त मालमत्तेचे कागदपत्र पाहतो, वीजबिलाकडे लक्ष देत नाही.</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="surveyPremiumSuccess" style="display: none; opacity: 0; text-align: center; padding: 30px 10px 15px 10px; transition: all 0.4s ease;">
+                    <div class="survey-thumb-icon" style="width: 70px; height: 70px; background: var(--primary-gradient); color: #ffffff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.15);">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <h4 style="margin: 0 0 6px 0; color: var(--text-main); font-size: 1.2rem; font-weight: 800;">तुमच्या प्रतिसादाबद्दल धन्यवाद!</h4>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; font-weight: 500;">भविष्यातील कायदेशीर वाद टाळण्यासाठी वीजबिल तपासणे हाच सर्वोत्तम मार्ग आहे.</p>
+                </div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-gavel"></i>
+                    <h2>३. थकबाकीमुळे वीजपुरवठा खंडित करण्याची कायदेशीर कार्यपद्धती.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">विद्युत कायदा २००३ च्या कलम ५६(१) नुसार, वीज कंपनीला थकबाकीमुळे वीज कापण्यापूर्वी ग्राहकाला १५ दिवसांची लिखित नोटीस देणे अनिवार्य आहे.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">थकबाकी वाढल्यास वीज कापण्याची कारवाई थेट केली जात नाही, त्याला एक निश्चित कायदेशीर चौकट आहे:</p>
+                    
+                    <ul class="urja-bullet-list">
+                        <li><strong>लिखित पूर्वसूचना (Notice Period):</strong> बिलावर किंवा स्वतंत्र पत्राद्वारे १५ दिवसांची पूर्वसूचना दिली जाते. या कालावधीत बिल न भरल्यास वीज कापण्याचा अधिकार कंपनीला मिळतो.</li>
+                        <li><strong>अपवाद (Exceptions):</strong> जर ग्राहकाने बिलाच्या रकमेबाबत वीज ग्राहक गाऱ्हाणे निवारण मंचाकडे (CGRF) अधिकृत दाद मागितली असेल आणि विवादित रकमेचा अंशतः भरणा केला असेल, तर अंतिम निर्णयापर्यंत वीज तोडता येत नाही.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुम्हाला माहिती आहे का की नोटीस न देता वीज तोडणे हा नियमांचा भंग मानला जातो?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 4 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-home"></i>
+                    <h2>४. जुन्या मालकाची वीजबिल थकबाकी नवीन ग्राहकावर लागू होते का?</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">सर्वोच्च न्यायालयाच्या निकालानुसार, जागेवरील जुनी वीज थकबाकी वसूल करण्याचा अधिकार वीज कंपन्यांना असून, ती रक्कम नवीन खरेदीदाराला भरावी लागू शकते.</li>
+                        </ul>
+                    </div>
+                    <p style="text-align: justify;">घर किंवा व्यावसायिक गाळा खरेदी करताना जुन्या वीजबिलाच्या थकबाकीबाबत खालील तांत्रिक व कायदेशीर बाबी अत्यंत महत्त्वाच्या आहेत:</p>
+                    
+                    <ul class="box-numbers-list" style="margin-top: 12px;">
+                        <li><span class="number-badge">1</span> <strong>जागेवरील बोजा (Charge on Property):</strong> जरी वीज वापर जुन्या मालकाने केला असला, तरी वीज जोडणी (Service Connection) त्या विशिष्ट जागेवर असते. त्यामुळे थकबाकी न भरल्यास नवीन मालकाला नवीन कनेक्शन नाकारले जाऊ शकते.</li>
+                        <li><span class="number-badge">2</span> <strong>बचावाचा उपाय:</strong> मालमत्ता खरेदी करण्यापूर्वी मूळ मालकाकडून वीज बिलाचे 'No Dues Certificate' किंवा नवीनतम भरलेले बिल आवर्जून मागवून घ्यावे, अन्यथा ती थकबाकी नवीन ग्राहकाच्या शिरावर येते.</li>
+                    </ul>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुम्ही कधी जुन्या थकबाकीमुळे नवीन वीज मीटर मिळण्यात अडचण आल्याचे ऐकले आहे का?</p>
+                </div>
+            </div>
+
+            <!-- SECTION 5 -->
+            <div class="faq-item">
+                <div class="faq-question-static">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h2>५. वीजबिल हप्त्यांमध्ये भरण्याचे निकष व नियम.</h2>
+                </div>
+                <div class="answer-content-static">
+                    <div class="faq-key-box">
+                        <h4><i class="fas fa-check-double"></i> Key Takeaways</h4>
+                        <ul>
+                            <li style="text-align: justify;">आर्थिक टंचाई किंवा अवाजवी बिल आल्यास ग्राहक अधिकृत मंजुरी घेऊन थकबाकी सुलभ हप्त्यांमध्ये (Installments) भरू शकतात.</li>
+                        </ul>
+                    </div>
+                    
+                    <p style="text-align: justify;">थकबाकीचे हप्ते पाडून घेण्यासाठी वीज वितरण कंपनीच्या (उदा. महावितरण) नियमांचे खालील कोष्टक मार्गदर्शक ठरेल:</p>
+
+                    <table class="urja-small-table">
+                        <thead>
+                            <tr>
+                                <th>थकबाकीची श्रेणी</th>
+                                <th>मंजूर करणारे सक्षम अधिकारी</th>
+                                <th>हप्त्यांचे नियम व अटी</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>कमी किंवा मध्यम रक्कम</td>
+                                <td>कनिष्ठ अभियंता (जेई) / उपकार्यकारी अभियंता</td>
+                                <td>३ ते ४ सुलभ मासिक हप्ते मंजूर होऊ शकतात.</td>
+                            </tr>
+                            <tr>
+                                <td>मोठी थकबाकी (व्यावसायिक/औद्योगिक)</td>
+                                <td>कार्यकारी अभियंता (EE) / अधिक्षक अभियंता</td>
+                                <td>विशेष लेखी अर्जाद्वारे ६ किंवा अधिक हप्ते मिळतात.</td>
+                            </tr>
+                            <tr>
+                                <td>मुख्य अट</td>
+                                <td>लेखा विभाग (Accounts)</td>
+                                <td>हप्त्यांसोबत चालू महिन्याचे नव्याने येणारे बिल नियमित भरणे बंधनकारक असते.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="color: var(--primary); font-weight: 700; text-align: justify; margin-top: 12px;">तुम्हाला थकबाकी भरण्यासाठी हप्ते पाडून मिळण्याची कायदेशीर सोय उपलब्ध आहे हे माहिती होते का?</p>
+                </div>
+            </div>
+
+        </div> 
+
+        <!-- SUMMARY REVIEWS -->
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-trophy"></i><h3>महत्त्वाचे निष्कर्ष</h3></div>
+            <div class="takeaway-simple-list">
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">वीज बिलातील थकबाकीवर चक्रवाढ पद्धतीने व्याज वाढत जाते, ज्यामुळे मूळ बिलापेक्षा व्याजाची रक्कमच अधिक होण्याची भीती असते.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">विद्युत कायद्यानुसार ग्राहकाला आपले म्हणणे मांडण्यासाठी आणि थकीत रक्कम भरण्यासाठी १५ दिवसांची नोटीस मिळणे हा त्याचा कायदेशीर अधिकार आहे.</p></div>
+                <div class="takeaway-simple-item"><i class="fas fa-check-double"></i><p style="text-align: justify;">नवीन मालमत्ता घेताना जुन्या मालकाची थकबाकी तपासली नाही, तर ती फेडण्याची संपूर्ण कायदेशीर जबाबदारी नवीन खरेदीदारावर येते.</p></div>
+            </div>
+        </div>
+
+        <!-- NEXT STEPS SECTION -->
+        <div class="simple-outline-box">
+            <div class="box-header"><i class="fas fa-arrow-alt-circle-right"></i><h3>पुढचं पाऊल:</h3></div>
+            <div class="intro-description-text">
+                <p style="text-align: justify;">जर तुमच्या वीज बिलावर अनपेक्षित थकबाकी दिसत असेल, तर त्वरित जवळच्या उपविभागीय वीज कार्यालयात (Sub-division Office) संपर्क साधून 'Consumer Ledger' तपासा. बिल चुकीचे असल्यास ते दुरुस्त (Bill Correction) करण्यासाठी लेखी अर्ज सादर करा आणि वेळेत थकबाकीमुक्त व्हा.</p>
+            </div>
+        </div>
+
+        <!-- PEOPLE ALSO ASK (PAA) -->
+        <div class="people-also-ask">
+            <div class="paa-header">
+                <i class="fas fa-users"></i>
+                <h3>People Also Ask</h3>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">थकबाकी भरल्यानंतर वीजपुरवठा पुन्हा सुरू होण्यास किती वेळ लागतो?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">थकबाकी आणि पुनर्रचना शुल्क (Reconnection Fee) ऑनलाईन किंवा ऑफलाईन भरल्यानंतर, महावितरणचे तंत्रज्ञ साधारणपणे २४ तासांच्या आत घरातील वीजपुरवठा पूर्ववत सुरू करतात.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">किती महिने बिल न भरल्यास वीज परमनंट कट (PD) केली जाते?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">सलग २ ते ३ महिने थकबाकी न भरल्यास सुरुवातीला तात्पुरता (Temporary Disconnection) वीजपुरवठा खंडित केला जातो. त्यानंतरही पुढील ६ महिने रक्कम न भरल्यास मीटर कायमचे काढून कनेक्शन परमनंट कट (Permanent Disconnected - PD) केले जाते.</p></div>
+            </div>
+            <div class="paa-item">
+                <div class="paa-question"><span class="paa-question-text">वीज बिलाची थकबाकी सिबिल (CIBIL) स्कोरवर परिणाम करते का?</span><span class="paa-toggle-icon"><i class="fas fa-plus"></i></span></div>
+                <div class="paa-answer"><p style="text-align: justify;">सध्या सामान्य घरगुती ग्राहकांची थकबाकी थेट सिबिलशी जोडलेली नाही. मात्र, काही मोठ्या व्यावसायिक किंवा औद्योगिक वीज ग्राहकांची माहिती बँकिंग प्रणालीशी शेअर केली जात असल्याने, भविष्यात कर्ज मिळण्यात अडचणी येऊ शकतात.</p></div>
+            </div>
+        </div>
+
+        <!-- DISCLAIMER -->
+        <div class="simple-outline-box">
+            <div class="box-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>महत्वाचे अस्वीकरण (Disclaimer):</h3>
+            </div>
+            <div class="disclaimer-text" style="font-size: 0.85rem; line-height: 1.5; text-align: justify;">
+                या लेखात दिलेली माहिती, कायदेशीर कलमे आणि हप्त्यांचे नियम हे सामान्य मार्गदर्शनासाठी असून ते भारतीय विद्युत कायदा २००३ आणि राज्य वीज नियामक आयोगाच्या (MERC) नियमांवर आधारित आहेत. वीज कंपन्यांचे अंतर्गत परिपत्रक आणि थकबाकी वसुलीचे नियम क्षेत्रानुसार व वेळेनुसार बदलू शकतात. थकबाकीबाबत कोणताही अंतिम निर्णय घेण्यापूर्वी किंवा कायदेशीर वाद निर्माण झाल्यास आपल्या संबंधित वीज वितरण कंपनीच्या अधिकृत अधिकाऱ्यांशी किंवा विधी तज्ज्ञांशी सल्लामसलत करावी. **UrjaPlus** कोणत्याही दंडात्मक कारवाईस अथवा दाव्यास जबाबदार असणार नाही.
+            </div>
+        </div>
+
+        <div class="content-spacer"></div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="bottom-nav">
+        <a href="../index.html" class="nav-item" data-nav="home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="../tools.html" class="nav-item" data-nav="Tools"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="../search.html" class="nav-item" data-nav="Search"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="../rti-plus.html" class="nav-item" data-nav="Favorites"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn" data-nav="Share"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Light / Dark Theme Sync
+        function applySynchronizedTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+        applySynchronizedTheme();
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                applySynchronizedTheme();
+            }
+        });
+        
+        // People Also Ask Accordion Logic
+        const paaItems = document.querySelectorAll('.paa-item');
+        paaItems.forEach(paa => {
+            const questionDiv = paa.querySelector('.paa-question');
+            if(questionDiv) {
+                questionDiv.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isActive = paa.classList.contains('active-paa');
+                    paaItems.forEach(other => {
+                        if(other !== paa && other.classList.contains('active-paa')) {
+                            other.classList.remove('active-paa');
+                        }
+                    });
+                    if(!isActive) {
+                        paa.classList.add('active-paa');
+                    } else {
+                        paa.classList.remove('active-paa');
+                    }
+                });
+            }
+        });
+        
+        // हेडर बॅक-ॲरो क्लिक फँक्शनलिटी (Direct Redirect to Index Page)
+        const backBtn = document.getElementById('backToHomeBtn');
+        if(backBtn) {
+            backBtn.addEventListener('click', () => {
+                window.location.href = '../billing-and-payment.html'; 
+            });
+        }
+        
+        // Smooth Click Effect for Boxes
+        document.addEventListener('click', function(e) {
+            const box = e.target.closest('.simple-outline-box, .faq-item');
+            if(box && !e.target.closest('button') && !e.target.closest('.people-also-ask')) {
+                box.style.transform = 'scale(0.99)';
+                setTimeout(() => { box.style.transform = ''; }, 130);
+            }
+        });
+    })();
+
+    // Survey Response Interaction
+    function handleSurveySelection(selectedLabel) {
+        const allLabels = selectedLabel.parentElement.querySelectorAll('label');
+        allLabels.forEach(label => {
+            const checkOuter = label.querySelector('.survey-custom-check');
+            const checkInner = checkOuter.querySelector('span');
+            checkOuter.style.borderColor = 'var(--text-muted)';
+            checkInner.style.background = 'transparent';
+            label.style.borderColor = 'var(--border-color)';
+            label.style.background = 'var(--bg-app)';
+        });
+
+        const activeCheckOuter = selectedLabel.querySelector('.survey-custom-check');
+        const activeCheckInner = activeCheckOuter.querySelector('span');
+        activeCheckOuter.style.borderColor = 'var(--primary)';
+        activeCheckInner.style.background = 'var(--primary)';
+        selectedLabel.style.borderColor = 'var(--primary)';
+        selectedLabel.style.background = 'var(--bg-card)';
+
+        setTimeout(function() {
+            const mainContent = document.getElementById('surveyPremiumMain');
+            const successContent = document.getElementById('surveyPremiumSuccess');
+            const thumbIcon = successContent.querySelector('.survey-thumb-icon');
+            
+            mainContent.style.opacity = '0';
+            mainContent.style.transform = 'scale(0.9)';
+            
+            setTimeout(function() {
+                mainContent.style.display = 'none';
+                successContent.style.display = 'block';
+                setTimeout(function() {
+                    successContent.style.opacity = '1';
+                    if(thumbIcon) thumbIcon.style.animation = 'thumbPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                }, 50);
+            }, 300);
+        }, 350);
+    }
+</script>
+</body>
+</html>
