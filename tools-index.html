@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>UrjaPlus - सर्व टूल्स लिस्टिंग</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- UrjaPlus Minimal & Responsive System Variables --- */
+        :root {
+            --bg-app: #ffffff;
+            --bg-card: #ffffff;
+            --primary: #111111; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); 
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --card-hover-bg: #f8fafc;
+            --tag-bg: #f1f5f9;
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827;
+            --primary: #ffffff; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+            --card-hover-bg: #1e293b;
+            --tag-bg: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .app-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 80px; 
+        }
+
+        /* HEADER */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .header-title {
+            color: #ffffff;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        /* CATEGORY FILTER TABS */
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 16px 16px 8px 16px;
+            scrollbar-width: none;
+        }
+
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            background: var(--tag-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--pill-active-bg);
+            color: var(--bg-card);
+            border-color: var(--pill-active-bg);
+        }
+
+        /* PAGINATION STYLING (Log इंटरफेसला सुसंगत) */
+        .pagination-wrap {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 8px 12px;
+            margin: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            gap: 8px;
+            flex-wrap: nowrap;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .pagination-wrap.bottom-pagination {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .page-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            min-width: 38px;
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-main);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .page-btn:active {
+            transform: scale(0.94);
+            background: var(--primary);
+            color: var(--bg-card);
+            border-color: var(--primary);
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            background: transparent;
+            padding: 2px 4px;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .page-link {
+            min-width: 34px;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: var(--text-muted);
+            text-decoration: none;
+            background: var(--tag-bg);
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .page-link.active-page {
+            background: var(--pill-active-bg);
+            color: var(--bg-card);
+            box-shadow: var(--shadow);
+            border-color: var(--pill-active-bg);
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .page-link:active {
+            transform: scale(0.94);
+        }
+
+        /* TOOL WRAPPER */
+        .tool-wrapper {
+            padding: 0 16px;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin: 12px 0 10px 4px;
+        }
+
+        /* TOOL LISTING CONTAINER */
+        .tools-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .tool-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .tool-card:active {
+            transform: scale(0.98);
+            background: var(--card-hover-bg);
+        }
+
+        .tool-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .tool-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--tag-bg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            flex-shrink: 0;
+        }
+
+        .tool-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .tool-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .tool-desc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .tool-arrow {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: transform 0.2s ease;
+        }
+
+        .tool-card:hover .tool-arrow {
+            transform: translateX(3px);
+            color: var(--text-main);
+        }
+
+        /* --- BOTTOM NAVIGATION MENU --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* --- SHARE MODAL CSS --- */
+        .urja-share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .urja-share-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .urja-modal-container {
+            background: var(--bg-card);
+            width: 90%;
+            max-width: 380px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: slideUp 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .urja-modal-header {
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+        .urja-modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-icon-circle {
+            background-color: var(--pill-active-bg);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-card);
+            font-size: 0.9rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .urja-close-modal {
+            background: var(--border-color);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        .urja-modal-body {
+            padding: 20px 18px 24px;
+        }
+        .urja-share-platforms {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .urja-share-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--bg-app);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .urja-share-icon:active {
+            transform: scale(0.96);
+            background: var(--border-color);
+        }
+        .urja-icon-circle {
+            width: 34px;
+            height: 34px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+        .urja-share-icon span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+        }
+        .urja-copy-link-btn {
+            background: var(--bg-app);
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+        .urja-copy-link-btn:active {
+            background: var(--border-color);
+        }
+        .urja-toast-message {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .urja-toast-message.show { opacity: 1; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- HEADER -->
+    <div class="sharp-header">
+        <button class="back-arrow" onclick="window.history.back()">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">
+            <span>उपयुक्त टूल्स (Tools)</span>
+        </div>
+    </div>
+
+    <!-- CATEGORY FILTER TABS -->
+    <div class="category-tabs">
+        <button class="tab-btn active" onclick="filterCategory('all', this)">सर्व (All)</button>
+        <button class="tab-btn" onclick="filterCategory('billing', this)">बिलिंग व दर</button>
+        <button class="tab-btn" onclick="filterCategory('calc', this)">कॅल्क्युलेटर</button>
+        <button class="tab-btn" onclick="filterCategory('legal', this)">कायदे व नियम</button>
+    </div>
+
+    <!-- TOP PAGINATION -->
+    <div class="pagination-wrap" id="paginationTop">
+        <a href="#" class="page-btn" id="prevPageTop"><i class="fas fa-chevron-left"></i></a>
+        <div class="page-numbers" id="pageNumbersTop"></div>
+        <a href="#" class="page-btn" id="nextPageTop"><i class="fas fa-chevron-right"></i></a>
+    </div>
+
+    <!-- MAIN TOOLS LISTING -->
+    <div class="tool-wrapper">
+        <div class="section-label">सर्व उपक्रम व टूल्स</div>
+        
+        <div class="tools-list" id="toolsList">
+            <!-- Dynamic Tool Cards render through JS -->
+        </div>
+    </div>
+
+    <!-- BOTTOM PAGINATION -->
+    <div class="pagination-wrap bottom-pagination" id="paginationBottom">
+        <a href="#" class="page-btn" id="prevPageBottom"><i class="fas fa-chevron-left"></i></a>
+        <div class="page-numbers" id="pageNumbersBottom"></div>
+        <a href="#" class="page-btn" id="nextPageBottom"><i class="fas fa-chevron-right"></i></a>
+    </div>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="tools.html" class="nav-item active"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="search.html" class="nav-item"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="rti-plus.html" class="nav-item"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<!-- DYNAMIC SHARE MODAL -->
+<div id="dynamicShareModal" class="urja-share-modal">
+    <div class="urja-modal-container">
+        <div class="urja-modal-header">
+            <h3>
+                <span class="header-icon-circle"><i class="fas fa-share-alt"></i></span>
+                Share Now
+            </h3>
+            <button class="urja-close-modal" id="closeShareModalBtn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="urja-modal-body">
+            <div class="urja-share-platforms">
+                <button class="urja-share-icon" id="whatsappShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-whatsapp" style="color:#25D366;"></i></div>
+                    <span>WhatsApp</span>
+                </button>
+                <button class="urja-share-icon" id="facebookShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-facebook-f" style="color:#1877F2;"></i></div>
+                    <span>Facebook</span>
+                </button>
+                <button class="urja-share-icon" id="instagramShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-instagram" style="color:#E4405F;"></i></div>
+                    <span>Instagram</span>
+                </button>
+                <button class="urja-share-icon" id="twitterShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-x-twitter"></i></div>
+                    <span>X (Twitter)</span>
+                </button>
+            </div>
+            <button class="urja-copy-link-btn" id="copyLinkBtn">
+                <span><i class="fas fa-link"></i> लिंक कॉपी करा</span> 
+                <i class="fas fa-copy"></i>
+            </button>
+            <div id="dynamicToast" class="urja-toast-message">✅ लिंक कॉपी झाली!</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Tool Data Array
+    const allToolsData = [
+        { title: "महावितरण वीज दरपत्रक", desc: "घरगुती, व्यावसायिक व शेती वीज आकार दर", icon: "fa-file-invoice-dollar", url: "energy-tariff-tool.html", category: "billing" },
+        { title: "वीज बिल कॅल्क्युलेटर", desc: "युनिटनुसार अंदाजे वीज बिलाची गणना करा", icon: "fa-calculator", url: "bill-calculator.html", category: "calc" },
+        { title: "सोलर पॅनेल कॅल्क्युलेटर", desc: "छतावरील सोलर क्षमतेचा अंदाज घ्या", icon: "fa-solar-panel", url: "solar-calculator.html", category: "calc" },
+        { title: "माहिती अधिकार (RTI) Plus", desc: "माहिती अधिकाराचा अर्ज व नमुने मिळवा", icon: "fa-scale-unbalanced", url: "rti-plus.html", category: "legal" },
+		{ title: "माहिती अधिकार (RTI1) Plus", desc: "माहिती अधिकाराचा अर्ज 2व नमुने मिळवा", icon: "fa-scale-unbalanced", url: "rti-plus2.html", category: "legal" },
+		{ title: "माहिती अधिकार (RTI2) Plus", desc: "माहिती अधिकाराचा अर्ज 3व नमुने मिळवा", icon: "fa-scale-unbalanced", url: "rti-plus3.html", category: "legal" },
+		{ title: "माहिती अधिकार (RTI3) Plus", desc: "माहिती अधिकाराचा अर्ज 4व नमुने मिळवा", icon: "fa-scale-unbalanced", url: "rti-plus4.html", category: "legal" },
+		{ title: "माहिती अधिकार (RTI4) Plus", desc: "माहिती अधिकाराचा अर्ज 5व नमुने मिळवा", icon: "fa-scale-unbalanced", url: "rti-plus5.html", category: "legal" },
+        { title: "ग्राहक मंच मार्गदर्शक", desc: "तक्रार निवारण आणि ग्राहकांचे हक्क", icon: "fa-gavel", url: "consumer-forum.html", category: "legal" },
+        { title: "दरपत्रक तुलना (Compare)", desc: "मागील व चालू वर्षाच्या दरांची तुलना करा", icon: "fa-code-compare", url: "tariff-compare.html", category: "billing" }
+    ];
+
+    let filteredTools = [...allToolsData];
+    const ITEMS_PER_PAGE = 8;
+    let TOTAL_PAGES = Math.ceil(filteredTools.length / ITEMS_PER_PAGE) || 1;
+    let CURRENT_PAGE = 1;
+
+    // Dark/Light Theme Sync
+    function applySynchronizedTheme() {
+        const activeTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', activeTheme);
+    }
+    applySynchronizedTheme();
+
+    // Render Cards for current page
+    function renderTools() {
+        const container = document.getElementById('toolsList');
+        if (!container) return;
+
+        const startIdx = (CURRENT_PAGE - 1) * ITEMS_PER_PAGE;
+        const endIdx = Math.min(startIdx + ITEMS_PER_PAGE, filteredTools.length);
+        const pageItems = filteredTools.slice(startIdx, endIdx);
+
+        let html = '';
+        if (pageItems.length === 0) {
+            html = `<div style="text-align:center; padding: 20px; color: var(--text-muted);">कोणतेही टूल सापडले नाही.</div>`;
+        } else {
+            pageItems.forEach(item => {
+                html += `
+                    <a href="${item.url}" class="tool-card">
+                        <div class="tool-left">
+                            <div class="tool-icon">
+                                <i class="fas ${item.icon}"></i>
+                            </div>
+                            <div class="tool-info">
+                                <div class="tool-title">${item.title}</div>
+                                <div class="tool-desc">${item.desc}</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right tool-arrow"></i>
+                    </a>
+                `;
+            });
+        }
+        container.innerHTML = html;
+    }
+
+    // Pagination URLs & Handling
+    function getPageURL(pageNum) {
+        return `?page=${pageNum}`;
+    }
+
+    function renderPagination(prevBtnId, nextBtnId, pageNumbersId) {
+        const pageNumbersDiv = document.getElementById(pageNumbersId);
+        if (!pageNumbersDiv) return;
+
+        let pagesHtml = '';
+        for (let i = 1; i <= TOTAL_PAGES; i++) {
+            if (i === CURRENT_PAGE) {
+                pagesHtml += `<span class="page-link active-page">${i}</span>`;
+            } else {
+                pagesHtml += `<a href="${getPageURL(i)}" onclick="goToPage(event, ${i})" class="page-link">${i}</a>`;
+            }
+        }
+        pageNumbersDiv.innerHTML = pagesHtml;
+
+        const prevBtn = document.getElementById(prevBtnId);
+        const nextBtn = document.getElementById(nextBtnId);
+
+        if (prevBtn) {
+            if (CURRENT_PAGE > 1) {
+                prevBtn.onclick = (e) => goToPage(e, CURRENT_PAGE - 1);
+                prevBtn.style.opacity = '1';
+                prevBtn.style.pointerEvents = 'auto';
+            } else {
+                prevBtn.onclick = (e) => e.preventDefault();
+                prevBtn.style.opacity = '0.5';
+                prevBtn.style.pointerEvents = 'none';
+            }
+        }
+
+        if (nextBtn) {
+            if (CURRENT_PAGE < TOTAL_PAGES) {
+                nextBtn.onclick = (e) => goToPage(e, CURRENT_PAGE + 1);
+                nextBtn.style.opacity = '1';
+                nextBtn.style.pointerEvents = 'auto';
+            } else {
+                nextBtn.onclick = (e) => e.preventDefault();
+                nextBtn.style.opacity = '0.5';
+                nextBtn.style.pointerEvents = 'none';
+            }
+        }
+    }
+
+    function goToPage(e, pageNum) {
+        e.preventDefault();
+        if (pageNum >= 1 && pageNum <= TOTAL_PAGES) {
+            CURRENT_PAGE = pageNum;
+            renderTools();
+            refreshAllPagination();
+        }
+    }
+
+    function refreshAllPagination() {
+        renderPagination('prevPageTop', 'nextPageTop', 'pageNumbersTop');
+        renderPagination('prevPageBottom', 'nextPageBottom', 'pageNumbersBottom');
+    }
+
+    // Filter by Category Tabs
+    let currentCategory = 'all';
+    function filterCategory(cat, element) {
+        currentCategory = cat;
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
+
+        if (cat === 'all') {
+            filteredTools = [...allToolsData];
+        } else {
+            filteredTools = allToolsData.filter(item => item.category === cat);
+        }
+
+        TOTAL_PAGES = Math.ceil(filteredTools.length / ITEMS_PER_PAGE) || 1;
+        CURRENT_PAGE = 1;
+        renderTools();
+        refreshAllPagination();
+    }
+
+    // ---- ADVANCED SHARE MODAL LOGIC ----
+    let currentShareUrl = window.location.href;
+    let currentShareTitle = "UrjaPlus - सर्व उपयुक्त टूल्स";
+    let currentShareDesc = "UrjaPlus वर विविध वीज ग्राहक टूल्स, कॅल्क्युलेटर आणि मार्गदर्शन उपलब्ध आहे.";
+
+    function updateMetaTagsForShare(ogTitle, ogDescription, ogImage, ogUrl) {
+        let meta = document.querySelector('meta[property="og:title"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:title'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogTitle);
+        
+        meta = document.querySelector('meta[property="og:description"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:description'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogDescription);
+        
+        meta = document.querySelector('meta[property="og:image"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:image'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogImage);
+        
+        meta = document.querySelector('meta[property="og:url"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:url'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogUrl);
+    }
+
+    function addUTMParameters(url, source) {
+        try {
+            const u = new URL(url);
+            u.searchParams.set('utm_source', source);
+            u.searchParams.set('utm_medium', 'social_share');
+            u.searchParams.set('utm_campaign', 'urjaplus_tools');
+            return u.toString();
+        } catch(e) { return url; }
+    }
+
+    function showToastMessage(msg) {
+        const toast = document.getElementById('dynamicToast');
+        if(toast) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2000); }
+        else alert(msg);
+    }
+
+    function openCustomShareModal(title, desc, imgUrl, articleLink) {
+        updateMetaTagsForShare(title, desc, imgUrl, articleLink);
+        const modal = document.getElementById('dynamicShareModal');
+        if(modal) modal.classList.add('active');
+        currentShareUrl = addUTMParameters(articleLink, 'share_modal');
+        currentShareTitle = title;
+        currentShareDesc = desc;
+    }
+
+    function closeShareModal() {
+        const modal = document.getElementById('dynamicShareModal');
+        if(modal) modal.classList.remove('active');
+    }
+
+    function shareOnWhatsApp() { window.open(`https://wa.me/?text=${encodeURIComponent(currentShareTitle + "\n" + currentShareDesc + "\n" + currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(currentShareTitle)}&url=${encodeURIComponent(currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnInstagram() { navigator.clipboard.writeText(currentShareUrl).then(() => showToastMessage("📸 Instagram साठी लिंक कॉपी झाली! पेस्ट करा.")); closeShareModal(); }
+    function copyLink() { navigator.clipboard.writeText(currentShareUrl).then(() => showToastMessage("✅ लिंक कॉपी झाली!")); closeShareModal(); }
+
+    function attachShareModalEvents() {
+        document.getElementById('closeShareModalBtn')?.addEventListener('click', closeShareModal);
+        document.getElementById('whatsappShareBtn')?.addEventListener('click', shareOnWhatsApp);
+        document.getElementById('facebookShareBtn')?.addEventListener('click', shareOnFacebook);
+        document.getElementById('instagramShareBtn')?.addEventListener('click', shareOnInstagram);
+        document.getElementById('twitterShareBtn')?.addEventListener('click', shareOnTwitter);
+        document.getElementById('copyLinkBtn')?.addEventListener('click', copyLink);
+        document.getElementById('dynamicShareModal')?.addEventListener('click', (e) => { if(e.target === document.getElementById('dynamicShareModal')) closeShareModal(); });
+    }
+
+    function shareCurrentPage() {
+        openCustomShareModal(currentShareTitle, currentShareDesc, "", window.location.href);
+    }
+    
+    attachShareModalEvents();
+
+    const nativeShareBtn = document.getElementById('nativeShareBtn');
+    if(nativeShareBtn) {
+        nativeShareBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            shareCurrentPage();
+        });
+    }
+
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'theme') {
+            applySynchronizedTheme();
+        }
+    });
+
+    // Initialize Page
+    renderTools();
+    refreshAllPagination();
+</script>
+</body>
+</html>
