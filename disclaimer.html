@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Disclaimer | UrjaPlus</title>
+	
+	<!-- Open Graph / Social Media Sharing Meta Tags -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Disclaimer | UrjaPlus">
+<meta property="og:description" content="माहितीच्या देवाणघेवाणीसाठी स्पष्ट मर्यादा असणे आवश्यक असते, तरीही अंतिम निर्णयाची जबाबदारी तुमचीच असते.">
+<meta property="og:image" content="https://urjaplus.in/Image/disclaimer.webp">
+<meta property="og:image:width" content="300">
+<meta property="og:image:height" content="300">
+<meta property="og:url" content="https://urjaplus.in/disclaimer.html">
+<meta property="og:site_name" content="UrjaPlus">
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Disclaimer | UrjaPlus">
+<meta name="twitter:description" content="माहितीच्या देवाणघेवाणीसाठी स्पष्ट मर्यादा असणे आवश्यक असते, तरीही अंतिम निर्णयाची जबाबदारी तुमचीच असते.">
+<meta name="twitter:image" content="https://urjaplus.in/Image/disclaimer.webp">
+	
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* --- index.html मधून घेतलेली आधुनिक रंगसंगती (Theme System) --- */
@@ -598,6 +615,14 @@
             transition: 0.2s;
         }
         .urja-toast-message.show { opacity: 1; }
+        
+        @media (max-width: 480px) {
+            .urja-share-icon { padding: 6px 8px; gap: 8px; }
+            .urja-icon-circle { width: 32px; height: 32px; font-size: 1.1rem; }
+            .urja-share-icon span { font-size: 0.75rem; white-space: nowrap; }
+            .urja-modal-container { width: 92%; }
+            .urja-modal-header h3 { font-size: 1.1rem; }
+        }
     </style>
 </head>
 <body>
@@ -693,7 +718,45 @@
         <a href="tools.html" class="nav-item" data-nav="Tools"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
         <a href="search.html" class="nav-item" data-nav="Search"><i class="fas fa-search"></i><span>Search</span></a>
         <a href="rti-plus.html" class="nav-item" data-nav="Favorites"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
-        <a href="#" class="nav-item" id="nativeShareBtn"><i class="fas fa-share-alt"></i><span>Share</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn" data-nav="Share"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<!-- Dynamic Share Modal Component -->
+<div id="dynamicShareModal" class="urja-share-modal">
+    <div class="urja-modal-container">
+        <div class="urja-modal-header">
+            <h3>
+                <span class="header-icon-circle"><i class="fas fa-share-alt"></i></span>
+                Share Now
+            </h3>
+            <button class="urja-close-modal" id="closeShareModalBtn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="urja-modal-body">
+            <div class="urja-share-platforms">
+                <button class="urja-share-icon" id="whatsappShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-whatsapp" style="color:#25D366;"></i></div>
+                    <span>WhatsApp</span>
+                </button>
+                <button class="urja-share-icon" id="facebookShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-facebook-f" style="color:#1877F2;"></i></div>
+                    <span>Facebook</span>
+                </button>
+                <button class="urja-share-icon" id="instagramShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-instagram" style="color:#E4405F;"></i></div>
+                    <span>Instagram</span>
+                </button>
+                <button class="urja-share-icon" id="twitterShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-x-twitter"></i></div>
+                    <span>X (Twitter)</span>
+                </button>
+            </div>
+            <button class="urja-copy-link-btn" id="copyLinkBtn">
+                <span><i class="fas fa-link"></i> लिंक कॉपी करा</span> 
+                <i class="fas fa-copy"></i>
+            </button>
+            <div id="shareToastMsg" class="urja-toast-message">✅ लिंक कॉपी झाली!</div>
+        </div>
     </div>
 </div>
 
@@ -721,6 +784,10 @@
     }
 
     // --- Share Modal Logic (`about-us.html` पॅटर्न) ---
+    let currentShareUrl = window.location.href;
+    let currentShareTitle = "Disclaimer | UrjaPlus";
+    let currentShareDesc = "UrjaPlus प्लॅटफॉर्मवरील माहितीच्या वापराशी संबंधित अटी, मर्यादा आणि कायदेशीर स्पष्टीकरणे.";
+
     function updateMetaTagsForShare(ogTitle, ogDescription, ogImage, ogUrl) {
         let meta = document.querySelector('meta[property="og:title"]');
         if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:title'); document.head.appendChild(meta); }
@@ -747,9 +814,9 @@
         updateMetaTagsForShare(title, desc, imgUrl, articleLink);
         const modal = document.getElementById('dynamicShareModal');
         if(modal) modal.classList.add('active');
-        window.currentShareUrl = addUTMParameters(articleLink, 'share_modal');
-        window.currentShareTitle = title;
-        window.currentShareDesc = desc;
+        currentShareUrl = addUTMParameters(articleLink, 'share_modal');
+        currentShareTitle = title;
+        currentShareDesc = desc;
     }
 
     function shareCurrentPage() {
@@ -759,16 +826,13 @@
         openCustomShareModal(defaultTitle, defaultDesc, defaultImg, window.location.href);
     }
 
-    function shareOnWhatsApp() { window.open(`https://wa.me/?text=${encodeURIComponent(window.currentShareTitle + "\n" + window.currentShareDesc + "\n" + window.currentShareUrl)}`, '_blank'); closeShareModal(); }
-    function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.currentShareUrl)}`, '_blank'); closeShareModal(); }
-    function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(window.currentShareTitle)}&url=${encodeURIComponent(window.currentShareUrl)}`, '_blank'); closeShareModal(); }
-    function shareOnInstagram() { navigator.clipboard.writeText(window.currentShareUrl).then(() => showShareToastMessage("📸 Instagram साठीリンク copy झाली! पेस्ट करा.")); closeShareModal(); }
-    function copyLink() { navigator.clipboard.writeText(window.currentShareUrl).then(() => showShareToastMessage("✅ लिंक कॉपी झाली!")); closeShareModal(); }
+    function shareOnWhatsApp() { window.open(`https://wa.me/?text=${encodeURIComponent(currentShareTitle + "\n" + currentShareDesc + "\n" + currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(currentShareTitle)}&url=${encodeURIComponent(currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnInstagram() { navigator.clipboard.writeText(currentShareUrl).then(() => showShareToastMessage("📸 Instagram साठी लिंक कॉपी झाली! पेस्ट करा.")); closeShareModal(); }
+    function copyLink() { navigator.clipboard.writeText(currentShareUrl).then(() => showShareToastMessage("✅ लिंक कॉपी झाली!")); closeShareModal(); }
 
-    function injectShareModal() {
-        if(document.getElementById('dynamicShareModal')) return;
-        const modalHTML = `<div id="dynamicShareModal" class="urja-share-modal"><div class="urja-modal-container"><div class="urja-modal-header"><h3><span class="header-icon-circle"><i class="fas fa-share-alt"></i></span>Share Now</h3><button class="urja-close-modal" id="closeShareModalBtn"><i class="fas fa-times"></i></button></div><div class="urja-modal-body"><div class="urja-share-platforms"><button class="urja-share-icon" id="whatsappShareBtn"><div class="urja-icon-circle"><i class="fab fa-whatsapp" style="color:#25D366;"></i></div><span>WhatsApp</span></button><button class="urja-share-icon" id="facebookShareBtn"><div class="urja-icon-circle"><i class="fab fa-facebook-f" style="color:#1877F2;"></i></div><span>Facebook</span></button><button class="urja-share-icon" id="instagramShareBtn"><div class="urja-icon-circle"><i class="fab fa-instagram" style="color:#E4405F;"></i></div><span>Instagram</span></button><button class="urja-share-icon" id="twitterShareBtn"><div class="urja-icon-circle"><i class="fab fa-x-twitter"></i></div><span>X (Twitter)</span></button></div><button class="urja-copy-link-btn" id="copyLinkBtn"><span><i class="fas fa-link"></i> लिंक कॉपी करा</span> <i class="fas fa-copy"></i></button><div id="shareToastMsg" class="urja-toast-message">✅ लिंक कॉपी झाली!</div></div></div></div>`;
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
+    function attachShareModalEvents() {
         document.getElementById('closeShareModalBtn')?.addEventListener('click', closeShareModal);
         document.getElementById('whatsappShareBtn')?.addEventListener('click', shareOnWhatsApp);
         document.getElementById('facebookShareBtn')?.addEventListener('click', shareOnFacebook);
@@ -777,6 +841,8 @@
         document.getElementById('copyLinkBtn')?.addEventListener('click', copyLink);
         document.getElementById('dynamicShareModal')?.addEventListener('click', (e) => { if(e.target === document.getElementById('dynamicShareModal')) closeShareModal(); });
     }
+
+    attachShareModalEvents();
     
     // Bottom Navigation Handlers
     const navButtons = document.querySelectorAll('.nav-item');
@@ -792,7 +858,11 @@
                 case 'Tools': window.location.href = 'tools.html'; break;
                 case 'Search': window.location.href = 'search.html'; break;
                 case 'Favorites': window.location.href = 'favorites.html'; break;
-                case 'Share': shareCurrentPage(); setTimeout(() => { navButtons.forEach(b => b.classList.remove('active')); }, 100); break;
+                case 'Share': 
+                    e.preventDefault();
+                    shareCurrentPage(); 
+                    setTimeout(() => { navButtons.forEach(b => b.classList.remove('active')); }, 100); 
+                    break;
             }
         });
     });
@@ -803,8 +873,6 @@
     // UI Click effect
     const allCards = document.querySelectorAll('.mv-card');
     allCards.forEach(card => { card.addEventListener('click', () => { card.style.transform = 'scale(0.99)'; setTimeout(() => { card.style.transform = ''; }, 130); }); });
-    
-    injectShareModal();
 </script>
 </body>
 </html>
