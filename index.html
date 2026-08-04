@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>UrjaPlus | Energy Literacy & Grievance Redressal Hub</title>
+	
+	<!-- Open Graph / Social Media Sharing Meta Tags -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="UrjaPlus | Energy Literacy & Grievance Redressal Hub">
+<meta property="og:description" content="ऊर्जा साक्षरता आणि ग्राहक तक्रार निवारणासाठी प्रगत डिजिटल प्लॅटफॉर्म.">
+<meta property="og:image" content="https://urjaplus.in/Image/about-us.webp">
+<meta property="og:url" content="https://urjaplus.in/index.html">
+<meta property="og:site_name" content="UrjaPlus">
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UrjaPlus | Energy Literacy & Grievance Redressal Hub">
+<meta name="twitter:description" content="ऊर्जा साक्षरता आणि ग्राहक तक्रार निवारणासाठी प्रगत डिजिटल प्लॅटफॉर्म.">
+<meta name="twitter:image" content="https://urjaplus.in/Image/about-us.webp">
+	
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* --- Root Variables for Theme Switcher (Enhanced Dark Mode) --- */
@@ -368,19 +383,19 @@
             background: var(--bg-card);
             color: var(--primary);
             border: 1px solid var(--border-color);
-            padding: 10px 16px; /* नाजूक पॅडिंग */
+            padding: 10px 16px;
             border-radius: 12px;
-            font-size: 0.8rem; /* बारीक आणि नीटनेटका फॉन्ट */
+            font-size: 0.8rem;
             font-weight: 600;
             text-decoration: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02); /* अतिशय हलका शॅडो */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             letter-spacing: 0.2px;
         }
 
         .sleek-see-all-btn:active {
-            transform: scale(0.985); /* नाजूक क्लिक इफेक्ट */
+            transform: scale(0.985);
             background: rgba(17, 17, 17, 0.04);
             border-color: var(--primary);
         }
@@ -615,8 +630,8 @@
         }
 		
 		.bottom-navbar .nav-link {
-		text-decoration: none;
-		color: inherit;
+            text-decoration: none;
+            color: inherit;
 		}
 
         .nav-link {
@@ -641,55 +656,161 @@
             color: var(--primary);
         }
 
-        /* --- Share Sheet Component --- */
-        .share-sheet {
+        /* --- Dynamic Share Modal Component (about-us.html Style) --- */
+        .urja-share-modal {
+            display: none;
             position: fixed;
-            bottom: -100%;
+            top: 0;
             left: 0;
-            right: 0;
-            max-width: 480px;
-            margin: 0 auto;
-            background: var(--bg-card);
-            border-radius: 24px 24px 0 0;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
-            z-index: 1100;
-            transition: bottom 0.3s cubic-bezier(0.1, 0.8, 0.3, 1);
-            padding: 20px;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-
-        .share-sheet.active { bottom: 0; }
-
-        .share-header {
+        .urja-share-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .urja-modal-container {
+            background: var(--bg-card);
+            width: 90%;
+            max-width: 380px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: slideUp 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .urja-modal-header {
+            padding: 16px 18px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-card);
         }
-
-        .share-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            text-align: center;
-        }
-
-        .share-item {
+        .urja-modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 6px;
-            cursor: pointer;
+            gap: 10px;
         }
-
-        .share-icon-circle {
-            width: 45px;
-            height: 45px;
+        .header-icon-circle {
+            background-color: var(--pill-active-bg);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-card);
+            font-size: 0.9rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .urja-close-modal {
+            background: var(--border-color);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        .urja-modal-body {
+            padding: 20px 18px 24px;
+        }
+        .urja-share-platforms {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .urja-share-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--bg-app);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .urja-share-icon:active {
+            transform: scale(0.96);
+            background: var(--border-color);
+        }
+        .urja-icon-circle {
+            width: 34px;
+            height: 34px;
+            background: var(--bg-card);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
             font-size: 1.2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+        .urja-share-icon span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+        }
+        .urja-copy-link-btn {
+            background: var(--bg-app);
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+        .urja-copy-link-btn:active {
+            background: var(--border-color);
+        }
+        .urja-toast-message {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .urja-toast-message.show { opacity: 1; }
+        
+        @media (max-width: 480px) {
+            .urja-share-icon { padding: 6px 8px; gap: 8px; }
+            .urja-icon-circle { width: 32px; height: 32px; font-size: 1.1rem; }
+            .urja-share-icon span { font-size: 0.75rem; white-space: nowrap; }
+            .urja-modal-container { width: 92%; }
+            .urja-modal-header h3 { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -810,30 +931,31 @@
     </div>
 
     <nav class="bottom-navbar">
-    <a href="index.html" class="nav-link active">
-        <i class="fas fa-home"></i>
-        <span>Home</span>
-    </a>
+        <a href="index.html" class="nav-link active">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
 
-    <a href="tools.html" class="nav-link">
-        <i class="fas fa-screwdriver-wrench"></i>
-        <span>Tools</span>
-    </a>
+        <a href="tools.html" class="nav-link">
+            <i class="fas fa-screwdriver-wrench"></i>
+            <span>Tools</span>
+        </a>
 
-    <a href="search.html" class="nav-link">
-        <i class="fas fa-magnifying-glass"></i>
-        <span>Search</span>
-    </a>
+        <a href="search.html" class="nav-link">
+            <i class="fas fa-magnifying-glass"></i>
+            <span>Search</span>
+        </a>
 
-    <a href="rti-plus.html" class="nav-link">
-        <i class="fas fa-scale-unbalanced"></i>
-        <span>RTI Plus</span>
-    </a>
+        <a href="rti-plus.html" class="nav-link">
+            <i class="fas fa-scale-unbalanced"></i>
+            <span>RTI Plus</span>
+        </a>
 
-    <a href="https://urjaplus.com/share" class="nav-link">
-        <i class="fas fa-share-nodes"></i>
-        <span>Share</span>
-    </a>    </nav>
+        <a href="#" class="nav-link" id="nativeShareBtn">
+            <i class="fas fa-share-alt"></i>
+            <span>Share</span>
+        </a>
+    </nav>
 
 </div>
 
@@ -854,27 +976,40 @@
     </ul>
 </div>
 
-<div class="share-sheet" id="shareSheet">
-    <div class="share-header">
-        <h4 style="font-weight: 700;">Share App Content</h4>
-        <i class="fas fa-times" id="closeShareSheet" style="cursor:pointer; color:var(--text-muted)"></i>
-    </div>
-    <div class="share-grid">
-        <div class="share-item" onclick="triggerShare('wa')">
-            <div class="share-icon-circle" style="background:#25D366"><i class="fab fa-whatsapp"></i></div>
-            <span style="font-size:0.7rem; font-weight:600">WhatsApp</span>
+<!-- Dynamic Share Modal Framework (exact match with about-us.html) -->
+<div id="dynamicShareModal" class="urja-share-modal">
+    <div class="urja-modal-container">
+        <div class="urja-modal-header">
+            <h3>
+                <span class="header-icon-circle"><i class="fas fa-share-alt"></i></span>
+                Share Now
+            </h3>
+            <button class="urja-close-modal" id="closeShareModalBtn"><i class="fas fa-times"></i></button>
         </div>
-        <div class="share-item" onclick="triggerShare('fb')">
-            <div class="share-icon-circle" style="background:#1877F2"><i class="fab fa-facebook-f"></i></div>
-            <span style="font-size:0.7rem; font-weight:600">Facebook</span>
-        </div>
-        <div class="share-item" onclick="triggerShare('x')">
-            <div class="share-icon-circle" style="background:#000000"><i class="fab fa-x-twitter"></i></div>
-            <span style="font-size:0.7rem; font-weight:600">Twitter</span>
-        </div>
-        <div class="share-item" onclick="triggerShare('copy')">
-            <div class="share-icon-circle" style="background:#64748b"><i class="fas fa-link"></i></div>
-            <span style="font-size:0.7rem; font-weight:600">Copy Link</span>
+        <div class="urja-modal-body">
+            <div class="urja-share-platforms">
+                <button class="urja-share-icon" id="whatsappShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-whatsapp" style="color:#25D366;"></i></div>
+                    <span>WhatsApp</span>
+                </button>
+                <button class="urja-share-icon" id="facebookShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-facebook-f" style="color:#1877F2;"></i></div>
+                    <span>Facebook</span>
+                </button>
+                <button class="urja-share-icon" id="instagramShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-instagram" style="color:#E4405F;"></i></div>
+                    <span>Instagram</span>
+                </button>
+                <button class="urja-share-icon" id="twitterShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-x-twitter"></i></div>
+                    <span>X (Twitter)</span>
+                </button>
+            </div>
+            <button class="urja-copy-link-btn" id="copyLinkBtn">
+                <span><i class="fas fa-link"></i> लिंक कॉपी करा</span> 
+                <i class="fas fa-copy"></i>
+            </button>
+            <div id="dynamicToast" class="urja-toast-message">✅ लिंक कॉपी झाली!</div>
         </div>
     </div>
 </div>
@@ -1056,37 +1191,98 @@
         });
     });
 
-/* --- Modern Share Sheet Action Controllers --- */
-    const shareSheet = document.getElementById('shareSheet');
-    
-    // एरर टाळण्यासाठी आधी 'navShareBtn' अस्तित्वात आहे का ते तपासले जाईल
-    const shareBtn = document.getElementById('navShareBtn');
-    if (shareBtn) {
-        shareBtn.addEventListener('click', (e) => {
+    /* --- Advanced Share Modal Logic (integrated from about-us.html) --- */
+    let currentShareUrl = window.location.href;
+    let currentShareTitle = "UrjaPlus | Energy Literacy & Grievance Redressal Hub";
+    let currentShareDesc = "Advanced Platform for Energy Literacy and Consumer Grievance Management";
+
+    function updateMetaTagsForShare(ogTitle, ogDescription, ogImage, ogUrl) {
+        let meta = document.querySelector('meta[property="og:title"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:title'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogTitle);
+        
+        meta = document.querySelector('meta[property="og:description"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:description'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogDescription);
+        
+        meta = document.querySelector('meta[property="og:image"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:image'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogImage);
+        
+        meta = document.querySelector('meta[property="og:url"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:url'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogUrl);
+    }
+
+    function addUTMParameters(url, source) {
+        try {
+            const u = new URL(url);
+            u.searchParams.set('utm_source', source);
+            u.searchParams.set('utm_medium', 'social_share');
+            u.searchParams.set('utm_campaign', 'urjaplus_home');
+            return u.toString();
+        } catch(e) { return url; }
+    }
+
+    function showToastMessage(msg) {
+        const toast = document.getElementById('dynamicToast');
+        if(toast) { 
+            toast.textContent = msg; 
+            toast.classList.add('show'); 
+            setTimeout(() => toast.classList.remove('show'), 2000); 
+        } else {
+            alert(msg);
+        }
+    }
+
+    function openCustomShareModal(title, desc, imgUrl, articleLink) {
+        updateMetaTagsForShare(title, desc, imgUrl, articleLink);
+        const modal = document.getElementById('dynamicShareModal');
+        if(modal) modal.classList.add('active');
+        currentShareUrl = addUTMParameters(articleLink, 'share_modal');
+        currentShareTitle = title;
+        currentShareDesc = desc;
+    }
+
+    function closeShareModal() {
+        const modal = document.getElementById('dynamicShareModal');
+        if(modal) modal.classList.remove('active');
+    }
+
+    function shareOnWhatsApp() { window.open(`https://wa.me/?text=${encodeURIComponent(currentShareTitle + "\n" + currentShareDesc + "\n" + currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(currentShareTitle)}&url=${encodeURIComponent(currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnInstagram() { navigator.clipboard.writeText(currentShareUrl).then(() => showToastMessage("📸 Instagram साठी लिंक कॉपी झाली! पेस्ट करा.")); closeShareModal(); }
+    function copyLink() { navigator.clipboard.writeText(currentShareUrl).then(() => showToastMessage("✅ लिंक कॉपी झाली!")); closeShareModal(); }
+
+    function attachShareModalEvents() {
+        document.getElementById('closeShareModalBtn')?.addEventListener('click', closeShareModal);
+        document.getElementById('whatsappShareBtn')?.addEventListener('click', shareOnWhatsApp);
+        document.getElementById('facebookShareBtn')?.addEventListener('click', shareOnFacebook);
+        document.getElementById('instagramShareBtn')?.addEventListener('click', shareOnInstagram);
+        document.getElementById('twitterShareBtn')?.addEventListener('click', shareOnTwitter);
+        document.getElementById('copyLinkBtn')?.addEventListener('click', copyLink);
+        document.getElementById('dynamicShareModal')?.addEventListener('click', (e) => { 
+            if(e.target === document.getElementById('dynamicShareModal')) closeShareModal(); 
+        });
+    }
+
+    function shareCurrentPage() {
+        const defaultTitle = "UrjaPlus | Energy Literacy Platform";
+        const defaultDesc = "Advanced Platform for Energy Literacy and Consumer Grievance Management";
+        const defaultImg = "Image/about-us.webp";
+        openCustomShareModal(defaultTitle, defaultDesc, defaultImg, window.location.href);
+    }
+
+    attachShareModalEvents();
+
+    // फुटर मधील शेअर बटण क्लिक ईव्हेंट हँडलर
+    const nativeShareBtn = document.getElementById('nativeShareBtn');
+    if(nativeShareBtn) {
+        nativeShareBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            shareSheet.classList.add('active');
+            shareCurrentPage();
         });
-    }
-    
-    // बॉटम नेव्हिगेशन बारमधील शेअर बटनला देखील मॅप केले
-    const bottomShareBtn = document.querySelector('a[href*="share"]');
-    if (bottomShareBtn) {
-        bottomShareBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // बाहेरील लिंकवर जाण्यापासून रोखण्यासाठी
-            shareSheet.classList.add('active');
-        });
-    }
-
-    document.getElementById('closeShareSheet').addEventListener('click', () => shareSheet.classList.remove('active'));
-
-    function triggerShare(type) {
-        shareSheet.classList.remove('active');
-        const shareUrl = window.location.href;
-        const textStr = "Explore premium energy updates on UrjaPlus App Platform!";
-        if(type === 'wa') window.open(`https://wa.me/?text=${encodeURIComponent(textStr + " " + shareUrl)}`);
-        else if(type === 'fb') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`);
-        else if(type === 'x') window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(textStr)}&url=${encodeURIComponent(shareUrl)}`);
-        else alert("Link copied seamlessly to clipboard!");
     }
 
     /* --- Inline Redirect Click Handlers for Additional Blocks --- */
@@ -1102,11 +1298,10 @@
     });
 
     document.querySelectorAll('.nav-link').forEach(link => {
-        link.onclick = () => {
+        link.onclick = (e) => {
+            if(link.id === 'nativeShareBtn') return; // शेअर बटनसाठी रिडायरेक्शन बंद ठेवले आहे
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             link.classList.add('active');
-            const target = link.getAttribute('data-target');
-            if(target !== 'home') alert(`${target.toUpperCase()} engine modules will load instantly.`);
         }
     });
 
