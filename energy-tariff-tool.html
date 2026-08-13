@@ -396,9 +396,8 @@
         <div class="filter-group">
             <label class="filter-label" for="tariffPeriod">कालावधी निवडा</label>
             <select id="tariffPeriod" class="line-select" onchange="loadTariff()">
-                <option value="2024-25" selected>01 एप्रिल 2024 ते चालू (चालू दरपत्रक)</option>
-                <option value="2023-24">01 एप्रिल 2023 ते 31 मार्च 2024</option>
-                <option value="2022-23">01 एप्रिल 2022 ते 31 मार्च 2023</option>
+                <option value="2026-27" selected>01 एप्रिल 2026 ते 31 मार्च 2027</option>
+                <option value="2025-26">01 जुलै 2025 ते 31 मार्च 2026</option>
             </select>
         </div>
 
@@ -406,10 +405,28 @@
         <div class="filter-group">
             <label class="filter-label" for="tariffCategory">ग्राहक वर्गवारी निवडा</label>
             <select id="tariffCategory" class="line-select" onchange="loadTariff()">
-                <option value="LT-1" selected>LT-I: घरगुती (Residential)</option>
-                <option value="LT-2">LT-II: व्यावसायिक (Commercial)</option>
-                <option value="LT-5">LT-V: औद्योगिक (Industrial)</option>
-                <option value="LT-4">LT-IV: शेती (Agriculture)</option>
+				<option value="LT-1B" selected>घरगुती (BPL)</option>
+				<option value="LT-1A1">घरगुती (RESI 1 PHASE)</option>
+				<option value="LT-1A3">घरगुती (RESI 3 PHASE)</option>
+                <option value="LT-2A">व्यावसायिक (Comm < 20KW)</option>
+				<option value="LT-2B">व्यावसायिक (Comm 20 TO 50 KW)</option>
+				<option value="LT-2C">व्यावसायिक (Comm ABV 20KW)</option>
+				<option value="LT-3A">सार्व. पाणी पुरवठा (PWW 0 TO 20KW)</option>
+				<option value="LT-3B">सार्व. पाणी पुरवठा (PWW 20 TO 50KW)</option>
+				<option value="LT-3C">सार्व. पाणी पुरवठा (PWW ABV 50KW)</option>
+				<option value="LT-4A">शेतीपंप (METERED)</option>
+				<option value="LT-4H">शेतीपंप (OTHER)</option>
+                <option value="LT-5A">औद्योगिक UPTO 20KW(Industrial)</option>
+				<option value="LT-5B">औद्योगिक ABV 20KW</option>
+                <option value="LT-6A">पथदिवे (GRAMPANCHAYAT A, B, C)</option>
+				<option value="LT-6B">पथदिवे (MUNICIPLE CORP)</option>
+				<option value="LT-10A1">सार्वजनिक सेवा-GOVT (0 TO 20KW)</option>
+				<option value="LT-10A2">सार्वजनिक सेवा-GOVT (20 TO 50KW)</option>
+				<option value="LT-10A3">सार्वजनिक सेवा-GOVT (ABOVE 50KW)</option>
+				<option value="LT-10B1">सार्वजनिक सेवा-OTHER (0 TO 20KW)</option>
+				<option value="LT-10B2">सार्वजनिक सेवा-OTHER (20 TO 50KW)</option>
+				<option value="LT-10B3">सार्वजनिक सेवा-OTHER (ABOVE 50KW)</option>
+				<option value="LT-11">इलेक्ट्रिकल व्हेइकल चार्जिंग (EVCS)</option>
             </select>
         </div>
 
@@ -471,21 +488,20 @@
 <script>
     // महावितरण दरपत्रक डेटा बेस
     const db = {
-        "2024-25": {
-            "LT-1": {
-                fixed: "₹128.00 / महिना",
+        "2026-27": {
+            "LT-1B": {
+                fixed: "Rs. 34.00 / महिना",
                 slabs: [
-                    { range: "0 ते 100 युनिट्स", rate: "₹5.88 / Unit", fac: "₹0.20" },
-                    { range: "101 ते 300 युनिट्स", rate: "₹11.18 / Unit", fac: "₹0.35" },
-                    { range: "301 ते 500 युनिट्स", rate: "₹14.92 / Unit", fac: "₹0.50" },
-                    { range: "500 पेक्षा जास्त", rate: "₹16.71 / Unit", fac: "₹0.60" }
+                    { range: "सर्व वापर (All Units)", rate: "Rs. 1.48 / Unit", WHEELING: "₹0.00" },
                 ]
             },
-            "LT-2": {
-                fixed: "₹522.00 / महिना",
+            "LT-1A1": {
+                fixed: "rS. 130.00 / महिना",
                 slabs: [
-                    { range: "0 ते 20 kW पर्यंत", rate: "₹8.31 / Unit", fac: "₹0.40" },
-                    { range: "20 kW पेक्षा जास्त", rate: "₹12.62 / Unit", fac: "₹0.65" }
+                    { range: "0 ते 100 UNIT", rate: "Rs. 4.28 / Unit", WHEELING: "Rs. 1.47 / Unit" },
+					{ range: "101 ते 300 UNIT", rate: "Rs. 11.10 / Unit", WHEELING: "Rs. 1.47 / Unit" },
+					{ range: "301 ते 500 UNIT", rate: "Rs. 15.38 / Unit", WHEELING: "Rs. 1.47 / Unit" },
+					{ range: "ABOVE 500 UNIT", rate: "Rs. 17.68 / Unit", WHEELING: "Rs. 1.47 / Unit" },
                 ]
             },
             "LT-5": {
@@ -501,7 +517,7 @@
                 ]
             }
         },
-        "2023-24": {
+        "2025-26": {
             "LT-1": {
                 fixed: "₹116.00 / महिना",
                 slabs: [
@@ -584,7 +600,7 @@
                 <tr>
                     <td>${item.range}</td>
                     <td class="rate-bold">${item.rate}</td>
-                    <td>${item.fac}</td>
+                    <td>${item.WHEELING}</td>
                 </tr>
             `;
         });
@@ -598,7 +614,7 @@
                     <tr>
                         <th>वापर स्लॅब</th>
                         <th>वीज दर</th>
-                        <th>FAC</th>
+                        <th>व्हिलिंग चार्ज</th>
                     </tr>
                 </thead>
                 <tbody>
