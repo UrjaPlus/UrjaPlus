@@ -107,27 +107,41 @@
             margin-bottom: 4px;
         }
 
-        /* सुधारित ड्रॉपडाऊन CSS - मजकूर एकाच ओळीत बसवण्यासाठी बदल */
+        /* मोबाईलवर ड्रॉपडाऊन टेक्स्ट एकाच ओळीत बसवण्यासाठी अत्यंत अचूक स्टाइलिंग */
         .line-select {
             width: 100%;
-            padding: 8px 4px;
+            padding: 8px 24px 8px 0;
             background: transparent;
             border: none;
             border-bottom: 1.5px solid var(--border-color);
             border-radius: 0;
             color: var(--text-main);
-            font-size: 0.82rem; /* अक्षरांचा आकार लहान केला */
+            font-size: clamp(0.72rem, 3.2vw, 0.82rem); /* स्क्रीनच्या आकारानुसार आपोआप अ‍ॅडजस्ट होणारा फॉन्ट साइज */
             font-weight: 600;
             outline: none;
             cursor: pointer;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            
+            /* क्रॉस-ब्राउझर आणि मोबाईल सिस्टीम फॉन्ट प्रिसिजन */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg fill='%2364748b' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 0 center;
+            
+            /* टेक्स्ट एकाच ओळीत बसवून truncation/ellipsis लागू करणे */
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            word-break: keep-all !important;
+            word-wrap: normal !important;
         }
 
         .line-select option {
-            font-size: 0.8rem; /* ऑप्शनमधील अक्षरांचा आकार */
+            font-size: 0.78rem;
             background: var(--bg-card);
             color: var(--text-main);
+            padding: 6px;
         }
 
         .line-select:focus {
@@ -435,7 +449,7 @@
 				<option value="LT-10B1">सार्वजनिक सेवा-OTHER (0 TO 20KW)</option>
 				<option value="LT-10B2">सार्वजनिक सेवा-OTHER (20 TO 50KW)</option>
 				<option value="LT-10B3">सार्वजनिक सेवा-OTHER (ABOVE 50KW)</option>
-				<option value="LT-11">इलेक्ट्रिकल व्हेइकल charge (EVCS)</option>
+				<option value="LT-11">इलेक्ट्रिकल व्हेइकल चार्जिंग (EVCS)</option>
             </select>
         </div>
 
