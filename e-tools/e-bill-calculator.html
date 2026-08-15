@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>वीज बिल कॅल्कुलेटर | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- UrjaPlus Minimal & Responsive System Variables --- */
+        :root {
+            --bg-app: #ffffff;
+            --bg-card: #ffffff;
+            --primary: #111111; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); 
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --nav-active: #111111;
+            --accent-green: #10b981;
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827;
+            --primary: #ffffff; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+            --nav-active: #ffffff;
+            --accent-green: #34d399;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .app-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 75px; 
+        }
+
+        /* HEADER */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .header-title {
+            color: #ffffff;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        /* MAIN WRAPPER */
+        .tool-wrapper {
+            padding: 20px 16px;
+        }
+
+        /* INPUT & DROPDOWN GROUPS */
+        .filter-group {
+            margin-bottom: 20px;
+        }
+
+        .filter-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .line-select, .line-input {
+            width: 100%;
+            padding: 8px 24px 8px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1.5px solid var(--border-color);
+            border-radius: 0;
+            color: var(--text-main);
+            font-size: clamp(0.72rem, 3.2vw, 0.82rem);
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .line-select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg fill='%2364748b' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 0 center;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            word-break: keep-all !important;
+        }
+
+        .line-input[type=number]::-webkit-inner-spin-button, 
+        .line-input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        .line-input[type=number] {
+            -moz-appearance: textfield;
+            font-size: 0.95rem;
+            cursor: text;
+        }
+
+        .line-select option {
+            font-size: 0.78rem;
+            background: var(--bg-card);
+            color: var(--text-main);
+            padding: 6px;
+        }
+
+        .line-select:focus, .line-input:focus {
+            border-bottom-color: var(--primary);
+        }
+
+        /* CALCULATE BUTTON */
+        .calc-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-gradient);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.1s ease;
+        }
+
+        .calc-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* POPUP MODAL STYLES */
+        .result-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .result-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-container {
+            background: var(--bg-card);
+            width: 92%;
+            max-width: 420px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: slideUp 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+
+        .modal-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-icon-circle {
+            background-color: var(--pill-active-bg);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-card);
+            font-size: 0.9rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-modal-btn {
+            background: var(--border-color);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+
+        .modal-body {
+            padding: 18px;
+            overflow-y: auto;
+        }
+
+        .calc-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            margin-bottom: 15px;
+        }
+
+        .calc-table th {
+            text-align: left;
+            padding: 8px 0;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .calc-table td {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .total-box {
+            background: var(--bg-app);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .total-label {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .total-amount {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--accent-green);
+        }
+
+        /* --- BOTTOM NAVIGATION MENU (Same as Energy Tariff Tool) --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        @media (max-width: 420px) {
+            .bottom-nav { padding: 8px 10px 20px; }
+        }
+        
+        @media (max-width: 360px) {
+            .bottom-nav { padding: 8px 10px 22px 10px; }
+            .nav-item i { font-size: 1.2rem !important; }
+            .nav-item span { font-size: 0.65rem !important; }
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-item i { font-size: 1.2rem; }
+        .nav-item.active { color: var(--primary); transform: translateY(-2px); }
+
+        /* --- SHARE MODAL CSS (Same as Energy Tariff Tool) --- */
+        .urja-share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .urja-share-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .urja-modal-container {
+            background: var(--bg-card);
+            width: 90%;
+            max-width: 380px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: slideUp 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        .urja-modal-header {
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+        .urja-modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .urja-close-modal {
+            background: var(--border-color);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        .urja-modal-body {
+            padding: 20px 18px 24px;
+        }
+        .urja-share-platforms {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .urja-share-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--bg-app);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .urja-share-icon:active {
+            transform: scale(0.96);
+            background: var(--border-color);
+        }
+        .urja-icon-circle {
+            width: 34px;
+            height: 34px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+        .urja-share-icon span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+        }
+        .urja-copy-link-btn {
+            background: var(--bg-app);
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+        .urja-copy-link-btn:active {
+            background: var(--border-color);
+        }
+        .urja-toast-message {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .urja-toast-message.show { opacity: 1; }
+        
+        @media (max-width: 480px) {
+            .urja-share-icon { padding: 6px 8px; gap: 8px; }
+            .urja-icon-circle { width: 32px; height: 32px; font-size: 1.1rem; }
+            .urja-share-icon span { font-size: 0.75rem; white-space: nowrap; }
+            .urja-modal-container { width: 92%; }
+            .urja-modal-header h3 { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- HEADER -->
+    <div class="sharp-header">
+        <button class="back-arrow" onclick="window.history.back()">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">
+            <span>वीज बिल कॅल्कुलेटर</span>
+        </div>
+    </div>
+
+    <!-- MAIN TOOL CONTENT -->
+    <div class="tool-wrapper">
+        
+        <!-- DROPDOWN 1: PERIOD -->
+        <div class="filter-group">
+            <label class="filter-label" for="calcPeriod">कालावधी निवडा</label>
+            <select id="calcPeriod" class="line-select">
+                <option value="2026-27" selected>01 एप्रिल 2026 ते 31 मार्च 2027</option>
+                <option value="2025-26">01 जुलै 2025 ते 31 मार्च 2026</option>
+            </select>
+        </div>
+
+        <!-- DROPDOWN 2: CATEGORY -->
+        <div class="filter-group">
+            <label class="filter-label" for="calcCategory">ग्राहक वर्गवारी निवडा</label>
+            <select id="calcCategory" class="line-select">
+                <option value="LT-1B">घरगुती (BPL)</option>
+                <option value="LT-1A1" selected>घरगुती (RESI 1 PHASE)</option>
+                <option value="LT-1A3">घरगुती (RESI 3 PHASE)</option>
+                <option value="LT-2A">व्यावसायिक (Comm &lt; 20KW)</option>
+                <option value="LT-2B">व्यावसायिक (Comm 20 TO 50 KW)</option>
+                <option value="LT-2C">व्यावसायिक (Comm ABV 20KW)</option>
+                <option value="LT-3A">सार्व. पाणी पुरवठा (PWW 0 TO 20KW)</option>
+                <option value="LT-3B">सार्व. पाणी पुरवठा (PWW 20 TO 50KW)</option>
+                <option value="LT-3C">सार्व. पाणी पुरवठा (PWW ABV 50KW)</option>
+                <option value="LT-4A">शेतीपंप (METERED)</option>
+                <option value="LT-4H">शेतीपंप (OTHER)</option>
+                <option value="LT-5A">औद्योगिक UPTO 20KW(Industrial)</option>
+                <option value="LT-5B">औद्योगिक ABV 20KW</option>
+                <option value="LT-6A">पथदिवे (GRAMPANCHAYAT A, B, C)</option>
+                <option value="LT-6B">पथदिवे (MUNICIPLE CORP)</option>
+                <option value="LT-10A1">सार्वजनिक सेवा-GOVT (0 TO 20KW)</option>
+                <option value="LT-10A2">सार्वजनिक सेवा-GOVT (20 TO 50KW)</option>
+                <option value="LT-10A3">सार्वजनिक सेवा-GOVT (ABOVE 50KW)</option>
+                <option value="LT-10B1">सार्वजनिक सेवा-OTHER (0 TO 20KW)</option>
+                <option value="LT-10B2">सार्वजनिक सेवा-OTHER (20 TO 50KW)</option>
+                <option value="LT-10B3">सार्वजनिक सेवा-OTHER (ABOVE 50KW)</option>
+                <option value="LT-11">इलेक्ट्रिकल व्हेइकल charge (EVCS)</option>
+            </select>
+        </div>
+
+        <!-- INPUT: UNITS -->
+        <div class="filter-group">
+            <label class="filter-label" for="calcUnits">वापरलेले युनिट्स (Units Consumed)</label>
+            <input type="number" id="calcUnits" class="line-input" placeholder="उदा. 150" min="0" inputmode="numeric">
+        </div>
+
+        <!-- BUTTON -->
+        <button class="calc-btn" onclick="calculateBill()">
+            <i class="fas fa-calculator"></i> बिल कॅल्क्युलेट करा
+        </button>
+
+    </div>
+
+    <!-- BOTTOM NAVIGATION BAR (Updated like energy-tariff-tool) -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="tools.html" class="nav-item active"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="search.html" class="nav-item"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="rti-plus.html" class="nav-item"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<!-- POP-UP WINDOW (RESULT MODAL) -->
+<div id="billResultModal" class="result-modal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>
+                <span class="header-icon-circle"><i class="fas fa-file-invoice-dollar"></i></span>
+                अंदाजीत वीज बिल तपशील
+            </h3>
+            <button class="close-modal-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <table class="calc-table">
+                <thead>
+                    <tr>
+                        <th>तपशील (Details)</th>
+                        <th style="text-align: right;">रक्कम (₹)</th>
+                    </tr>
+                </thead>
+                <tbody id="breakdownBody">
+                    <!-- JS द्वारे डेटा येईल -->
+                </tbody>
+            </table>
+
+            <div class="total-box">
+                <span class="total-label">एकूण अंदाजीत बिल:</span>
+                <span class="total-amount" id="totalAmount">₹ 0.00</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DYNAMIC SHARE MODAL (Added from energy-tariff-tool) -->
+<div id="dynamicShareModal" class="urja-share-modal">
+    <div class="urja-modal-container">
+        <div class="urja-modal-header">
+            <h3>
+                <span class="header-icon-circle"><i class="fas fa-share-alt"></i></span>
+                Share Now
+            </h3>
+            <button class="urja-close-modal" id="closeShareModalBtn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="urja-modal-body">
+            <div class="urja-share-platforms">
+                <button class="urja-share-icon" id="whatsappShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-whatsapp" style="color:#25D366;"></i></div>
+                    <span>WhatsApp</span>
+                </button>
+                <button class="urja-share-icon" id="facebookShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-facebook-f" style="color:#1877F2;"></i></div>
+                    <span>Facebook</span>
+                </button>
+                <button class="urja-share-icon" id="instagramShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-instagram" style="color:#E4405F;"></i></div>
+                    <span>Instagram</span>
+                </button>
+                <button class="urja-share-icon" id="twitterShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-x-twitter"></i></div>
+                    <span>X (Twitter)</span>
+                </button>
+            </div>
+            <button class="urja-copy-link-btn" id="copyLinkBtn">
+                <span><i class="fas fa-link"></i> लिंक कॉपी करा</span> 
+                <i class="fas fa-copy"></i>
+            </button>
+            <div id="dynamicToast" class="urja-toast-message">✅ लिंक कॉपी झाली!</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // वीज दर डेटाबेस
+    const tariffRates = {
+        "2026-27": {
+            "LT-1B": { fixed: 34.00, slabs: [{ min: 0, max: Infinity, rate: 1.48, wheeling: 0.00 }] },
+            "LT-1A1": {
+                fixed: 130.00,
+                slabs: [
+                    { min: 0, max: 100, rate: 4.28, wheeling: 1.47 },
+                    { min: 101, max: 300, rate: 11.10, wheeling: 1.47 },
+                    { min: 301, max: 500, rate: 15.38, wheeling: 1.47 },
+                    { min: 501, max: Infinity, rate: 17.68, wheeling: 1.47 }
+                ]
+            },
+            "LT-1A3": { fixed: 390.00, slabs: [{ min: 0, max: 100, rate: 4.28, wheeling: 1.47 }, { min: 101, max: 300, rate: 11.10, wheeling: 1.47 }, { min: 301, max: 500, rate: 15.38, wheeling: 1.47 }, { min: 501, max: Infinity, rate: 17.68, wheeling: 1.47 }] },
+            "LT-2A": { fixed: 470.00, slabs: [{ min: 0, max: Infinity, rate: 7.55, wheeling: 1.47 }] },
+            "LT-2B": { fixed: 470.00, slabs: [{ min: 0, max: Infinity, rate: 11.42, wheeling: 1.47 }] },
+            "LT-2C": { fixed: 470.00, slabs: [{ min: 0, max: Infinity, rate: 11.42, wheeling: 1.47 }] },
+            "LT-3A": { fixed: 420.00, slabs: [{ min: 0, max: Infinity, rate: 3.20, wheeling: 1.47 }] },
+            "LT-3B": { fixed: 420.00, slabs: [{ min: 0, max: Infinity, rate: 5.40, wheeling: 1.47 }] },
+            "LT-3C": { fixed: 420.00, slabs: [{ min: 0, max: Infinity, rate: 6.80, wheeling: 1.47 }] },
+            "LT-4A": { fixed: 46.00, slabs: [{ min: 0, max: Infinity, rate: 4.11, wheeling: 0.00 }] },
+            "LT-4H": { fixed: 46.00, slabs: [{ min: 0, max: Infinity, rate: 4.11, wheeling: 0.00 }] },
+            "LT-5A": { fixed: 522.00, slabs: [{ min: 0, max: Infinity, rate: 6.30, wheeling: 0.30 }] },
+            "LT-5B": { fixed: 522.00, slabs: [{ min: 0, max: Infinity, rate: 6.30, wheeling: 0.30 }] },
+            "LT-6A": { fixed: 420.00, slabs: [{ min: 0, max: Infinity, rate: 6.10, wheeling: 1.47 }] },
+            "LT-6B": { fixed: 420.00, slabs: [{ min: 0, max: Infinity, rate: 7.80, wheeling: 1.47 }] },
+            "LT-10A1": { fixed: 470.00, slabs: [{ min: 0, max: Infinity, rate: 7.10, wheeling: 1.47 }] },
+            "LT-10A2": { fixed: 470.00, slabs: [{ min: 0, max: Infinity, rate: 7.10, wheeling: 1.47 }] },
+            "LT-10A3": { fixed: 470.00, slabs: [{ min: 0, max: Infinity, rate: 7.10, wheeling: 1.47 }] },
+            "LT-10B1": { fixed: 470.00, slabs: [{ min: 0, max: Infinity, rate: 8.50, wheeling: 1.47 }] },
+            "LT-10B2": { fixed: 470.00, slabs: [{ min: 0, max: Infinity, rate: 8.50, wheeling: 1.47 }] },
+            "LT-10B3": { fixed: 470.00, slabs: [{ min: 0, max: Infinity, rate: 8.50, wheeling: 1.47 }] },
+            "LT-11": { fixed: 100.00, slabs: [{ min: 0, max: Infinity, rate: 5.50, wheeling: 1.47 }] }
+        },
+        "2025-26": {
+            "LT-1A1": {
+                fixed: 116.00,
+                slabs: [
+                    { min: 0, max: 100, rate: 5.31, wheeling: 0.15 },
+                    { min: 101, max: 300, rate: 10.12, wheeling: 0.25 },
+                    { min: 301, max: 500, rate: 13.50, wheeling: 0.40 },
+                    { min: 501, max: Infinity, rate: 15.13, wheeling: 0.50 }
+                ]
+            }
+        }
+    };
+
+    // Dark/Light Theme Sync
+    function applySynchronizedTheme() {
+        const activeTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', activeTheme);
+    }
+    applySynchronizedTheme();
+
+    // स्लॅब कॅल्क्युलेशन लॉजिक
+    function calculateBill() {
+        const period = document.getElementById('calcPeriod').value;
+        const category = document.getElementById('calcCategory').value;
+        const unitsInput = document.getElementById('calcUnits').value;
+        const units = parseFloat(unitsInput);
+
+        if (isNaN(units) || units < 0) {
+            alert("कृपया वैध युनिट्स टाका.");
+            return;
+        }
+
+        const categoryData = tariffRates[period]?.[category];
+        if (!categoryData) {
+            alert("निवडलेल्या वर्गवारीसाठी दर उपलब्ध नाहीत.");
+            return;
+        }
+
+        let totalEnergyCharge = 0;
+        let totalWheelingCharge = 0;
+        let breakdownHTML = '';
+
+        const fixedCharge = categoryData.fixed;
+        breakdownHTML += `
+            <tr>
+                <td>स्थिर आकार (Fixed Charge)</td>
+                <td style="text-align: right;">₹ ${fixedCharge.toFixed(2)}</td>
+            </tr>
+        `;
+
+        let remainingUnits = units;
+
+        for (let slab of categoryData.slabs) {
+            if (units > slab.min - 1) {
+                let slabUnits = 0;
+                
+                if (slab.max === Infinity) {
+                    slabUnits = units - (slab.min - 1);
+                } else {
+                    const slabCapacity = slab.max - slab.min + 1;
+                    slabUnits = Math.min(remainingUnits, slabCapacity);
+                }
+
+                if (slabUnits > 0) {
+                    const energyCost = slabUnits * slab.rate;
+                    const wheelingCost = slabUnits * slab.wheeling;
+                    
+                    totalEnergyCharge += energyCost;
+                    totalWheelingCharge += wheelingCost;
+
+                    breakdownHTML += `
+                        <tr>
+                            <td>स्लॅब (${slab.min}-${slab.max === Infinity ? 'वरील' : slab.max}): ${slabUnits} U @ ₹${slab.rate}</td>
+                            <td style="text-align: right;">₹ ${energyCost.toFixed(2)}</td>
+                        </tr>
+                    `;
+                    
+                    remainingUnits -= slabUnits;
+                }
+            }
+        }
+
+        if (totalWheelingCharge > 0) {
+            breakdownHTML += `
+                <tr>
+                    <td>व्हिलिंग चार्ज (Wheeling Charge)</td>
+                    <td style="text-align: right;">₹ ${totalWheelingCharge.toFixed(2)}</td>
+                </tr>
+            `;
+        }
+
+        const grandTotal = fixedCharge + totalEnergyCharge + totalWheelingCharge;
+
+        document.getElementById('breakdownBody').innerHTML = breakdownHTML;
+        document.getElementById('totalAmount').innerText = `₹ ${grandTotal.toFixed(2)}`;
+        
+        openModal();
+    }
+
+    // Modal Helpers
+    function openModal() {
+        const modal = document.getElementById('billResultModal');
+        if (modal) modal.classList.add('active');
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('billResultModal');
+        if (modal) modal.classList.remove('active');
+    }
+
+    document.getElementById('billResultModal')?.addEventListener('click', (e) => {
+        if (e.target === document.getElementById('billResultModal')) closeModal();
+    });
+
+    // ---- ADVANCED SHARE MODAL LOGIC (FROM ENERGY TARIFF TOOL) ----
+    let currentShareUrl = window.location.href;
+    let currentShareTitle = "वीज बिल कॅल्कुलेटर | UrjaPlus";
+    let currentShareDesc = "तुमच्या वापराचे अंदाजपत्रक त्वरित कॅल्क्युलेट करा UrjaPlus वर.";
+
+    function updateMetaTagsForShare(ogTitle, ogDescription, ogImage, ogUrl) {
+        let meta = document.querySelector('meta[property="og:title"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:title'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogTitle);
+        
+        meta = document.querySelector('meta[property="og:description"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:description'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogDescription);
+        
+        meta = document.querySelector('meta[property="og:image"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:image'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogImage);
+        
+        meta = document.querySelector('meta[property="og:url"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:url'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogUrl);
+    }
+
+    function addUTMParameters(url, source) {
+        try {
+            const u = new URL(url);
+            u.searchParams.set('utm_source', source);
+            u.searchParams.set('utm_medium', 'social_share');
+            u.searchParams.set('utm_campaign', 'urjaplus_calc');
+            return u.toString();
+        } catch(e) { return url; }
+    }
+
+    function showToastMessage(msg) {
+        const toast = document.getElementById('dynamicToast');
+        if(toast) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2000); }
+        else alert(msg);
+    }
+
+    function openCustomShareModal(title, desc, imgUrl, articleLink) {
+        updateMetaTagsForShare(title, desc, imgUrl, articleLink);
+        const modal = document.getElementById('dynamicShareModal');
+        if(modal) modal.classList.add('active');
+        currentShareUrl = addUTMParameters(articleLink, 'share_modal');
+        currentShareTitle = title;
+        currentShareDesc = desc;
+    }
+
+    function closeShareModal() {
+        const modal = document.getElementById('dynamicShareModal');
+        if(modal) modal.classList.remove('active');
+    }
+
+    function shareOnWhatsApp() { window.open(`https://wa.me/?text=${encodeURIComponent(currentShareTitle + "\n" + currentShareDesc + "\n" + currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(currentShareTitle)}&url=${encodeURIComponent(currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnInstagram() { navigator.clipboard.writeText(currentShareUrl).then(() => showToastMessage("📸 Instagram साठी लिंक कॉपी झाली! पेस्ट करा.")); closeShareModal(); }
+    function copyLink() { navigator.clipboard.writeText(currentShareUrl).then(() => showToastMessage("✅ लिंक कॉपी झाली!")); closeShareModal(); }
+
+    function attachShareModalEvents() {
+        document.getElementById('closeShareModalBtn')?.addEventListener('click', closeShareModal);
+        document.getElementById('whatsappShareBtn')?.addEventListener('click', shareOnWhatsApp);
+        document.getElementById('facebookShareBtn')?.addEventListener('click', shareOnFacebook);
+        document.getElementById('instagramShareBtn')?.addEventListener('click', shareOnInstagram);
+        document.getElementById('twitterShareBtn')?.addEventListener('click', shareOnTwitter);
+        document.getElementById('copyLinkBtn')?.addEventListener('click', copyLink);
+        document.getElementById('dynamicShareModal')?.addEventListener('click', (e) => { if(e.target === document.getElementById('dynamicShareModal')) closeShareModal(); });
+    }
+
+    function shareCurrentPage() {
+        const defaultTitle = "वीज बिल कॅल्कुलेटर | UrjaPlus";
+        const defaultDesc = "तुमच्या वापराचे अंदाजपत्रक त्वरित कॅल्क्युलेट करा UrjaPlus वर.";
+        const defaultImg = "";
+        openCustomShareModal(defaultTitle, defaultDesc, defaultImg, window.location.href);
+    }
+    
+    attachShareModalEvents();
+
+    // फुटर नेव्हिगेशन शेअर बटण इव्हेंट
+    const nativeShareBtn = document.getElementById('nativeShareBtn');
+    if(nativeShareBtn) {
+        nativeShareBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            shareCurrentPage();
+        });
+    }
+
+    // लोकल स्टोरेज चेंज लिसनर (थीम सिंक्रोनायझेशनसाठी)
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'theme') {
+            applySynchronizedTheme();
+        }
+    });
+</script>
+</body>
+</html>
