@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0d6efd">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>UrjaPlus | Energy Literacy & Grievance Redressal Hub</title>
@@ -1310,6 +1312,19 @@
     /* --- Initial Execution Sequence on Load --- */
     updateActivePill("billing");
     renderAppCards("billing");
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js")
+            .then(registration => {
+                console.log("UrjaPlus Service Worker registered:", registration.scope);
+            })
+            .catch(error => {
+                console.error("Service Worker registration failed:", error);
+            });
+    });
+}
 </script>
 </body>
 </html>
