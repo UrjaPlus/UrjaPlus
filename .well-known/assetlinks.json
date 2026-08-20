@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.urjaplus.urjaplus",
+      "sha256_cert_fingerprints": [
+        "B3:E8:BA:02:CF:31:C7:9C:2E:AC:A1:B3:5B:5F:D0:C7:23:ED:43:E8:BE:C9:1E:8B:E1:87:76:7C:11:89:87:E9"
+      ]
+    }
+  }
+]
