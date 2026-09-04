@@ -278,7 +278,7 @@
         .nav-item i { font-size: 1.2rem; }
         .nav-item.active { color: var(--primary); }
 
-        /* MODAL SYSTEM (INFO & SHARE) */
+        /* MODAL SYSTEM (INFO) */
         .urja-modal {
             display: none;
             position: fixed;
@@ -331,24 +331,158 @@
             line-height: 1.5;
         }
 
-        /* SHARE PLATFORMS */
-        .urja-share-platforms { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+        /* --- URJA SHARE MODAL CSS (EXACT MATCH WITH ENERGY TARIFF TOOL) --- */
+        .urja-share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .urja-share-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .urja-share-modal .urja-modal-container {
+            background: var(--bg-card);
+            width: 90%;
+            max-width: 380px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: slideUp 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        .urja-share-modal .urja-modal-header {
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+        .urja-share-modal .urja-modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-icon-circle {
+            background-color: var(--pill-active-bg);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-card);
+            font-size: 0.9rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .urja-share-modal .urja-close-modal {
+            background: var(--border-color);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        .urja-share-modal .urja-modal-body {
+            padding: 20px 18px 24px;
+        }
+        .urja-share-platforms {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
         .urja-share-icon {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: var(--bg-app); border: 1px solid var(--border-color);
-            border-radius: 50px; padding: 8px; cursor: pointer; color: var(--text-main);
-            font-size: 0.8rem; font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--bg-app);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .urja-share-icon:active {
+            transform: scale(0.96);
+            background: var(--border-color);
+        }
+        .urja-icon-circle {
+            width: 34px;
+            height: 34px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+        .urja-share-icon span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
         }
         .urja-copy-link-btn {
-            background: var(--bg-app); width: 100%; padding: 10px;
-            border-radius: 50px; display: flex; justify-content: space-between;
-            border: 1px solid var(--border-color); cursor: pointer; color: var(--text-main); font-size: 0.85rem;
+            background: var(--bg-app);
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+        .urja-copy-link-btn:active {
+            background: var(--border-color);
         }
         .urja-toast-message {
-            background: #1f2937; color: white; text-align: center;
-            padding: 8px; border-radius: 40px; font-size: 0.7rem; opacity: 0; transition: 0.2s; margin-top: 8px;
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: 0.2s;
         }
         .urja-toast-message.show { opacity: 1; }
+        
+        @media (max-width: 480px) {
+            .urja-share-icon { padding: 6px 8px; gap: 8px; }
+            .urja-icon-circle { width: 32px; height: 32px; font-size: 1.1rem; }
+            .urja-share-icon span { font-size: 0.75rem; white-space: nowrap; }
+            .urja-share-modal .urja-modal-container { width: 92%; }
+            .urja-share-modal .urja-modal-header h3 { font-size: 1.1rem; }
+        }
     </style>
 </head>
 <body>
@@ -492,17 +626,34 @@
     </div>
 </div>
 
-<!-- DYNAMIC SHARE MODAL -->
-<div id="dynamicShareModal" class="urja-modal">
+<!-- DYNAMIC SHARE MODAL (EXACT MATCH WITH ENERGY TARIFF TOOL) -->
+<div id="dynamicShareModal" class="urja-share-modal">
     <div class="urja-modal-container">
         <div class="urja-modal-header">
-            <h3><i class="fas fa-share-alt"></i> Share Tool</h3>
-            <button class="urja-close-modal" onclick="closeShareModal()"><i class="fas fa-times"></i></button>
+            <h3>
+                <span class="header-icon-circle"><i class="fas fa-share-alt"></i></span>
+                Share Now
+            </h3>
+            <button class="urja-close-modal" id="closeShareModalBtn"><i class="fas fa-times"></i></button>
         </div>
         <div class="urja-modal-body">
             <div class="urja-share-platforms">
-                <button class="urja-share-icon" id="whatsappShareBtn"><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp</button>
-                <button class="urja-share-icon" id="facebookShareBtn"><i class="fab fa-facebook-f" style="color:#1877F2;"></i> Facebook</button>
+                <button class="urja-share-icon" id="whatsappShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-whatsapp" style="color:#25D366;"></i></div>
+                    <span>WhatsApp</span>
+                </button>
+                <button class="urja-share-icon" id="facebookShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-facebook-f" style="color:#1877F2;"></i></div>
+                    <span>Facebook</span>
+                </button>
+                <button class="urja-share-icon" id="instagramShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-instagram" style="color:#E4405F;"></i></div>
+                    <span>Instagram</span>
+                </button>
+                <button class="urja-share-icon" id="twitterShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-x-twitter"></i></div>
+                    <span>X (Twitter)</span>
+                </button>
             </div>
             <button class="urja-copy-link-btn" id="copyLinkBtn">
                 <span><i class="fas fa-link"></i> लिंक कॉपी करा</span> 
@@ -601,47 +752,97 @@
         document.getElementById('infoModal').classList.remove('active');
     }
 
-    // SHARE MODAL LOGIC
+    // ---- ADVANCED SHARE MODAL LOGIC (FROM ENERGY TARIFF TOOL) ----
     let currentShareUrl = window.location.href;
-    const shareTitle = "सोलर नेट मीटरिंग कॅल्क्युलेटर | UrjaPlus";
+    let currentShareTitle = "सोलर नेट मीटरिंग कॅल्क्युलेटर | UrjaPlus";
+    let currentShareDesc = "तुमच्या सोलर नेट मीटरिंग हिशोबाचे सुलभ कॅल्क्युलेटर वापरा UrjaPlus वर.";
+
+    function updateMetaTagsForShare(ogTitle, ogDescription, ogImage, ogUrl) {
+        let meta = document.querySelector('meta[property="og:title"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:title'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogTitle);
+        
+        meta = document.querySelector('meta[property="og:description"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:description'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogDescription);
+        
+        meta = document.querySelector('meta[property="og:image"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:image'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogImage);
+        
+        meta = document.querySelector('meta[property="og:url"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:url'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogUrl);
+    }
+
+    function addUTMParameters(url, source) {
+        try {
+            const u = new URL(url);
+            u.searchParams.set('utm_source', source);
+            u.searchParams.set('utm_medium', 'social_share');
+            u.searchParams.set('utm_campaign', 'urjaplus_solar_calc');
+            return u.toString();
+        } catch(e) { return url; }
+    }
 
     function showToastMessage(msg) {
         const toast = document.getElementById('dynamicToast');
         if(toast) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2000); }
+        else alert(msg);
     }
 
-    function openShareModal() {
-        document.getElementById('dynamicShareModal')?.classList.add('active');
+    function openCustomShareModal(title, desc, imgUrl, articleLink) {
+        updateMetaTagsForShare(title, desc, imgUrl, articleLink);
+        const modal = document.getElementById('dynamicShareModal');
+        if(modal) modal.classList.add('active');
+        currentShareUrl = addUTMParameters(articleLink, 'share_modal');
+        currentShareTitle = title;
+        currentShareDesc = desc;
     }
 
     function closeShareModal() {
-        document.getElementById('dynamicShareModal')?.classList.remove('active');
+        const modal = document.getElementById('dynamicShareModal');
+        if(modal) modal.classList.remove('active');
     }
 
-    document.getElementById('whatsappShareBtn')?.addEventListener('click', () => {
-        window.open(`https://wa.me/?text=${encodeURIComponent(shareTitle + "\n" + currentShareUrl)}`, '_blank');
-        closeShareModal();
-    });
-    document.getElementById('facebookShareBtn')?.addEventListener('click', () => {
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentShareUrl)}`, '_blank');
-        closeShareModal();
-    });
-    document.getElementById('copyLinkBtn')?.addEventListener('click', () => {
-        navigator.clipboard.writeText(currentShareUrl).then(() => showToastMessage("✅ लिंक कॉपी झाली!"));
-        closeShareModal();
-    });
+    function shareOnWhatsApp() { window.open(`https://wa.me/?text=${encodeURIComponent(currentShareTitle + "\n" + currentShareDesc + "\n" + currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(currentShareTitle)}&url=${encodeURIComponent(currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnInstagram() { navigator.clipboard.writeText(currentShareUrl).then(() => showToastMessage("📸 Instagram साठी लिंक कॉपी झाली! पेस्ट करा.")); closeShareModal(); }
+    function copyLink() { navigator.clipboard.writeText(currentShareUrl).then(() => showToastMessage("✅ लिंक कॉपी झाली!")); closeShareModal(); }
 
-    document.getElementById('nativeShareBtn')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        openShareModal();
-    });
+    function attachShareModalEvents() {
+        document.getElementById('closeShareModalBtn')?.addEventListener('click', closeShareModal);
+        document.getElementById('whatsappShareBtn')?.addEventListener('click', shareOnWhatsApp);
+        document.getElementById('facebookShareBtn')?.addEventListener('click', shareOnFacebook);
+        document.getElementById('instagramShareBtn')?.addEventListener('click', shareOnInstagram);
+        document.getElementById('twitterShareBtn')?.addEventListener('click', shareOnTwitter);
+        document.getElementById('copyLinkBtn')?.addEventListener('click', copyLink);
+        document.getElementById('dynamicShareModal')?.addEventListener('click', (e) => { if(e.target === document.getElementById('dynamicShareModal')) closeShareModal(); });
+    }
 
-    // Close modals on outside click
+    function shareCurrentPage() {
+        const defaultTitle = "सोलर नेट मीटरिंग कॅल्क्युलेटर | UrjaPlus";
+        const defaultDesc = "तुमच्या सोलर नेट मीटरिंग हिशोबाचे सुलभ कॅल्क्युलेटर वापरा UrjaPlus वर.";
+        const defaultImg = "";
+        openCustomShareModal(defaultTitle, defaultDesc, defaultImg, window.location.href);
+    }
+    
+    attachShareModalEvents();
+
+    // फुटर नेव्हिगेशन शेअर बटण इव्हेंट
+    const nativeShareBtn = document.getElementById('nativeShareBtn');
+    if(nativeShareBtn) {
+        nativeShareBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            shareCurrentPage();
+        });
+    }
+
+    // Close Info modal on outside click
     window.addEventListener('click', (e) => {
         const infoM = document.getElementById('infoModal');
-        const shareM = document.getElementById('dynamicShareModal');
         if (e.target === infoM) closeInfoModal();
-        if (e.target === shareM) closeShareModal();
     });
 
     window.addEventListener('storage', (e) => {
