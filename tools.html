@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>UrjaPlus - टूल्स लिस्टिंग</title>
+    <title>Energy Tools | UrjaPlus</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* --- UrjaPlus Minimal & Responsive System Variables --- */
@@ -503,24 +503,15 @@
             <i class="fas fa-chevron-left"></i>
         </button>
         <div class="header-title">
-            <span>Tools</span>
+            <span>Energy Tools</span>
         </div>
     </div>
 
     <!-- CATEGORY FILTER TABS -->
     <div class="category-tabs">
-        <button class="tab-btn active" onclick="filterCategory('all', this)">सर्व (All)</button>
-        <button class="tab-btn" onclick="filterCategory('billing', this)">बिलिंग व दर</button>
-        <button class="tab-btn" onclick="filterCategory('calc', this)">कॅल्क्युलेटर</button>
-        <button class="tab-btn" onclick="filterCategory('legal', this)">कायदे व नियम</button>
+        <button class="tab-btn active" onclick="filterCategory('all', this)">तुमच्या ऊर्जा गरजांसाठी आवश्यक टूल्स</button>
     </div>
 
-    <!-- TOP PAGINATION -->
-    <div class="pagination-wrap" id="paginationTop">
-        <a href="#" class="page-btn" id="prevPageTop"><i class="fas fa-chevron-left"></i></a>
-        <div class="page-numbers" id="pageNumbersTop"></div>
-        <a href="#" class="page-btn" id="nextPageTop"><i class="fas fa-chevron-right"></i></a>
-    </div>
 
     <!-- MAIN TOOLS LISTING -->
     <div class="tool-wrapper">
@@ -531,12 +522,6 @@
         </div>
     </div>
 
-    <!-- BOTTOM PAGINATION -->
-    <div class="pagination-wrap bottom-pagination" id="paginationBottom">
-        <a href="#" class="page-btn" id="prevPageBottom"><i class="fas fa-chevron-left"></i></a>
-        <div class="page-numbers" id="pageNumbersBottom"></div>
-        <a href="#" class="page-btn" id="nextPageBottom"><i class="fas fa-chevron-right"></i></a>
-    </div>
 
     <!-- BOTTOM NAVIGATION BAR -->
     <div class="bottom-nav">
@@ -591,14 +576,7 @@
     const allToolsData = [
         { title: "महावितरण वीज दरपत्रक", desc: "घरगुती, व्यावसायिक व शेती वीज आकार दर", icon: "fa-file-invoice-dollar", url: "e-tools/energy-tariff-tool.html", category: "billing" },
         { title: "वीज बिल कॅल्क्युलेटर", desc: "युनिटनुसार अंदाजे वीज बिलाची गणना करा", icon: "fa-calculator", url: "e-tools/e-bill-calculator.html", category: "calc" },
-        { title: "सोलर पॅनेल कॅल्क्युलेटर", desc: "छतावरील सोलर क्षमतेचा अंदाज घ्या", icon: "fa-solar-panel", url: "e-tools/solar-rooftop-calculator.html", category: "calc" },
-        { title: "माहिती अधिकार (RTI) Plus", desc: "माहिती अधिकाराचा अर्ज व नमुने मिळवा", icon: "fa-scale-unbalanced", url: "rti-plus.html", category: "legal" },
-		{ title: "माहिती अधिकार (RTI1) Plus", desc: "माहिती अधिकाराचा अर्ज 2व नमुने मिळवा", icon: "fa-scale-unbalanced", url: "rti-plus2.html", category: "legal" },
-		{ title: "माहिती अधिकार (RTI2) Plus", desc: "माहिती अधिकाराचा अर्ज 3व नमुने मिळवा", icon: "fa-scale-unbalanced", url: "rti-plus3.html", category: "legal" },
-		{ title: "माहिती अधिकार (RTI3) Plus", desc: "माहिती अधिकाराचा अर्ज 4व नमुने मिळवा", icon: "fa-scale-unbalanced", url: "rti-plus4.html", category: "legal" },
-		{ title: "माहिती अधिकार (RTI4) Plus", desc: "माहिती अधिकाराचा अर्ज 5व नमुने मिळवा", icon: "fa-scale-unbalanced", url: "rti-plus5.html", category: "legal" },
-        { title: "ग्राहक मंच मार्गदर्शक", desc: "तक्रार निवारण आणि ग्राहकांचे हक्क", icon: "fa-gavel", url: "consumer-forum.html", category: "legal" },
-        { title: "दरपत्रक तुलना (Compare)", desc: "मागील व चालू वर्षाच्या दरांची तुलना करा", icon: "fa-code-compare", url: "tariff-compare.html", category: "billing" }
+        { title: "सोलर पॅनेल कॅल्क्युलेटर", desc: "छतावरील सोलर क्षमतेचा अंदाज घ्या", icon: "fa-solar-panel", url: "e-tools/solar-rooftop-calculator.html", category: "calc" }
     ];
 
     let filteredTools = [...allToolsData];
