@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>सोलर नेट मीटरिंग कॅल्क्युलेटर | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- UrjaPlus System Variables (App UI System) --- */
+        :root {
+            --bg-app: #ffffff;
+            --bg-card: #ffffff;
+            --primary: #111111; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); 
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --accent-green: #10b981;
+            --accent-blue: #2563eb;
+            --accent-amber: #f59e0b;
+            --accent-purple: #8b5cf6;
+            --accent-red: #ef4444;
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827;
+            --primary: #ffffff; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .app-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 85px; 
+        }
+
+        /* HEADER */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .header-title {
+            color: #ffffff;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        /* MAIN WRAPPER */
+        .tool-wrapper {
+            padding: 20px 16px;
+        }
+
+        /* INPUT GROUPS */
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .line-input {
+            width: 100%;
+            padding: 10px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1.5px solid var(--border-color);
+            border-radius: 0;
+            color: var(--text-main);
+            font-size: 1rem;
+            font-weight: 600;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .line-input:focus {
+            border-bottom-color: var(--primary);
+        }
+
+        .btn-calc {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            background: var(--primary-gradient);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.1s;
+        }
+
+        .btn-calc:active {
+            transform: scale(0.98);
+        }
+
+        /* RESULTS SECTION */
+        .results-container {
+            margin-top: 24px;
+            display: none;
+        }
+
+        .results-container.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .res-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px;
+            box-shadow: var(--shadow);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .res-card.full-width {
+            grid-column: span 2;
+        }
+
+        .res-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .res-label {
+            font-size: 0.73rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* SMALL INFO BUTTON IN STRIP */
+        .btn-info-small {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .btn-info-small:active {
+            background: var(--border-color);
+            color: var(--text-main);
+        }
+
+        .res-value {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-top: 2px;
+        }
+
+        .unit-tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        /* BOTTOM NAVIGATION */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-item i { font-size: 1.2rem; }
+        .nav-item.active { color: var(--primary); }
+
+        /* MODAL SYSTEM (INFO & SHARE) */
+        .urja-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .urja-modal.active { display: flex; opacity: 1; }
+        .urja-modal-container {
+            background: var(--bg-card);
+            width: 90%; max-width: 380px;
+            border-radius: 16px; overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            animation: slideUp 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .urja-modal-header {
+            padding: 14px 16px; display: flex;
+            justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .urja-modal-header h3 { 
+            font-size: 1rem; 
+            font-weight: 700;
+            color: var(--text-main); 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        .urja-close-modal {
+            background: var(--border-color); border: none;
+            width: 30px; height: 30px; border-radius: 50%;
+            cursor: pointer; color: var(--text-main);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+        }
+        .urja-modal-body { 
+            padding: 16px; 
+            font-size: 0.85rem;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        /* SHARE PLATFORMS */
+        .urja-share-platforms { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+        .urja-share-icon {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: var(--bg-app); border: 1px solid var(--border-color);
+            border-radius: 50px; padding: 8px; cursor: pointer; color: var(--text-main);
+            font-size: 0.8rem; font-weight: 600;
+        }
+        .urja-copy-link-btn {
+            background: var(--bg-app); width: 100%; padding: 10px;
+            border-radius: 50px; display: flex; justify-content: space-between;
+            border: 1px solid var(--border-color); cursor: pointer; color: var(--text-main); font-size: 0.85rem;
+        }
+        .urja-toast-message {
+            background: #1f2937; color: white; text-align: center;
+            padding: 8px; border-radius: 40px; font-size: 0.7rem; opacity: 0; transition: 0.2s; margin-top: 8px;
+        }
+        .urja-toast-message.show { opacity: 1; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- HEADER -->
+    <div class="sharp-header">
+        <button class="back-arrow" onclick="window.history.back()">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">
+            <span>सोलर नेट मीटरिंग कॅल्क्युलेटर</span>
+        </div>
+    </div>
+
+    <!-- MAIN FORM WRAPPER -->
+    <div class="tool-wrapper">
+        
+        <div class="input-group">
+            <label class="input-label" for="importUnits">इम्पोर्ट युनिट्स - (वीज कंपनीकडून घेतलेली वीज)</label>
+            <input type="number" id="importUnits" class="line-input" placeholder="Enter the import unit." min="0">
+        </div>
+
+        <div class="input-group">
+            <label class="input-label" for="exportUnits">एक्स्पोर्ट युनिट्स - (ग्रीडला दिलेली वीज)</label>
+            <input type="number" id="exportUnits" class="line-input" placeholder="Enter the export unit." min="0">
+        </div>
+
+        <div class="input-group">
+            <label class="input-label" for="genUnits">जनरेशन युनिट्स - (एकूण तयार झालेली वीज)</label>
+            <input type="number" id="genUnits" class="line-input" placeholder="Enter the generation unit." min="0">
+        </div>
+
+        <button class="btn-calc" onclick="calculateSolar()">
+            <i class="fas fa-calculator"></i> Calculate
+        </button>
+
+        <!-- OUTPUT RESULTS DISPLAY -->
+        <div id="resultsContainer" class="results-container">
+            <div class="section-title">गणनेचा निकाल (Calculation Summary)</div>
+
+            <div class="grid-cards">
+                
+                <!-- 1. SOLAR SELF CONSUMPTION (FULL WIDTH) -->
+                <div class="res-card full-width">
+                    <div class="res-header">
+                        <div class="res-label">
+                            <i class="fas fa-home" style="color: var(--accent-amber);"></i>
+                            सोलर जनरेशनपैकी स्वतः वापरलेले युनिट्स
+                        </div>
+                        <button class="btn-info-small" onclick="openInfoModal('selfCons')">
+                            <i class="fas fa-info-circle"></i> Info
+                        </button>
+                    </div>
+                    <div class="res-value" id="resSelfCons">0 <span class="unit-tag">kWh</span></div>
+                </div>
+
+                <!-- 2. GRID EXPORT UNITS -->
+                <div class="res-card">
+                    <div class="res-header">
+                        <div class="res-label">
+                            <i class="fas fa-solar-panel" style="color: var(--accent-blue);"></i>
+                            ग्रीडला दिलेले युनिट्स
+                        </div>
+                        <button class="btn-info-small" onclick="openInfoModal('gridExport')">
+                            <i class="fas fa-info-circle"></i> Info
+                        </button>
+                    </div>
+                    <div class="res-value" id="resGridExport">0 <span class="unit-tag">kWh</span></div>
+                </div>
+
+                <!-- 3. BANKED UNITS -->
+                <div class="res-card">
+                    <div class="res-header">
+                        <div class="res-label">
+                            <i class="fas fa-piggy-bank" style="color: var(--accent-green);"></i>
+                            बँकेड युनिट्स शिल्लक
+                        </div>
+                        <button class="btn-info-small" onclick="openInfoModal('banked')">
+                            <i class="fas fa-info-circle"></i> Info
+                        </button>
+                    </div>
+                    <div class="res-value" id="resBanked">0 <span class="unit-tag">kWh</span></div>
+                </div>
+
+                <!-- 4. TOTAL POWER CONSUMED (AFTER BANK ADJUSTMENT) -->
+                <div class="res-card">
+                    <div class="res-header">
+                        <div class="res-label">
+                            <i class="fas fa-bolt" style="color: var(--accent-purple);"></i>
+                            एकूण वीज वापर
+                        </div>
+                        <button class="btn-info-small" onclick="openInfoModal('totalConsumption')">
+                            <i class="fas fa-info-circle"></i> Info
+                        </button>
+                    </div>
+                    <div class="res-value" id="resTotalConsumption">0 <span class="unit-tag">kWh</span></div>
+                </div>
+
+                <!-- 5. BILLABLE UNITS -->
+                <div class="res-card">
+                    <div class="res-header">
+                        <div class="res-label">
+                            <i class="fas fa-file-invoice-dollar" style="color: var(--accent-red);"></i>
+                            बिलिंग करण्यात येणारे युनिट्स
+                        </div>
+                        <button class="btn-info-small" onclick="openInfoModal('billable')">
+                            <i class="fas fa-info-circle"></i> Info
+                        </button>
+                    </div>
+                    <div class="res-value" id="resBillable">0 <span class="unit-tag">kWh</span></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="tools.html" class="nav-item active"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="search.html" class="nav-item"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="rti-plus.html" class="nav-item"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<!-- PARAMETER INFORMATION POPUP MODAL -->
+<div id="infoModal" class="urja-modal">
+    <div class="urja-modal-container">
+        <div class="urja-modal-header">
+            <h3 id="infoModalTitle">
+                <i class="fas fa-info-circle"></i> माहिती
+            </h3>
+            <button class="urja-close-modal" onclick="closeInfoModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="urja-modal-body" id="infoModalContent">
+            <!-- Dynamic Content -->
+        </div>
+    </div>
+</div>
+
+<!-- DYNAMIC SHARE MODAL -->
+<div id="dynamicShareModal" class="urja-modal">
+    <div class="urja-modal-container">
+        <div class="urja-modal-header">
+            <h3><i class="fas fa-share-alt"></i> Share Tool</h3>
+            <button class="urja-close-modal" onclick="closeShareModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="urja-modal-body">
+            <div class="urja-share-platforms">
+                <button class="urja-share-icon" id="whatsappShareBtn"><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp</button>
+                <button class="urja-share-icon" id="facebookShareBtn"><i class="fab fa-facebook-f" style="color:#1877F2;"></i> Facebook</button>
+            </div>
+            <button class="urja-copy-link-btn" id="copyLinkBtn">
+                <span><i class="fas fa-link"></i> लिंक कॉपी करा</span> 
+                <i class="fas fa-copy"></i>
+            </button>
+            <div id="dynamicToast" class="urja-toast-message">✅ लिंक कॉपी झाली!</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Theme Synchronization
+    function applySynchronizedTheme() {
+        const activeTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', activeTheme);
+    }
+    applySynchronizedTheme();
+
+    // Solar Net Metering Calculation Logic
+    function calculateSolar() {
+        const imp = parseFloat(document.getElementById('importUnits').value) || 0;
+        const exp = parseFloat(document.getElementById('exportUnits').value) || 0;
+        const gen = parseFloat(document.getElementById('genUnits').value) || 0;
+
+        // 1. सोलर जनरेशनपैकी स्वतः वापरलेले युनिट्स: (जनरेशन - एक्सपोर्ट)
+        const selfConsumption = gen >= exp ? (gen - exp) : 0;
+
+        // 2. वीज वितरणाच्या ग्रीडला दिलेले युनिट्स: (Export Units)
+        const gridExportUnits = exp;
+
+        // 3. बँकेड युनिट्स शिल्लक (Banked Units): (Export > Import असल्यास उरलेले युनिट्स)
+        const bankedUnits = exp > imp ? (exp - imp) : 0;
+
+        // 4. एकूण वीज वापर: (वीज वितरण कंपनीकडून घेतलेली वीज - बॅंकेड युनिट)
+        const totalConsumption = (imp + selfConsumption) - bankedUnits;
+
+        // 5. बिलिंग करण्यात येणारे युनिट्स: (Import > Export असल्यास देय युनिट्स)
+        const billableUnits = imp > exp ? (imp - exp) : 0;
+
+        // Displaying Output Values
+        document.getElementById('resSelfCons').innerHTML = `${selfConsumption.toFixed(1)} <span class="unit-tag">kWh</span>`;
+        document.getElementById('resGridExport').innerHTML = `${gridExportUnits.toFixed(1)} <span class="unit-tag">kWh</span>`;
+        document.getElementById('resBanked').innerHTML = `${bankedUnits.toFixed(1)} <span class="unit-tag">kWh</span>`;
+        document.getElementById('resTotalConsumption').innerHTML = `${totalConsumption.toFixed(1)} <span class="unit-tag">kWh</span>`;
+        document.getElementById('resBillable').innerHTML = `${billableUnits.toFixed(1)} <span class="unit-tag">kWh</span>`;
+
+        // Display Output Container
+        document.getElementById('resultsContainer').classList.add('active');
+    }
+
+    // INFORMATION MODAL DATA IN MARATHI
+    const infoData = {
+        selfCons: {
+            title: "स्वतः वापरलेले युनिट्स",
+            icon: "fa-home",
+            iconColor: "var(--accent-amber)",
+            desc: "<b>सोलर जनरेशनपैकी स्वतः वापरलेले युनिट्स:</b><br><br>सोलर पॅनेल्सने तयार केलेल्या एकूण विजेपैकी ग्रीडला न पाठवता थेट घरातील उपकरणांनी (लाइट, पंखे, फ्रिज इ.) वापरलेली वीज.<br><br><b>सूत्र:</b> Generation - Export"
+        },
+        gridExport: {
+            title: "ग्रीडला दिलेले युनिट्स",
+            icon: "fa-solar-panel",
+            iconColor: "var(--accent-blue)",
+            desc: "<b>वीज वितरणाच्या ग्रीडला दिलेले युनिट्स:</b><br><br>दिवसभरात घरातील वापर पूर्ण होऊन अतिरिक्त झालेली आणि नेट मीटरद्वारे वीज वितरण कंपनीच्या ग्रीडमध्ये पाठवलेली वीज (Export Units)."
+        },
+        banked: {
+            title: "बँकेड युनिट्स शिल्लक",
+            icon: "fa-piggy-bank",
+            iconColor: "var(--accent-green)",
+            desc: "<b>बँकेड युनिट्स शिल्लक (Banked Units):</b><br><br>जर तुम्ही ग्रीडला पाठवलेली वीज (Export) ही घेतलेल्या विजेपेक्षा (Import) जास्त असेल, तर उरलेले शिल्लक युनिट्स वीज वितरण कंपनीच्या खात्यात जमा राहतात. हे युनिट्स पुढील बिलांमध्ये वापरता येतात."
+        },
+        totalConsumption: {
+            title: "एकूण वीज वापर",
+            icon: "fa-bolt",
+            iconColor: "var(--accent-purple)",
+            desc: "<b>एकूण वीज वापर:</b><br><br>सोलर जनरेशनपैकी स्वतः वापरलेले युनिट्स + वीज वितरण कंपनीकडून घेतलेल्या एकूण विजेमधून (Import) तुमच्याकडे आधीच शिल्लक असलेले बँकेड युनिट्स वजा केल्यानंतर उरलेला प्रत्यक्ष वापर.<br><br><b>सूत्र:</b> वीज वितरण कंपनीकडून घेतलेली वीज - बॅंकेड युनिट"
+        },
+        billable: {
+            title: "बिलिंग करण्यात येणारे युनिट्स",
+            icon: "fa-file-invoice-dollar",
+            iconColor: "var(--accent-red)",
+            desc: "<b>बिलिंग करण्यात येणारे युनिट्स (Net Billable Units):</b><br><br>सोलर युनिट्स ॲडजस्ट झाल्यानंतर ज्या युनिट्सचे बिल तुम्हाला वीज वितरण कंपनीला भरावे लागेल. जर Export युनिट्स Import पेक्षा जास्त असतील तर हे युनिट्स <b>0</b> राहतील.<br><b>सूत्र:</b> import - Export"
+        }
+    };
+
+    function openInfoModal(key) {
+        const item = infoData[key];
+        if(!item) return;
+
+        document.getElementById('infoModalTitle').innerHTML = `<i class="fas ${item.icon}" style="color:${item.iconColor};"></i> ${item.title}`;
+        document.getElementById('infoModalContent').innerHTML = item.desc;
+        
+        document.getElementById('infoModal').classList.add('active');
+    }
+
+    function closeInfoModal() {
+        document.getElementById('infoModal').classList.remove('active');
+    }
+
+    // SHARE MODAL LOGIC
+    let currentShareUrl = window.location.href;
+    const shareTitle = "सोलर नेट मीटरिंग कॅल्क्युलेटर | UrjaPlus";
+
+    function showToastMessage(msg) {
+        const toast = document.getElementById('dynamicToast');
+        if(toast) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2000); }
+    }
+
+    function openShareModal() {
+        document.getElementById('dynamicShareModal')?.classList.add('active');
+    }
+
+    function closeShareModal() {
+        document.getElementById('dynamicShareModal')?.classList.remove('active');
+    }
+
+    document.getElementById('whatsappShareBtn')?.addEventListener('click', () => {
+        window.open(`https://wa.me/?text=${encodeURIComponent(shareTitle + "\n" + currentShareUrl)}`, '_blank');
+        closeShareModal();
+    });
+    document.getElementById('facebookShareBtn')?.addEventListener('click', () => {
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentShareUrl)}`, '_blank');
+        closeShareModal();
+    });
+    document.getElementById('copyLinkBtn')?.addEventListener('click', () => {
+        navigator.clipboard.writeText(currentShareUrl).then(() => showToastMessage("✅ लिंक कॉपी झाली!"));
+        closeShareModal();
+    });
+
+    document.getElementById('nativeShareBtn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        openShareModal();
+    });
+
+    // Close modals on outside click
+    window.addEventListener('click', (e) => {
+        const infoM = document.getElementById('infoModal');
+        const shareM = document.getElementById('dynamicShareModal');
+        if (e.target === infoM) closeInfoModal();
+        if (e.target === shareM) closeShareModal();
+    });
+
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'theme') applySynchronizedTheme();
+    });
+</script>
+</body>
+</html>
