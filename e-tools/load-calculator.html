@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>लोड कॅल्क्युलेटर | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- UrjaPlus Minimal & Responsive System Variables --- */
+        :root {
+            --bg-app: #ffffff;
+            --bg-card: #ffffff;
+            --primary: #111111; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); 
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --nav-active: #111111;
+            --accent-green: #10b981;
+            --danger-color: #ef4444;
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827;
+            --primary: #ffffff; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+            --nav-active: #ffffff;
+            --accent-green: #34d399;
+            --danger-color: #f87171;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .app-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 80px; 
+        }
+
+        /* HEADER */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .header-title {
+            color: #ffffff;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        /* MAIN WRAPPER */
+        .tool-wrapper {
+            padding: 20px 16px;
+        }
+
+        /* APPLIANCE CARD */
+        .appliance-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 16px;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .appliance-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: var(--danger-color);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* INPUT & DROPDOWN GROUPS */
+        .filter-group {
+            margin-bottom: 16px;
+        }
+
+        .filter-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 12px;
+        }
+
+        .line-select, .line-input {
+            width: 100%;
+            padding: 8px 24px 8px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1.5px solid var(--border-color);
+            border-radius: 0;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 600;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .line-input::placeholder {
+            color: var(--text-muted);
+            opacity: 0.5;
+            font-weight: 400;
+        }
+
+        .line-select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg fill='%2364748b' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 0 center;
+            cursor: pointer;
+        }
+
+        .line-input[type=number]::-webkit-inner-spin-button, 
+        .line-input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        .line-input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        .line-select:focus, .line-input:focus {
+            border-bottom-color: var(--primary);
+        }
+
+        /* BUTTONS */
+        .add-tab-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1.5px dashed var(--border-color);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .add-tab-btn:active {
+            background: var(--border-color);
+        }
+
+        .calc-btn {
+            width: 100%;
+            padding: 13px;
+            background: var(--primary-gradient);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.1s ease;
+        }
+
+        .calc-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* POPUP MODAL STYLES */
+        .result-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .result-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-container {
+            background: var(--bg-card);
+            width: 92%;
+            max-width: 440px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: slideUp 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+
+        .modal-header h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-icon-circle {
+            background-color: var(--pill-active-bg);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-card);
+            font-size: 0.9rem;
+        }
+
+        .close-modal-btn {
+            background: var(--border-color);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+
+        .modal-body {
+            padding: 18px;
+            overflow-y: auto;
+        }
+
+        .calc-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            margin-bottom: 15px;
+        }
+
+        .calc-table th {
+            text-align: left;
+            padding: 8px 4px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .calc-table td {
+            padding: 10px 4px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+            vertical-align: middle;
+        }
+
+        .total-box {
+            background: var(--bg-app);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-top: 10px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+        }
+
+        .total-label {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .total-amount {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--accent-green);
+        }
+
+        /* --- BOTTOM NAVIGATION MENU --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        @media (max-width: 420px) {
+            .bottom-nav { padding: 8px 10px 20px; }
+        }
+
+        @media (max-width: 360px) {
+            .bottom-nav { padding: 8px 10px 22px 10px; }
+            .nav-item i { font-size: 1.2rem !important; }
+            .nav-item span { font-size: 0.65rem !important; }
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* --- SHARE MODAL CSS (EXACT MATCH WITH ABOUT-US.HTML) --- */
+        .urja-share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .urja-share-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .urja-modal-container {
+            background: var(--bg-card);
+            width: 90%;
+            max-width: 380px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: slideUp 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        .urja-modal-header {
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+        .urja-modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .urja-close-modal {
+            background: var(--border-color);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        .urja-modal-body {
+            padding: 20px 18px 24px;
+        }
+        .urja-share-platforms {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .urja-share-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--bg-app);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .urja-share-icon:active {
+            transform: scale(0.96);
+            background: var(--border-color);
+        }
+        .urja-icon-circle {
+            width: 34px;
+            height: 34px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+        .urja-share-icon span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+        }
+        .urja-copy-link-btn {
+            background: var(--bg-app);
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+        .urja-copy-link-btn:active {
+            background: var(--border-color);
+        }
+        .urja-toast-message {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .urja-toast-message.show { opacity: 1; }
+
+        @media (max-width: 480px) {
+            .urja-share-icon { padding: 6px 8px; gap: 8px; }
+            .urja-icon-circle { width: 32px; height: 32px; font-size: 1.1rem; }
+            .urja-share-icon span { font-size: 0.75rem; white-space: nowrap; }
+            .urja-modal-container { width: 92%; }
+            .urja-modal-header h3 { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- HEADER -->
+    <div class="sharp-header">
+        <button class="back-arrow" onclick="window.history.back()">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">
+            <span>लोड कॅल्क्युलेटर</span>
+        </div>
+    </div>
+
+    <!-- MAIN TOOL CONTENT -->
+    <div class="tool-wrapper">
+        
+        <!-- DYNAMIC APPLIANCES CONTAINER -->
+        <div id="appliancesList">
+            <!-- Dynamic Appliance Cards will be rendered here -->
+        </div>
+
+        <!-- NEW APPLIANCE ADD BUTTON -->
+        <button class="add-tab-btn" onclick="addApplianceCard()">
+            <i class="fas fa-plus-circle"></i> Add new equipment
+        </button>
+
+        <!-- CALCULATE LOAD + USAGE BUTTON -->
+        <button class="calc-btn" onclick="calculateLoadAndUsage()">
+            <i class="fas fa-calculator"></i> Calculate Load + Usage
+        </button>
+
+    </div>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="tools.html" class="nav-item active"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="search.html" class="nav-item"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="rti-plus.html" class="nav-item"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <button class="nav-item" id="urjaShareBtn"><i class="fas fa-share-alt"></i><span>Share</span></button>
+    </div>
+</div>
+
+<!-- POP-UP WINDOW (RESULT MODAL) -->
+<div id="loadResultModal" class="result-modal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>
+                <span class="header-icon-circle"><i class="fas fa-bolt"></i></span>
+                एकूण लोड व वापराची स्थिती
+            </h3>
+            <button class="close-modal-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <table class="calc-table">
+                <thead>
+                    <tr>
+                        <th>उपकरणाचा तपशील</th>
+                        <th style="text-align: right; min-width: 90px;">युनिट्स (kWh)</th>
+                    </tr>
+                </thead>
+                <tbody id="breakdownBody">
+                    <!-- Dynamic Data Rows -->
+                </tbody>
+            </table>
+
+            <div class="total-box">
+                <div class="total-row">
+                    <span class="total-label">Total Load:</span>
+                    <span class="total-amount" id="totalLoadKW" style="color:var(--text-main);">0.00 kW</span>
+                </div>
+                <div class="total-row" style="margin-top: 4px;">
+                    <span class="total-label">Total Units:</span>
+                    <span class="total-amount" id="totalUnits">0.00 kWh</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SHARE MODAL (EXACT MATCH WITH ABOUT-US.HTML) -->
+<div id="urjaShareModal" class="urja-share-modal">
+    <div class="urja-modal-container">
+        <div class="urja-modal-header">
+            <h3>
+                <span class="header-icon-circle"><i class="fas fa-share-alt"></i></span>
+                Share Now
+            </h3>
+            <button class="urja-close-modal" id="closeShareModalBtn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="urja-modal-body">
+            <div class="urja-share-platforms">
+                <button class="urja-share-icon" id="whatsappShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-whatsapp" style="color:#25D366;"></i></div>
+                    <span>WhatsApp</span>
+                </button>
+                <button class="urja-share-icon" id="facebookShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-facebook-f" style="color:#1877F2;"></i></div>
+                    <span>Facebook</span>
+                </button>
+                <button class="urja-share-icon" id="instagramShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-instagram" style="color:#E4405F;"></i></div>
+                    <span>Instagram</span>
+                </button>
+                <button class="urja-share-icon" id="twitterShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-x-twitter"></i></div>
+                    <span>X (Twitter)</span>
+                </button>
+            </div>
+            <button class="urja-copy-link-btn" id="copyLinkBtn">
+                <span><i class="fas fa-link"></i> लिंक कॉपी करा</span> 
+                <i class="fas fa-copy"></i>
+            </button>
+            <div id="dynamicToast" class="urja-toast-message">✅ लिंक कॉपी झाली!</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let cardCounter = 0;
+
+    // पेज लोड झाल्यावर १ उपकरण कार्ड ऑटोमॅटिक जोडणे
+    window.onload = function() {
+        addApplianceCard();
+    };
+
+    // १. उपकरण कार्ड जोडणे (Add Appliance Card)
+    function addApplianceCard() {
+        cardCounter++;
+        const container = document.getElementById('appliancesList');
+        
+        const card = document.createElement('div');
+        card.className = 'appliance-card';
+        card.id = `card_${cardCounter}`;
+        
+        card.innerHTML = `
+            <div class="appliance-card-header">
+                <span><i class="fas fa-plug"></i> उपकरण #${cardCounter}</span>
+                ${cardCounter > 1 ? `<button class="remove-btn" onclick="removeApplianceCard(${cardCounter})"><i class="fas fa-trash-alt"></i> Remove it.</button>` : ''}
+            </div>
+
+            <!-- उपकरणाचे नाव -->
+            <div class="filter-group">
+                <label class="filter-label">उपकरणाचे नाव</label>
+                <input type="text" class="line-input app-name" placeholder="Appliance Name">
+            </div>
+
+            <!-- लोड आणि युनिट (Wattage / HP) -->
+            <div class="filter-group grid-2">
+                <div>
+                    <label class="filter-label">उपकरणाचा लोड</label>
+                    <input type="number" class="line-input app-load" placeholder="3.00" step="0.01" inputmode="decimal">
+                </div>
+                <div>
+                    <label class="filter-label">एकक (Unit)</label>
+                    <select class="line-select app-unit">
+                        <option value="Wattage" selected>Wattage</option>
+                        <option value="HP">HP</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- वापराचे तास आणि कालावधी (दिवस) -->
+            <div class="grid-2">
+                <div class="filter-group">
+                    <label class="filter-label">वापराचे तास</label>
+                    <input type="number" class="line-input app-hours" placeholder="2" step="0.1" inputmode="decimal">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">कालावधी (दिवस)</label>
+                    <input type="number" class="line-input app-days" placeholder="30" step="1" inputmode="numeric">
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(card);
+    }
+
+    // २. उपकरण कार्ड हटवणे
+    function removeApplianceCard(id) {
+        const card = document.getElementById(`card_${id}`);
+        if (card) card.remove();
+    }
+
+    // ३. Calculate Load + Usage
+    function calculateLoadAndUsage() {
+        const names = document.querySelectorAll('.app-name');
+        const loads = document.querySelectorAll('.app-load');
+        const units = document.querySelectorAll('.app-unit');
+        const hours = document.querySelectorAll('.app-hours');
+        const days = document.querySelectorAll('.app-days');
+
+        let totalKW = 0;
+        let totalUnitsKWh = 0;
+        let breakdownHTML = '';
+        let hasData = false;
+
+        for (let i = 0; i < names.length; i++) {
+            const nameVal = names[i].value.trim() || `उपकरण #${i + 1}`;
+            const loadVal = parseFloat(loads[i].value) || 0;
+            const unitVal = units[i].value;
+            const hourVal = parseFloat(hours[i].value) || 0;
+            const dayVal = parseFloat(days[i].value) || 30; // जर रिकामे ठेवले तर ३० दिवस गृहीत धरले जातील
+
+            if (loadVal > 0 && hourVal > 0 && dayVal > 0) {
+                hasData = true;
+
+                // Load to kW conversion
+                let loadInKW = 0;
+                if (unitVal === 'Wattage') {
+                    loadInKW = loadVal / 1000;
+                } else if (unitVal === 'HP') {
+                    loadInKW = loadVal * 0.746;
+                }
+
+                // Total kWh (Units) = Load(kW) * Hours * Days
+                const applianceUnits = loadInKW * hourVal * dayVal;
+
+                totalKW += loadInKW;
+                totalUnitsKWh += applianceUnits;
+
+                // पॉप-अपमधील कॅल्कुलेशन फॉर्मॅट
+                breakdownHTML += `
+                    <tr>
+                        <td>
+                            <strong>${nameVal}</strong><br>
+                            <span style="font-size:0.75rem; color:var(--text-muted);">
+                                ${loadVal} ${unitVal} × ${hourVal} तास × ${dayVal} दिवस
+                            </span>
+                        </td>
+                        <td style="text-align: right; font-weight:700; color:var(--accent-green);">
+                            ${applianceUnits.toFixed(2)}
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        if (!hasData) {
+            alert("कृपया किमान एका उपकरणाचा लोड आणि वापराचे तास प्रविष्ट करा.");
+            return;
+        }
+
+        document.getElementById('breakdownBody').innerHTML = breakdownHTML;
+        document.getElementById('totalLoadKW').innerText = `${totalKW.toFixed(2)} kW`;
+        document.getElementById('totalUnits').innerText = `${totalUnitsKWh.toFixed(2)} kWh`;
+
+        openModal();
+    }
+
+    // Dark/Light Theme Sync
+    function applySynchronizedTheme() {
+        const activeTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', activeTheme);
+    }
+    applySynchronizedTheme();
+
+    // Result Modal Display Functions
+    function openModal() {
+        const modal = document.getElementById('loadResultModal');
+        if (modal) modal.classList.add('active');
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('loadResultModal');
+        if (modal) modal.classList.remove('active');
+    }
+
+    document.getElementById('loadResultModal')?.addEventListener('click', (e) => {
+        if (e.target === document.getElementById('loadResultModal')) closeModal();
+    });
+
+    // --- FIXED SHARE MODAL LOGIC (DIRECT MODAL OPEN TO PREVENT CRASH) ---
+    const urjaShareBtn = document.getElementById('urjaShareBtn');
+    const urjaShareModal = document.getElementById('urjaShareModal');
+    const urjaCloseShareModal = document.getElementById('urjaCloseShareModal');
+
+    if (urjaShareBtn && urjaShareModal) {
+        urjaShareBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // एरर टाळण्यासाठी डायरेक्ट मॉडेल उघडणे (KILLED_BAD_MESSAGE एरर फिक्स)
+            urjaShareModal.classList.add('active');
+        });
+    }
+
+    if (urjaCloseShareModal) {
+        urjaCloseShareModal.addEventListener('click', () => {
+            urjaShareModal.classList.remove('active');
+        });
+    }
+
+    if (urjaShareModal) {
+        urjaShareModal.addEventListener('click', (e) => {
+            if (e.target === urjaShareModal) {
+                urjaShareModal.classList.remove('active');
+            }
+        });
+    }
+
+    function shareToPlatform(platform) {
+        const url = encodeURIComponent(window.location.href);
+        const text = encodeURIComponent('UrjaPlus - लोड कॅल्क्युलेटर डिजिटल दालनात आपले स्वागत आहे:');
+        let shareUrl = '';
+
+        switch(platform) {
+            case 'whatsapp':
+                shareUrl = `https://api.whatsapp.com/send?text=${text}%20${url}`;
+                break;
+            case 'telegram':
+                shareUrl = `https://t.me/share/url?url=${url}&text=${text}`;
+                break;
+            case 'facebook':
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                break;
+            case 'x':
+                shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+                break;
+            case 'linkedin':
+                shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                break;
+        }
+
+        if (shareUrl) {
+            window.open(shareUrl, '_blank');
+        }
+    }
+
+    function copyCurrentUrl() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            const toast = document.getElementById('urjaToast');
+            if (toast) {
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }
+        }).catch(err => {
+            console.error('Copy failed', err);
+        });
+    }
+
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'theme') {
+            applySynchronizedTheme();
+        }
+    });
+</script>
+</body>
+</html>
