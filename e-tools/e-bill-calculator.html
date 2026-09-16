@@ -313,7 +313,7 @@
             color: var(--accent-green);
         }
 
-        /* --- BOTTOM NAVIGATION MENU (Same as Energy Tariff Tool) --- */
+        /* --- BOTTOM NAVIGATION MENU --- */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -359,7 +359,7 @@
         .nav-item i { font-size: 1.2rem; }
         .nav-item.active { color: var(--primary); transform: translateY(-2px); }
 
-        /* --- SHARE MODAL CSS (Same as Energy Tariff Tool) --- */
+        /* --- SHARE MODAL CSS --- */
         .urja-share-modal {
             display: none;
             position: fixed;
@@ -519,11 +519,17 @@
         
         <!-- DROPDOWN 1: PERIOD -->
         <div class="filter-group">
-            <label class="filter-label" for="calcPeriod">कालावधी निवडा</label>
+            <label class="filter-label" for="calcPeriod">दरपत्रक</label>
             <select id="calcPeriod" class="line-select">
                 <option value="2026-27" selected>01 एप्रिल 2026 ते 31 मार्च 2027</option>
                 <option value="2025-26">01 जुलै 2025 ते 31 मार्च 2026</option>
             </select>
+        </div>
+
+        <!-- FREE FORM INPUT: BILLING DURATION (कालावधी) -->
+        <div class="filter-group">
+            <label class="filter-label" for="billingMonths">वीज बिलाचा कालावधी (महिने - उदा. 1.0, 1.3, 1.5)</label>
+            <input type="number" id="billingMonths" class="line-input" placeholder="उदा. 1.0 किंवा 1.3" value="1.0" step="0.01" min="0.1" inputmode="decimal">
         </div>
 
         <!-- DROPDOWN 2: CATEGORY -->
@@ -568,12 +574,12 @@
 
     </div>
 
-    <!-- BOTTOM NAVIGATION BAR (Updated like energy-tariff-tool) -->
+    <!-- BOTTOM NAVIGATION BAR -->
     <div class="bottom-nav">
-        <a href="../index.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="../tools.html" class="nav-item active"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
-        <a href="../search.html" class="nav-item"><i class="fas fa-search"></i><span>Search</span></a>
-        <a href="../rti-plus.html" class="nav-item"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="tools.html" class="nav-item active"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="search.html" class="nav-item"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="rti-plus.html" class="nav-item"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
         <a href="#" class="nav-item" id="nativeShareBtn"><i class="fas fa-share-alt"></i><span>Share</span></a>
     </div>
 </div>
@@ -609,7 +615,7 @@
     </div>
 </div>
 
-<!-- DYNAMIC SHARE MODAL (Added from energy-tariff-tool) -->
+<!-- DYNAMIC SHARE MODAL -->
 <div id="dynamicShareModal" class="urja-share-modal">
     <div class="urja-modal-container">
         <div class="urja-modal-header">
@@ -648,7 +654,7 @@
 </div>
 
 <script>
-    // वीज दर डेटाबेस
+    // वीज दर डेटाबेस (महिना निहाय बेस स्लॅब)
     const tariffRates = {
         "2026-27": {
             "LT-1B": { fixed: 34.00, slabs: [{ min: 0, max: Infinity, rate: 1.48, wheeling: 0.00 }] },
@@ -656,12 +662,12 @@
                 fixed: 130.00,
                 slabs: [
                     { min: 0, max: 100, rate: 4.28, wheeling: 1.47 },
-                    { min: 101, max: 300, rate: 11.10, wheeling: 1.47 },
-                    { min: 301, max: 500, rate: 15.38, wheeling: 1.47 },
-                    { min: 501, max: Infinity, rate: 17.68, wheeling: 1.47 }
+                    { min: 100, max: 300, rate: 11.10, wheeling: 1.47 },
+                    { min: 300, max: 500, rate: 15.38, wheeling: 1.47 },
+                    { min: 500, max: Infinity, rate: 17.68, wheeling: 1.47 }
                 ]
             },
-            "LT-1A3": { fixed: 390.00, slabs: [{ min: 0, max: 100, rate: 4.28, wheeling: 1.47 }, { min: 101, max: 300, rate: 11.10, wheeling: 1.47 }, { min: 301, max: 500, rate: 15.38, wheeling: 1.47 }, { min: 501, max: Infinity, rate: 17.68, wheeling: 1.47 }] },
+            "LT-1A3": { fixed: 390.00, slabs: [{ min: 0, max: 100, rate: 4.28, wheeling: 1.47 }, { min: 100, max: 300, rate: 11.10, wheeling: 1.47 }, { min: 300, max: 500, rate: 15.38, wheeling: 1.47 }, { min: 500, max: Infinity, rate: 17.68, wheeling: 1.47 }] },
             "LT-2A": { fixed: 470.00, slabs: [{ min: 0, max: Infinity, rate: 7.55, wheeling: 1.47 }] },
             "LT-2B": { fixed: 470.00, slabs: [{ min: 0, max: Infinity, rate: 11.42, wheeling: 1.47 }] },
             "LT-2C": { fixed: 470.00, slabs: [{ min: 0, max: Infinity, rate: 11.42, wheeling: 1.47 }] },
@@ -687,9 +693,9 @@
                 fixed: 116.00,
                 slabs: [
                     { min: 0, max: 100, rate: 5.31, wheeling: 0.15 },
-                    { min: 101, max: 300, rate: 10.12, wheeling: 0.25 },
-                    { min: 301, max: 500, rate: 13.50, wheeling: 0.40 },
-                    { min: 501, max: Infinity, rate: 15.13, wheeling: 0.50 }
+                    { min: 100, max: 300, rate: 10.12, wheeling: 0.25 },
+                    { min: 300, max: 500, rate: 13.50, wheeling: 0.40 },
+                    { min: 500, max: Infinity, rate: 15.13, wheeling: 0.50 }
                 ]
             }
         }
@@ -702,12 +708,20 @@
     }
     applySynchronizedTheme();
 
-    // स्लॅब कॅल्क्युलेशन लॉजिक
+    // कालावधीनुसार स्लॅब आणि बिलाचे कॅल्क्युलेशन
     function calculateBill() {
         const period = document.getElementById('calcPeriod').value;
         const category = document.getElementById('calcCategory').value;
         const unitsInput = document.getElementById('calcUnits').value;
+        const monthsInput = document.getElementById('billingMonths').value;
+        
+        const monthsMultiplier = parseFloat(monthsInput);
         const units = parseFloat(unitsInput);
+
+        if (isNaN(monthsMultiplier) || monthsMultiplier <= 0) {
+            alert("कृपया बिलाचा वैध कालावधी (महिने) टाका.");
+            return;
+        }
 
         if (isNaN(units) || units < 0) {
             alert("कृपया वैध युनिट्स टाका.");
@@ -724,46 +738,48 @@
         let totalWheelingCharge = 0;
         let breakdownHTML = '';
 
-        const fixedCharge = categoryData.fixed;
+        // १. कालावधीनुसार स्थिर आकार (Fixed Charge Multiplied)
+        const adjustedFixedCharge = categoryData.fixed * monthsMultiplier;
         breakdownHTML += `
             <tr>
-                <td>स्थिर आकार (Fixed Charge)</td>
-                <td style="text-align: right;">₹ ${fixedCharge.toFixed(2)}</td>
+                <td>स्थिर आकार (${monthsMultiplier} महिने)</td>
+                <td style="text-align: right;">₹ ${adjustedFixedCharge.toFixed(2)}</td>
             </tr>
         `;
 
         let remainingUnits = units;
 
+        // २. कालावधीनुसार स्लॅब गणित
         for (let slab of categoryData.slabs) {
-            if (units > slab.min - 1) {
-                let slabUnits = 0;
-                
-                if (slab.max === Infinity) {
-                    slabUnits = units - (slab.min - 1);
-                } else {
-                    const slabCapacity = slab.max - slab.min + 1;
-                    slabUnits = Math.min(remainingUnits, slabCapacity);
-                }
+            if (remainingUnits <= 0) break;
 
-                if (slabUnits > 0) {
-                    const energyCost = slabUnits * slab.rate;
-                    const wheelingCost = slabUnits * slab.wheeling;
-                    
-                    totalEnergyCharge += energyCost;
-                    totalWheelingCharge += wheelingCost;
+            const adjustedMin = Math.round(slab.min * monthsMultiplier);
+            const adjustedMax = slab.max === Infinity ? Infinity : Math.round(slab.max * monthsMultiplier);
+            
+            const slabCapacity = adjustedMax === Infinity ? Infinity : (adjustedMax - adjustedMin);
+            const slabUnits = Math.min(remainingUnits, slabCapacity);
 
-                    breakdownHTML += `
-                        <tr>
-                            <td>स्लॅब (${slab.min}-${slab.max === Infinity ? 'वरील' : slab.max}): ${slabUnits} U @ ₹${slab.rate}</td>
-                            <td style="text-align: right;">₹ ${energyCost.toFixed(2)}</td>
-                        </tr>
-                    `;
-                    
-                    remainingUnits -= slabUnits;
-                }
+            if (slabUnits > 0) {
+                const energyCost = slabUnits * slab.rate;
+                const wheelingCost = slabUnits * slab.wheeling;
+
+                totalEnergyCharge += energyCost;
+                totalWheelingCharge += wheelingCost;
+
+                const labelText = adjustedMax === Infinity ? `${adjustedMin} वरील` : `${adjustedMin} ते ${adjustedMax}`;
+
+                breakdownHTML += `
+                    <tr>
+                        <td>स्लॅब (${labelText}): ${slabUnits.toFixed(2)} U @ ₹${slab.rate}</td>
+                        <td style="text-align: right;">₹ ${energyCost.toFixed(2)}</td>
+                    </tr>
+                `;
+
+                remainingUnits -= slabUnits;
             }
         }
 
+        // व्हिलिंग चार्ज
         if (totalWheelingCharge > 0) {
             breakdownHTML += `
                 <tr>
@@ -773,11 +789,11 @@
             `;
         }
 
-        const grandTotal = fixedCharge + totalEnergyCharge + totalWheelingCharge;
+        const grandTotal = adjustedFixedCharge + totalEnergyCharge + totalWheelingCharge;
 
         document.getElementById('breakdownBody').innerHTML = breakdownHTML;
         document.getElementById('totalAmount').innerText = `₹ ${grandTotal.toFixed(2)}`;
-        
+
         openModal();
     }
 
@@ -796,7 +812,7 @@
         if (e.target === document.getElementById('billResultModal')) closeModal();
     });
 
-    // ---- ADVANCED SHARE MODAL LOGIC (FROM ENERGY TARIFF TOOL) ----
+    // ---- ADVANCED SHARE MODAL LOGIC ----
     let currentShareUrl = window.location.href;
     let currentShareTitle = "वीज बिल कॅल्कुलेटर | UrjaPlus";
     let currentShareDesc = "तुमच्या वापराचे अंदाजपत्रक त्वरित कॅल्क्युलेट करा UrjaPlus वर.";
