@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>विद्युत संज्ञा आणि संकल्पना | UrjaPlus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- UrjaPlus System Variables (App UI System) --- */
+        :root {
+            --bg-app: #ffffff;
+            --bg-card: #ffffff;
+            --primary: #111111; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #333333 100%); 
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            --pill-active-bg: #111111;
+            --nav-bg: #ffffff;
+            --accent-green: #10b981;
+            --accent-blue: #2563eb;
+            --accent-amber: #f59e0b;
+            --accent-purple: #8b5cf6;
+            --accent-red: #ef4444;
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #0b0f19; 
+            --bg-card: #111827;
+            --primary: #ffffff; 
+            --primary-gradient: linear-gradient(135deg, #000000 0%, #1f2937 100%); 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --pill-active-bg: #f8fafc;
+            --nav-bg: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .app-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            background: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 85px; 
+        }
+
+        /* HEADER */
+        .sharp-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .header-title {
+            color: #ffffff;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        /* MAIN WRAPPER */
+        .tool-wrapper {
+            padding: 20px 16px;
+        }
+
+        /* INPUT GROUPS & DROPDOWNS */
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .styled-select {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 600;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
+        }
+
+        .styled-select:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .styled-select:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* DETAILS DISPLAY CARDS */
+        .details-container {
+            margin-top: 24px;
+            display: none;
+        }
+
+        .details-container.active {
+            display: block;
+            animation: fadeIn 0.35s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .term-title-card {
+            background: var(--primary-gradient);
+            color: #ffffff;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .term-title-card h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .term-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow);
+        }
+
+        .info-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .info-card-header i {
+            font-size: 1.1rem;
+        }
+
+        .info-card-body {
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+
+        .info-card-body code {
+            background: var(--bg-app);
+            border: 1px solid var(--border-color);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-weight: 700;
+            color: var(--accent-purple);
+            display: inline-block;
+            margin: 4px 0;
+        }
+
+        /* BOTTOM NAVIGATION */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 12px 22px;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+            z-index: 200;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-item i { font-size: 1.2rem; }
+        .nav-item.active { color: var(--primary); }
+
+        /* URJA SHARE MODAL CSS */
+        .urja-share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .urja-share-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .urja-share-modal .urja-modal-container {
+            background: var(--bg-card);
+            width: 90%;
+            max-width: 380px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: slideUp 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .urja-share-modal .urja-modal-header {
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+        .urja-share-modal .urja-modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-icon-circle {
+            background-color: var(--pill-active-bg);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-card);
+            font-size: 0.9rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .urja-share-modal .urja-close-modal {
+            background: var(--border-color);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        .urja-share-modal .urja-modal-body {
+            padding: 20px 18px 24px;
+        }
+        .urja-share-platforms {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .urja-share-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--bg-app);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .urja-share-icon:active {
+            transform: scale(0.96);
+            background: var(--border-color);
+        }
+        .urja-icon-circle {
+            width: 34px;
+            height: 34px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+        .urja-share-icon span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+        }
+        .urja-copy-link-btn {
+            background: var(--bg-app);
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+        .urja-copy-link-btn:active {
+            background: var(--border-color);
+        }
+        .urja-toast-message {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .urja-toast-message.show { opacity: 1; }
+        
+        @media (max-width: 480px) {
+            .urja-share-icon { padding: 6px 8px; gap: 8px; }
+            .urja-icon-circle { width: 32px; height: 32px; font-size: 1.1rem; }
+            .urja-share-icon span { font-size: 0.75rem; white-space: nowrap; }
+            .urja-share-modal .urja-modal-container { width: 92%; }
+            .urja-share-modal .urja-modal-header h3 { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- HEADER -->
+    <div class="sharp-header">
+        <button class="back-arrow" onclick="window.history.back()">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="header-title">
+            <span>संज्ञा आणि संकल्पना</span>
+        </div>
+    </div>
+
+    <!-- MAIN FORM WRAPPER -->
+    <div class="tool-wrapper">
+        
+        <!-- Category Dropdown -->
+        <div class="input-group">
+            <label class="input-label" for="categorySelect">
+                <i class="fas fa-layer-group"></i> श्रेणी निवडा (Category)
+            </label>
+            <select id="categorySelect" class="styled-select" onchange="onCategoryChange()">
+                <option value="">-- श्रेणी निवडा --</option>
+                <option value="basic">मूलभूत संज्ञा (Basic Electric Concepts)</option>
+                <option value="power">शक्ती व ऊर्जा (Power & Energy)</option>
+                <option value="billing">बिलिंग आणि नेट मीटरिंग (Billing & Metering)</option>
+            </select>
+        </div>
+
+        <!-- Term Dropdown -->
+        <div class="input-group">
+            <label class="input-label" for="termSelect">
+                <i class="fas fa-book-open"></i> संज्ञा निवडा (Select Term)
+            </label>
+            <select id="termSelect" class="styled-select" onchange="onTermChange()" disabled>
+                <option value="">-- आधी श्रेणी निवडा --</option>
+            </select>
+        </div>
+
+        <!-- DETAILS DISPLAY SECTION -->
+        <div id="detailsContainer" class="details-container">
+            
+            <div class="term-title-card">
+                <div>
+                    <h2 id="dispTermTitle">--</h2>
+                </div>
+                <span class="term-badge" id="dispUnitBadge">--</span>
+            </div>
+
+            <!-- 1. सोपा अर्थ -->
+            <div class="info-card">
+                <div class="info-card-header" style="color: var(--accent-blue);">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>सोपा अर्थ</span>
+                </div>
+                <div class="info-card-body" id="dispEasyMeaning">
+                    --
+                </div>
+            </div>
+
+            <!-- 2. गणना (Calculation & Formula) -->
+            <div class="info-card">
+                <div class="info-card-header" style="color: var(--accent-purple);">
+                    <i class="fas fa-calculator"></i>
+                    <span>गणना आणि सूत्र</span>
+                </div>
+                <div class="info-card-body" id="dispCalculation">
+                    --
+                </div>
+            </div>
+
+            <!-- 3. महत्त्व -->
+            <div class="info-card">
+                <div class="info-card-header" style="color: var(--accent-green);">
+                    <i class="fas fa-star"></i>
+                    <span>महत्त्व आणि वापर</span>
+                </div>
+                <div class="info-card-body" id="dispImportance">
+                    --
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <div class="bottom-nav">
+        <a href="../index.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="../tools.html" class="nav-item active"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+        <a href="../search.html" class="nav-item"><i class="fas fa-search"></i><span>Search</span></a>
+        <a href="../rti-plus.html" class="nav-item"><i class="fas fa-scale-unbalanced"></i><span>RTI Plus</span></a>
+        <a href="#" class="nav-item" id="nativeShareBtn"><i class="fas fa-share-alt"></i><span>Share</span></a>
+    </div>
+</div>
+
+<!-- DYNAMIC SHARE MODAL -->
+<div id="dynamicShareModal" class="urja-share-modal">
+    <div class="urja-modal-container">
+        <div class="urja-modal-header">
+            <h3>
+                <span class="header-icon-circle"><i class="fas fa-share-alt"></i></span>
+                Share Now
+            </h3>
+            <button class="urja-close-modal" id="closeShareModalBtn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="urja-modal-body">
+            <div class="urja-share-platforms">
+                <button class="urja-share-icon" id="whatsappShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-whatsapp" style="color:#25D366;"></i></div>
+                    <span>WhatsApp</span>
+                </button>
+                <button class="urja-share-icon" id="facebookShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-facebook-f" style="color:#1877F2;"></i></div>
+                    <span>Facebook</span>
+                </button>
+                <button class="urja-share-icon" id="instagramShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-instagram" style="color:#E4405F;"></i></div>
+                    <span>Instagram</span>
+                </button>
+                <button class="urja-share-icon" id="twitterShareBtn">
+                    <div class="urja-icon-circle"><i class="fab fa-x-twitter"></i></div>
+                    <span>X (Twitter)</span>
+                </button>
+            </div>
+            <button class="urja-copy-link-btn" id="copyLinkBtn">
+                <span><i class="fas fa-link"></i> लिंक कॉपी करा</span> 
+                <i class="fas fa-copy"></i>
+            </button>
+            <div id="dynamicToast" class="urja-toast-message">✅ लिंक कॉपी झाली!</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Theme Synchronization
+    function applySynchronizedTheme() {
+        const activeTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', activeTheme);
+    }
+    applySynchronizedTheme();
+
+    // ELECTRICAL TERMS DATABASE
+    const termsDatabase = {
+        voltage: {
+            cat: "basic",
+            title: "व्होल्टेज (Voltage)",
+            unit: "Volt (V)",
+            meaning: "व्होल्टेज म्हणजे विजेचा दाब (Electric Pressure). पाण्याच्या पाईपमधील दाब जसा पाणी पुढे ढकलतो, तसाच व्होल्टेज इलेक्ट्रॉन पुढे ढकलतो.",
+            calculation: "सूत्र: <code>V = I × R</code> (Ohm's Law)<br>जसे की, २ A करंट आणि ११० Ω रोध असल्यास: व्होल्टेज = २ × ११० = २२० V.",
+            importance: "उपकरणे सुरळीत चालण्यासाठी स्थिर व्होल्टेज आवश्यक असते. भारतात घरातील मानक व्होल्टेज २३०V असते."
+        },
+        current: {
+            cat: "basic",
+            title: "करंट (Current)",
+            unit: "Ampere (A)",
+            meaning: "करंट म्हणजे विजेच्या प्रवाहाचा वेग किंवा वायरमधून एका सेकंदात वाहणाऱ्या इलेक्ट्रॉनचे प्रमाण.",
+            calculation: "सूत्र: <code>I = P / V</code><br>उदा. १०० वॉटचा दिवा २३०V वर चालल्यास: I = १०० / २३० = ०.४३ Ampere.",
+            importance: "वायरची जाडी आणि फ्यूज/MCB ची रेटिंग ठरवण्यासाठी करंट माहिती असणे अत्यंत गरजेचे असते."
+        },
+        resistance: {
+            cat: "basic",
+            title: "रेजिस्टन्स (Resistance)",
+            unit: "Ohm (Ω)",
+            meaning: "विजेच्या प्रवाहाला होणारा रोध किंवा अडथळा म्हणजे रेजिस्टन्स.",
+            calculation: "सूत्र: <code>R = V / I</code><br>उदा. २३०V वर १०A करंट वाहिल्यास: R = २३० / १० = २३ Ω.",
+            importance: "गिझर किंवा इस्री सारख्या उपकरणांमध्ये उष्णता निर्माण करण्यासाठी रेजिस्टन्सचा वापर होतो."
+        },
+        watt: {
+            cat: "power",
+            title: "वॉट (Watt - Power)",
+            unit: "Watt (W)",
+            meaning: "एखादे उपकरण एका सेकंदात किती ऊर्जा वापरते त्याची क्षमता म्हणजे वॉट (पॉवर).",
+            calculation: "सूत्र: <code>P = V × I</code><br>उदा. २३०V व्होल्टेजवर २A करंट वापरणारे उपकरण = २३० × २ = ४६० W चे असते.",
+            importance: "उपकरणांची वीज खाण्याची क्षमता दर्शवण्यासाठी वॉट वापरतात. जास्त वॉट म्हणजे जास्त वीज वापर."
+        },
+        kw: {
+            cat: "power",
+            title: "किलोवॉट (Kilowatt)",
+            unit: "kW",
+            meaning: "१००० वॉट म्हणजे १ किलोवॉट (kW). विजेचे मोठे प्रमाण सोप्या भाषेत मोजण्यासाठी ही संज्ञा वापरतात.",
+            calculation: "सूत्र: <code>kW = Watt / 1000</code><br>उदा. २००० वॉटचा गिझर = २००० / १००० = २ kW चा असतो.",
+            importance: "घरांचे मंजूर वीज भार (Sanctioned Load) आणि सोलर पॅनेलची क्षमता kW मध्ये मोजली जाते."
+        },
+        kwh: {
+            cat: "power",
+            title: "युनिट (kWh - Kilowatt Hour)",
+            unit: "kWh / Unit",
+            meaning: "वीज बिलातील १ युनिट म्हणजे १ किलोवॉट (१००० वॉट) क्षमतेचे उपकरण सलग १ तास वापरणे.",
+            calculation: "सूत्र: <code>युनिट्स = (वॉट × वापरलेले तास) / १०००</code><br>उदा. १०० वॉटचा पंखा १० तास चालल्यास = (१०० × १०) / १००० = १ युनिट.",
+            importance: "वीज मंडळ तुमच्याकडून याच युनिट्सनुसार दरमहा बिलाची आकारणी करते."
+        },
+        import: {
+            cat: "billing",
+            title: "इम्पोर्ट युनिट्स (Import Units)",
+            unit: "kWh",
+            meaning: "तुम्ही वीज वितरण कंपनीच्या (उदा. महावितरण) ग्रीडकडून वापरलेली एकूण वीज.",
+            calculation: "गणना: सोलर नसलेल्या सामान्य ग्राहकांसाठी मीटरचे रीडिंग म्हणजेच इम्पोर्ट युनिट्स असतात.",
+            importance: "सोलर वापरकर्त्यांसाठी रात्री किंवा सोलर कमी पडल्यास ग्रीडकडून घेतलेली वीज मोजण्यासाठी हे उपयुक्त ठरते."
+        },
+        export: {
+            cat: "billing",
+            title: "एक्स्पोर्ट युनिट्स (Export Units)",
+            unit: "kWh",
+            meaning: "तुमच्या छतावरील सोलर पॅनेलने तयार केलेली आणि तुमच्या वापरानंतर ग्रीडमध्ये परत पाठवलेली अतिरिक्त वीज.",
+            calculation: "सूत्र: <code>Export = एकूण सोलर जनरेशन - घरातील स्वतःचा वापर</code>",
+            importance: "नेट मीटरिंगद्वारे ही पाठवलेली वीज तुमच्या बिलातून वजा केली जाते, ज्यामुळे वीज बिल कमी किंवा शून्य येते."
+        },
+        net_metering: {
+            cat: "billing",
+            title: "नेट मीटरिंग (Net Metering)",
+            unit: "प्रणाली / पद्धत",
+            meaning: "कंपनीकडून घेतलेली वीज (Import) आणि कंपनीला दिलेली सोलर वीज (Export) यांचा हिशोब करून फरक काढणारी यंत्रणा.",
+            calculation: "सूत्र: <code>देय युनिट्स = Import Units - Export Units</code>",
+            importance: "सौरऊर्जेचा जास्तीत जास्त फायदा ग्राहकाला मिळवून देण्यासाठी नेट मीटरिंग पद्धत अत्यंत फायदेशीर ठरते."
+        }
+    };
+
+    // Category Selector Handler
+    function onCategoryChange() {
+        const cat = document.getElementById('categorySelect').value;
+        const termSelect = document.getElementById('termSelect');
+        const detailsContainer = document.getElementById('detailsContainer');
+
+        termSelect.innerHTML = '<option value="">-- संज्ञा निवडा --</option>';
+        detailsContainer.classList.remove('active');
+
+        if (!cat) {
+            termSelect.disabled = true;
+            return;
+        }
+
+        for (let key in termsDatabase) {
+            if (termsDatabase[key].cat === cat) {
+                const opt = document.createElement('option');
+                opt.value = key;
+                opt.textContent = termsDatabase[key].title;
+                termSelect.appendChild(opt);
+            }
+        }
+
+        termSelect.disabled = false;
+    }
+
+    // Term Selection Handler
+    function onTermChange() {
+        const termKey = document.getElementById('termSelect').value;
+        const detailsContainer = document.getElementById('detailsContainer');
+
+        if (!termKey || !termsDatabase[termKey]) {
+            detailsContainer.classList.remove('active');
+            return;
+        }
+
+        const data = termsDatabase[termKey];
+
+        document.getElementById('dispTermTitle').textContent = data.title;
+        document.getElementById('dispUnitBadge').textContent = `एकक: ${data.unit}`;
+        document.getElementById('dispEasyMeaning').innerHTML = data.meaning;
+        document.getElementById('dispCalculation').innerHTML = data.calculation;
+        document.getElementById('dispImportance').innerHTML = data.importance;
+
+        detailsContainer.classList.add('active');
+    }
+
+    // ---- ADVANCED SHARE MODAL LOGIC ----
+    let currentShareUrl = window.location.href;
+    let currentShareTitle = "विद्युत संज्ञा मार्गदर्शक | UrjaPlus";
+    let currentShareDesc = "विजेसंबंधीच्या सर्व संकल्पना व संज्ञा सोप्या भाषेत समजून घ्या UrjaPlus वर.";
+
+    function updateMetaTagsForShare(ogTitle, ogDescription, ogImage, ogUrl) {
+        let meta = document.querySelector('meta[property="og:title"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:title'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogTitle);
+        
+        meta = document.querySelector('meta[property="og:description"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:description'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogDescription);
+        
+        meta = document.querySelector('meta[property="og:image"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:image'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogImage);
+        
+        meta = document.querySelector('meta[property="og:url"]');
+        if(!meta) { meta = document.createElement('meta'); meta.setAttribute('property', 'og:url'); document.head.appendChild(meta); }
+        meta.setAttribute('content', ogUrl);
+    }
+
+    function addUTMParameters(url, source) {
+        try {
+            const u = new URL(url);
+            u.searchParams.set('utm_source', source);
+            u.searchParams.set('utm_medium', 'social_share');
+            u.searchParams.set('utm_campaign', 'urjaplus_terms_tool');
+            return u.toString();
+        } catch(e) { return url; }
+    }
+
+    function showToastMessage(msg) {
+        const toast = document.getElementById('dynamicToast');
+        if(toast) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2000); }
+        else alert(msg);
+    }
+
+    function openCustomShareModal(title, desc, imgUrl, articleLink) {
+        updateMetaTagsForShare(title, desc, imgUrl, articleLink);
+        const modal = document.getElementById('dynamicShareModal');
+        if(modal) modal.classList.add('active');
+        currentShareUrl = addUTMParameters(articleLink, 'share_modal');
+        currentShareTitle = title;
+        currentShareDesc = desc;
+    }
+
+    function closeShareModal() {
+        const modal = document.getElementById('dynamicShareModal');
+        if(modal) modal.classList.remove('active');
+    }
+
+    function shareOnWhatsApp() { window.open(`https://wa.me/?text=${encodeURIComponent(currentShareTitle + "\n" + currentShareDesc + "\n" + currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(currentShareTitle)}&url=${encodeURIComponent(currentShareUrl)}`, '_blank'); closeShareModal(); }
+    function shareOnInstagram() { navigator.clipboard.writeText(currentShareUrl).then(() => showToastMessage("📸 Instagram साठी लिंक कॉपी झाली! पेस्ट करा.")); closeShareModal(); }
+    function copyLink() { navigator.clipboard.writeText(currentShareUrl).then(() => showToastMessage("✅ लिंक कॉपी झाली!")); closeShareModal(); }
+
+    function attachShareModalEvents() {
+        document.getElementById('closeShareModalBtn')?.addEventListener('click', closeShareModal);
+        document.getElementById('whatsappShareBtn')?.addEventListener('click', shareOnWhatsApp);
+        document.getElementById('facebookShareBtn')?.addEventListener('click', shareOnFacebook);
+        document.getElementById('instagramShareBtn')?.addEventListener('click', shareOnInstagram);
+        document.getElementById('twitterShareBtn')?.addEventListener('click', shareOnTwitter);
+        document.getElementById('copyLinkBtn')?.addEventListener('click', copyLink);
+        document.getElementById('dynamicShareModal')?.addEventListener('click', (e) => { if(e.target === document.getElementById('dynamicShareModal')) closeShareModal(); });
+    }
+
+    function shareCurrentPage() {
+        const defaultTitle = "विद्युत संज्ञा मार्गदर्शक | UrjaPlus";
+        const defaultDesc = "विजेसंबंधीच्या सर्व संकल्पना व संज्ञा सोप्या भाषेत समजून घ्या UrjaPlus वर.";
+        const defaultImg = "";
+        openCustomShareModal(defaultTitle, defaultDesc, defaultImg, window.location.href);
+    }
+    
+    attachShareModalEvents();
+
+    // फुटर नेव्हिगेशन शेअर बटण इव्हेंट
+    const nativeShareBtn = document.getElementById('nativeShareBtn');
+    if(nativeShareBtn) {
+        nativeShareBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            shareCurrentPage();
+        });
+    }
+
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'theme') applySynchronizedTheme();
+    });
+</script>
+</body>
+</html>
