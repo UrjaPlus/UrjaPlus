@@ -55,7 +55,7 @@
         .about-container {
             max-width: 480px; 
             margin: 0 auto;
-            background: var(--bg-app); /* काळा रंग काढून मूळ थीमचा रंग दिला */
+            background: var(--bg-app);
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -93,13 +93,12 @@
             text-align: center;
         }
 
-        /* MAIN CONTENT & SLIDER FIXES */
+        /* MAIN CONTENT - FULLSCREEN FIT WITHOUT GAP */
         .guide-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             position: relative;
-            background: var(--bg-app);
             width: 100%;
             overflow: hidden;
         }
@@ -107,12 +106,12 @@
         .fullscreen-slider {
             flex: 1;
             position: relative;
-            background: var(--bg-app);
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
             height: 100%;
+            overflow: hidden;
         }
 
         .image-wrapper {
@@ -121,17 +120,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 5px;
+            padding: 0; /* सर्व पॅडिंग काढले */
+            margin: 0;
         }
 
         .slide-image {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* इमेज चारही बाजूंनी स्क्रीनवर पूर्णपणे फिट बसेल */
+            object-position: center;
             display: block;
-            border-radius: 4px;
+            border: none;
+            border-radius: 0;
         }
 
         /* NAVIGATION ARROWS */
@@ -151,7 +151,7 @@
             z-index: 1500;
             color: white;
             font-size: 1.2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         .nav-arrow-left { left: 10px; }
@@ -184,7 +184,6 @@
             align-items: center;
         }
 
-        /* लपलेला व बाहेर येणारा बॉक्स */
         .side-tab-content {
             width: 220px;
             background: #ffffff;
@@ -236,7 +235,6 @@
             transform: scale(0.97);
         }
 
-        /* डाव्या बाजूचा उभा लाल Handle */
         .side-tab-handle {
             width: 30px;
             height: 75px;
