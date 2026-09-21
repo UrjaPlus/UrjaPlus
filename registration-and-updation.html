@@ -112,6 +112,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
+            user-select: none;
         }
 
         .image-wrapper {
@@ -120,18 +121,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0; /* सर्व पॅडिंग काढले */
+            padding: 0;
             margin: 0;
         }
 
         .slide-image {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* इमेज चारही बाजूंनी स्क्रीनवर पूर्णपणे फिट बसेल */
+            object-fit: cover;
             object-position: center;
             display: block;
             border: none;
             border-radius: 0;
+            transition: opacity 0.3s ease-in-out;
         }
 
         /* NAVIGATION ARROWS */
@@ -368,11 +370,15 @@
     ];
     
     let currentIndex = 0;
+    let autoPlayTimer = null;
+    let isUserInteracting = false;
+
     const mainImage = document.getElementById('mainSlideImage');
     const counterSpan = document.getElementById('imageCounter');
     const sideStickyTab = document.getElementById('sideStickyTab');
     const sideTabHandle = document.getElementById('sideTabHandle');
     const sideTabCopyBtn = document.getElementById('sideTabCopyBtn');
+    const sliderContainer = document.getElementById('fullscreenSlider');
     
     const targetUrl = "https://wss.mahadiscom.in/wss/wss?uiActionName=getCreateUpdateCustProfile_new";
 
@@ -380,15 +386,55 @@
         if (mainImage) mainImage.src = imageList[currentIndex];
         if (counterSpan) counterSpan.innerText = `${currentIndex + 1} / ${imageList.length}`;
     }
-    
-    document.getElementById('nextImageBtn').addEventListener('click', () => {
+
+    function nextSlide() {
         currentIndex = (currentIndex + 1) % imageList.length;
         updateImage();
-    });
-    
-    document.getElementById('prevImageBtn').addEventListener('click', () => {
+    }
+
+    function prevSlide() {
         currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
         updateImage();
+    }
+
+    // --- AUTO-PLAY FEATURE ---
+    function startAutoPlay() {
+        stopAutoPlay();
+        autoPlayTimer = setInterval(() => {
+            if (!isUserInteracting) {
+                nextSlide();
+            }
+        }, 3000); // ३ सेकंद ट्रान्सफर
+    }
+
+    function stopAutoPlay() {
+        if (autoPlayTimer) {
+            clearInterval(autoPlayTimer);
+            autoPlayTimer = null;
+        }
+    }
+
+    // SMART PAUSE ON TOUCH / CLICK
+    function handleUserTouch() {
+        isUserInteracting = true;
+        stopAutoPlay(); // युजरने टॅप केल्यास ऑटो-प्ले पूर्णपणे थांबेल
+    }
+
+    // Event Listeners for Touch/Click Pause
+    sliderContainer.addEventListener('touchstart', handleUserTouch, { passive: true });
+    sliderContainer.addEventListener('click', handleUserTouch);
+
+    // Arrow Button Controls
+    document.getElementById('nextImageBtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        nextSlide();
+        startAutoPlay(); // बाणावर क्लिक केल्यास पुन्हा ऑटो-प्ले सुरू होईल
+    });
+
+    document.getElementById('prevImageBtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        prevSlide();
+        startAutoPlay(); // बाणावर क्लिक केल्यास पुन्हा ऑटो-प्ले सुरू होईल
     });
 
     // Back Button Functionality
@@ -418,7 +464,9 @@
         setTimeout(() => toast.classList.remove('show'), 2000);
     }
 
+    // Initialize Page
     updateImage();
+    startAutoPlay();
 </script>
 </body>
 </html>
