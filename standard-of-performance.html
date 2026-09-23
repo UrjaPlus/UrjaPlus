@@ -14,7 +14,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- index.html आणि rti-plus.html मधील CSS थीम सिस्टम --- */
+        /* --- CSS थीम सिस्टम --- */
         :root {
             --bg-app: #f4f7fe;
             --bg-card: #ffffff;
@@ -66,6 +66,7 @@
             position: relative;
             box-shadow: var(--shadow);
             padding-bottom: 90px;
+            overflow-x: hidden; /* स्क्रीनबाहेर जाणारा कन्टेंट रोखण्यासाठी */
         }
 
         /* Sticky Header */
@@ -106,6 +107,7 @@
 
         .main-content {
             padding: 18px 12px;
+            width: 100%;
         }
 
         /* Hero Banner */
@@ -131,19 +133,20 @@
             line-height: 1.4;
         }
 
-        /* Grid Services */
+        /* --- पूर्णपणे रिस्पोन्सिव्ह Grid Services (३ कॉलम मोबाईलसाठी) --- */
         .strip-grid-services {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr); /* मोबाईल स्क्रीनवर एका लाईनमध्ये ३ स्ट्रिप्स */
             gap: 8px;
             margin-top: 10px;
+            width: 100%;
         }
 
         .service-mini-card {
             background: var(--bg-card);
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            padding: 12px 4px;
+            padding: 10px 4px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -153,6 +156,8 @@
             cursor: pointer;
             transition: transform 0.2s ease, background 0.2s ease;
             text-decoration: none;
+            width: 100%;
+            min-height: 72px;
         }
 
         .service-mini-card:active {
@@ -161,20 +166,23 @@
         }
 
         .service-mini-card i {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             color: var(--text-main);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
         .service-mini-card span {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 700;
             color: var(--text-main);
             line-height: 1.2;
-            white-space: nowrap;
+            word-break: break-word;
+            text-align: center;
+            display: block;
+            width: 100%;
         }
 
-        /* --- नवीन रिस्पोन्सिव्ह प्रोमो जाहिरात बॅनर सेक्शन --- */
+        /* --- रिस्पोन्सिव्ह प्रोमो जाहिरात इमेज सेक्शन --- */
         .promo-banner-wrapper {
             margin-top: 18px;
             width: 100%;
@@ -182,14 +190,14 @@
 
         .promo-banner-card {
             background: var(--bg-card);
-            border-radius: 16px;
+            border-radius: 14px;
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow);
             overflow: hidden;
             display: block;
             text-decoration: none;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            position: relative;
+            transition: transform 0.2s ease;
+            width: 100%;
         }
 
         .promo-banner-card:active {
@@ -201,8 +209,7 @@
             height: auto;
             display: block;
             object-fit: cover;
-            border-radius: 16px;
-            transition: opacity 0.3s ease;
+            border-radius: 14px;
         }
 
         /* Bottom Navigation */
@@ -389,10 +396,21 @@
         }
         .urja-toast-message.show { opacity: 1; }
 
-        @media (max-width: 480px) {
+        /* अतिशय लहान स्क्रीन असणाऱ्या मोबाईलसाठी (३६०px पेक्षा कमी) मीडिया क्वेरी */
+        @media (max-width: 360px) {
+            .strip-grid-services {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+            }
+            .service-mini-card span {
+                font-size: 0.62rem;
+            }
+            .service-mini-card {
+                padding: 8px 2px;
+            }
             .urja-share-icon { padding: 6px 8px; gap: 8px; }
             .urja-icon-circle { width: 32px; height: 32px; font-size: 1.1rem; }
-            .urja-share-icon span { font-size: 0.75rem; white-space: nowrap; }
+            .urja-share-icon span { font-size: 0.75rem; }
             .urja-modal-container { width: 92%; }
             .urja-modal-header h3 { font-size: 1.1rem; }
         }
@@ -414,7 +432,7 @@
             <p>महावितरण सेवा मानके व विलंबासाठी मिळणाऱ्या भरपाईचे नियम</p>
         </div>
 
-        <!-- Grid Services (3 ओळींच्या मिनी स्ट्रिप्स) -->
+        <!-- Fully Responsive Grid Services (एका ओळीत ३ स्ट्रिप्स) -->
         <div class="strip-grid-services">
             <div class="service-mini-card" data-type="Consumer Rights" onclick="window.location.href='Blog/consumer-rights.html'">
                 <i class="fas fa-gavel"></i>
@@ -450,7 +468,7 @@
             </div>
             <div class="service-mini-card" data-type="Voltage Quality" onclick="window.location.href='Blog/service-guarantee.html'">
                 <i class="fas fa-sliders-h"></i>
-                <span>वोल्टेज आणि गुणवत्ता</span>
+                <span>वोल्टेज व गुणवत्ता</span>
             </div>
             <div class="service-mini-card" data-type="Safety Standards" onclick="window.location.href='Blog/service-guarantee.html'">
                 <i class="fas fa-hard-hat"></i>
@@ -466,10 +484,9 @@
             </div>
         </div>
 
-        <!-- नवीन प्रोमो जाहिरात इमेज सेक्शन (Grid Services च्या खाली) -->
+        <!-- रिस्पोन्सिव्ह प्रोमो जाहिरात इमेज सेक्शन -->
         <div class="promo-banner-wrapper">
             <a href="https://urjaplus.in" class="promo-banner-card" target="_blank" rel="noopener noreferrer">
-                <!-- येथे तुमच्या जाहिरातीच्या इमेजचा Path टाका (उदा. Image/promo-banner.webp) -->
                 <img src="Image/about-us.webp" alt="UrjaPlus Promo Banner" class="promo-banner-img" loading="lazy">
             </a>
         </div>
